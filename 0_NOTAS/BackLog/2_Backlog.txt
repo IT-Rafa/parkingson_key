@@ -1,0 +1,31 @@
+
+parkingson_key
+
+Idiomas: es en
+
+temas: claro oscuro
+
+Mostrar un teclado
+	varios teclados a elegir
+	
+Una página principal con:
+	- Texto escrito
+	- con iconos para texto escrito:
+		- Leer el texto con voz humana
+		- Borrar una letra
+		- Borrar todo el texto
+		- Guardar la frase en uno de los botones de mensajes
+		
+	- Teclado con las letras, incluyendo un botón para los símbolos
+		(números, operaciones, puntuación, etc)
+	- Botones de mensajes
+	- Boton para enviar mensaje por WhatsApp
+	
+	...
+
+Configuración
+	- idioma: Español Inglés
+	- tema: claro oscuro sistema
+	- Botones Mensajes: Nombre botón, lista de temas, lista de mensajes por tema
+	- Botón whasApp: lista de personas con números de teléfono.
+	- Teclado elegido- 

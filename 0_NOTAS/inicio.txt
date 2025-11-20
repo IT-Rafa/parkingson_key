@@ -1,0 +1,10 @@
+parkingson_key
+
+Pantalla con teclado que permite escribir palabras y seleccionar frases 
+para que gente con problemas al hablar y que pueda manejar una tablet, 
+aunque sea con cierta dificultad, pueda escribir sus mensajes para 
+comunicarse con otras personas.
+
+- Para el teclado se pueden elegir varios diseños.
+- El teclado normal se ignora. Solo se escribe con el de la pantalla.
+- Opciones para inglés y español

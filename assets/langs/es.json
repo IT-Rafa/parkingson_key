@@ -1,0 +1,16 @@
+{
+    "KEYBOARD_read": "Leer",
+    "KEYBOARD_letter": "Letra",
+    "KEYBOARD_word": "Palabra",
+    "KEYBOARD_all": "Todo",
+    "KEYBOARD_savePhrase": "Guardar frase",
+    "KEYBOARD_sendWhatsApp": "Enviar por WhatsApp",
+    "SETTINGS_settings": "Configuración",
+    "SETTINGS_language": "Idioma",
+    "SETTINGS_english": "Inglés",
+    "SETTINGS_spanish": "Español",
+    "SETTINGS_theme": "Tema",
+    "SETTINGS_light": "Claro",
+    "SETTINGS_dark": "Oscuro",
+    "SETTINGS_system": "Sistema"
+}
