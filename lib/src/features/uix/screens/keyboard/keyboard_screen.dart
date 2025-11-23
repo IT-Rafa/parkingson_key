@@ -143,35 +143,3 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
     );
   }
 }
-
-class LetterExpanded extends StatelessWidget {
-  const LetterExpanded({
-    super.key,
-    required TextEditingController controller,
-    required this.letter,
-    required this.toWrite,
-  }) : _controller = controller;
-
-  final TextEditingController _controller;
-  final String letter;
-  final String toWrite;
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: ElevatedButton(
-        onPressed: () {
-          _controller.text += toWrite;
-        },
-        style: ElevatedButton.styleFrom(
-          padding: const EdgeInsets.all(0),
-          minimumSize: const Size(60, 30),
-          shape: BeveledRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        child: Text(letter, style: Theme.of(context).textTheme.headlineMedium),
-      ),
-    );
-  }
-}
