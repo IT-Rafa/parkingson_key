@@ -19,7 +19,8 @@ class DelAllInkWell extends StatelessWidget {
           Icon(Icons.backspace),
           Text(
             "KEYBOARD_all",
-            style: Theme.of(context).textTheme.bodySmall,
+            style: Theme.of(context).textTheme.labelMedium!
+                .copyWith(color: Colors.black),
           ).tr(),
         ],
       ),
