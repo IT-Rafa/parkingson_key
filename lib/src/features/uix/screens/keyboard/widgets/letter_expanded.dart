@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parkingson_key/src/features/uix/themes/app_colors.dart';
 
 class LetterExpanded extends StatelessWidget {
   const LetterExpanded({
@@ -23,6 +24,7 @@ class LetterExpanded extends StatelessWidget {
           _controller.text += toWrite;
         },
         style: ElevatedButton.styleFrom(
+          foregroundColor: AppColors().onKey(context),
           padding: const EdgeInsets.all(0),
           minimumSize: const Size(60, 30),
           shape: BeveledRectangleBorder(

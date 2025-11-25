@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppColors {
   // primary
   static const Color primaryLight = Color.fromARGB(255, 46, 163, 165);
-  static const Color primaryDark = Color.fromARGB(255, 17, 116, 11);
+  static const Color primaryDark = Color.fromARGB(255, 20, 11, 116);
   // onPrimary
   static const Color onPrimaryLight = Colors.white;
   static const Color onPrimaryDark = Colors.white;
@@ -27,6 +27,16 @@ class AppColors {
       : primaryDark;
 
   static Color onPrimary(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.light
+      ? onPrimaryLight
+      : onPrimaryDark;
+
+  static Color key(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.light
+      ? onPrimaryLight
+      : onPrimaryDark;
+      
+  static Color onKey(BuildContext context) =>
       Theme.of(context).brightness == Brightness.light
       ? onPrimaryLight
       : onPrimaryDark;
