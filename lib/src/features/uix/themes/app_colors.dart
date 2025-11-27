@@ -33,13 +33,13 @@ class AppColors {
 
   static Color key(BuildContext context) =>
       Theme.of(context).brightness == Brightness.light
-      ? onPrimaryLight
-      : onPrimaryDark;
+      ? Colors.white
+      : Colors.black54;
       
   static Color onKey(BuildContext context) =>
       Theme.of(context).brightness == Brightness.light
-      ? onPrimaryLight
-      : onPrimaryDark;
+      ? Colors.black
+      : Colors.white;
 
   static Color error(BuildContext context) =>
       Theme.of(context).brightness == Brightness.light ? errorLight : errorDark;

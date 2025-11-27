@@ -10,10 +10,11 @@ class KeyKeyboardWrap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 5,
+      spacing: 10,
+
       children: [
         Row(
-          spacing: 5,
+          spacing: 10,
           children: [
             LetterExpanded(controller: _controller, letter: "B", toWrite: "b"),
             LetterExpanded(controller: _controller, letter: "C", toWrite: "c"),
@@ -25,8 +26,11 @@ class KeyKeyboardWrap extends StatelessWidget {
             LetterExpanded(controller: _controller, letter: "K", toWrite: "k"),
           ],
         ),
+        SizedBox(height: 10),
+
         Row(
-          spacing: 5,
+          spacing: 10,
+
           children: [
             LetterExpanded(controller: _controller, letter: "L", toWrite: "l"),
             LetterExpanded(
@@ -46,8 +50,11 @@ class KeyKeyboardWrap extends StatelessWidget {
             ),
           ],
         ),
+        SizedBox(height: 10),
+
         Row(
-          spacing: 5,
+          spacing: 10,
+
           children: [
             LetterExpanded(controller: _controller, letter: "R", toWrite: "r"),
             LetterExpanded(
@@ -64,8 +71,11 @@ class KeyKeyboardWrap extends StatelessWidget {
             LetterExpanded(controller: _controller, letter: "Z", toWrite: "z"),
           ],
         ),
+        SizedBox(height: 20),
+
         Row(
-          spacing: 5,
+          spacing: 10,
+
           children: [
             LetterExpanded(controller: _controller, letter: "A", toWrite: "a"),
             LetterExpanded(controller: _controller, letter: "E", toWrite: "e"),

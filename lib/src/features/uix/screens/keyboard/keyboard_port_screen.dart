@@ -31,77 +31,79 @@ class _KeyboardPortScreenState extends ConsumerState<KeyboardPortScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          spacing: 10,
-          children: [
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: TextField(
-                    readOnly: true,
-                    controller: _controller,
-                    decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(vertical: 0.0),
-                      fillColor: Colors.red,
-                      border: OutlineInputBorder(),
+    return SafeArea(
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            spacing: 10,
+            children: [
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: TextField(
+                      readOnly: true,
+                      controller: _controller,
+                      decoration: const InputDecoration(
+                        contentPadding: EdgeInsets.symmetric(vertical: 0.0),
+                        fillColor: Colors.red,
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                   ),
-                ),
-
-                IconButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/settings');
-                  },
-                  icon: Icon(Icons.menu, size: 40),
-                ),
-              ],
-            ),
-
-            Container(
-              color: Colors.grey[300],
-              padding: const EdgeInsets.all(10.0),
-
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ReadInkwell(controller: _controller),
-                  DelLetterInkWell(controller: _controller),
-                  DelWordInkWell(controller: _controller),
-                  DelAllInkWell(controller: _controller),
+      
+                  IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/settings');
+                    },
+                    icon: Icon(Icons.menu, size: 40),
+                  ),
                 ],
               ),
-            ),
-
-            Container(
-              color: Colors.grey[300],
-              padding: const EdgeInsets.all(10.0),
-
-              child: KeyKeyboardWrap(controller: _controller),
-            ),
-
-            Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: const Size(200, 50),
-                  ),
-                  child: Text("KEYBOARD_savePhrase").tr(),
+      
+              Container(
+                color: Colors.grey[300],
+                padding: const EdgeInsets.all(10.0),
+      
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ReadInkwell(controller: _controller),
+                    DelLetterInkWell(controller: _controller),
+                    DelWordInkWell(controller: _controller),
+                    DelAllInkWell(controller: _controller),
+                  ],
                 ),
-
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: const Size(200, 50),
+              ),
+      
+              Container(
+                color: Colors.grey[300],
+                padding: const EdgeInsets.all(10.0),
+      
+                child: KeyKeyboardWrap(controller: _controller),
+              ),
+      
+              Column(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: const Size(200, 50),
+                    ),
+                    child: Text("KEYBOARD_savePhrase").tr(),
                   ),
-                  child: Text("KEYBOARD_sendWhatsApp").tr(),
-                ),
-              ],
-            ),
-          ],
+      
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      fixedSize: const Size(200, 50),
+                    ),
+                    child: Text("KEYBOARD_sendWhatsApp").tr(),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
