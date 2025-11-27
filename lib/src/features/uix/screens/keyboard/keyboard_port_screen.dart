@@ -1,11 +1,10 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/del_all_inkwell.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/del_letter_inkwell.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/del_word_inkwell.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/read_inkwell.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/key_keyboard_wrap.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_wrap.dart';
 
 class KeyboardPortScreen extends ConsumerStatefulWidget {
   const KeyboardPortScreen({super.key});
@@ -51,7 +50,7 @@ class _KeyboardPortScreenState extends ConsumerState<KeyboardPortScreen> {
                       ),
                     ),
                   ),
-      
+
                   IconButton(
                     onPressed: () {
                       Navigator.pushNamed(context, '/settings');
@@ -60,11 +59,11 @@ class _KeyboardPortScreenState extends ConsumerState<KeyboardPortScreen> {
                   ),
                 ],
               ),
-      
+
               Container(
                 color: Colors.grey[300],
                 padding: const EdgeInsets.all(10.0),
-      
+
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -75,32 +74,12 @@ class _KeyboardPortScreenState extends ConsumerState<KeyboardPortScreen> {
                   ],
                 ),
               ),
-      
+
               Container(
                 color: Colors.grey[300],
                 padding: const EdgeInsets.all(10.0),
-      
-                child: KeyKeyboardWrap(controller: _controller),
-              ),
-      
-              Column(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(200, 50),
-                    ),
-                    child: Text("KEYBOARD_savePhrase").tr(),
-                  ),
-      
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(200, 50),
-                    ),
-                    child: Text("KEYBOARD_sendWhatsApp").tr(),
-                  ),
-                ],
+
+                child: Expanded(child: KeyboardWrap(controller: _controller)),
               ),
             ],
           ),

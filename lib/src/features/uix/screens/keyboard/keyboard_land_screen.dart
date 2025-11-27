@@ -1,11 +1,10 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/del_all_inkwell.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/del_letter_inkwell.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/del_word_inkwell.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/read_inkwell.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/key_keyboard_wrap.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_wrap.dart';
 
 class KeyboardLandScreen extends ConsumerStatefulWidget {
   const KeyboardLandScreen({super.key});
@@ -34,14 +33,14 @@ class _KeyboardLandScreenState extends ConsumerState<KeyboardLandScreen> {
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             spacing: 10,
-      
+
             children: [
               Row(
                 spacing: 10,
-      
+
                 children: <Widget>[
                   Expanded(
                     child: TextField(
@@ -54,11 +53,11 @@ class _KeyboardLandScreenState extends ConsumerState<KeyboardLandScreen> {
                       ),
                     ),
                   ),
-      
+
                   Container(
                     color: Colors.grey[300],
                     padding: const EdgeInsets.all(10.0),
-      
+
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [ReadInkwell(controller: _controller)],
@@ -67,7 +66,7 @@ class _KeyboardLandScreenState extends ConsumerState<KeyboardLandScreen> {
                   Container(
                     color: Colors.grey[300],
                     padding: const EdgeInsets.all(10.0),
-      
+
                     child: Row(
                       spacing: 30,
                       children: [
@@ -85,36 +84,14 @@ class _KeyboardLandScreenState extends ConsumerState<KeyboardLandScreen> {
                   ),
                 ],
               ),
-      
-              Container(
-                color: Colors.grey[300],
-                padding: const EdgeInsets.all(10.0),
-                child: KeyKeyboardWrap(controller: _controller),
-              ),
-      
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(200, 50),
-                      ),
-                      child: Text("KEYBOARD_savePhrase").tr(),
-                    ),
+              Expanded(
+                child: Container(
+                  color: Colors.blue,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: KeyboardWrap(controller: _controller),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: const Size(200, 50),
-                      ),
-                      child: Text("KEYBOARD_sendWhatsApp").tr(),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ],
           ),
