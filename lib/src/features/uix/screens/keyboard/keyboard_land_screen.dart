@@ -85,14 +85,21 @@ class _KeyboardLandScreenState extends ConsumerState<KeyboardLandScreen> {
                 ],
               ),
               Expanded(
+
                 child: Container(
                   color: Colors.blue,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: KeyboardWrap(controller: _controller),
+                    child: Column(
+                      children: [
+                        KeyboardWrap(controller: _controller),
+                        Text("hola",)
+                      ],
+                    ),
                   ),
                 ),
               ),
+              
             ],
           ),
         ),
