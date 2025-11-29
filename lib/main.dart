@@ -49,7 +49,7 @@ class MainApp extends ConsumerWidget {
       themeMode: themeMode,
 
       // RUTA PRINCIPAL
-      home: const SelectKeyboardScreen(),
+      home: const KeyboardScreen(),
 
       // Navegación dinámica
       onGenerateRoute: (settings) {

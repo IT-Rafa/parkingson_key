@@ -1,108 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/del_all_inkwell.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/del_letter_inkwell.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/del_word_inkwell.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/read_inkwell.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_wrap.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/keyboard_button.dart';
 
-class KeyboardLandScreen extends ConsumerStatefulWidget {
-  const KeyboardLandScreen({super.key});
+class KeyboardLandscape extends StatelessWidget {
+  final TextEditingController controller;
+  final FocusNode focusNode;
 
-  @override
-  ConsumerState<KeyboardLandScreen> createState() => _KeyboardLandScreenState();
-}
-
-class _KeyboardLandScreenState extends ConsumerState<KeyboardLandScreen> {
-  late final TextEditingController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  const KeyboardLandscape({
+    super.key,
+    required this.controller,
+    required this.focusNode,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            spacing: 10,
+    final keys = ["A","B","C","D","E","F","G","H","I","J","K"];
 
-            children: [
-              Row(
-                spacing: 10,
+    return Padding(
+      padding: const EdgeInsets.all(6),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final maxWidth = constraints.maxWidth;
 
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      readOnly: true,
-                      controller: _controller,
-                      decoration: const InputDecoration(
-                        contentPadding: EdgeInsets.symmetric(vertical: 0.0),
-                        fillColor: Colors.red,
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
-                  ),
+          final int columns = 6;
+          final double buttonWidth = (maxWidth - (columns * 8)) / columns;
 
-                  Container(
-                    color: Colors.grey[300],
-                    padding: const EdgeInsets.all(10.0),
-
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [ReadInkwell(controller: _controller)],
-                    ),
-                  ),
-                  Container(
-                    color: Colors.grey[300],
-                    padding: const EdgeInsets.all(10.0),
-
-                    child: Row(
-                      spacing: 30,
-                      children: [
-                        DelLetterInkWell(controller: _controller),
-                        DelWordInkWell(controller: _controller),
-                        DelAllInkWell(controller: _controller),
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/settings');
-                    },
-                    icon: Icon(Icons.menu, size: 40),
-                  ),
-                ],
-              ),
-              Expanded(
-
-                child: Container(
-                  color: Colors.blue,
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Column(
-                      children: [
-                        KeyboardWrap(controller: _controller),
-                        Text("hola",)
-                      ],
-                    ),
-                  ),
+          return Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            alignment: WrapAlignment.center,
+            children: keys.map((key) {
+              return SizedBox(
+                width: buttonWidth,
+                height: 55,
+                child: KeyboardButton(
+                  label: key,
+                  onTap: () {
+                    controller.text += key;
+                    controller.selection = TextSelection.fromPosition(
+                        TextPosition(offset: controller.text.length));
+                    focusNode.requestFocus();
+                  },
                 ),
-              ),
-              
-            ],
-          ),
-        ),
+              );
+            }).toList(),
+          );
+        },
       ),
     );
   }
