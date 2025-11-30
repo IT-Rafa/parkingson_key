@@ -34,36 +34,18 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // --- TEXTFIELD FIJO, SIN PARPADEOS ---
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: _controller,
-                focusNode: _focusNode,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Escribe...",
-                ),
-              ),
-            ),
-
             // ---- TECLADO ADAPTATIVO ----
             Expanded(
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   final isPortrait =
-                      MediaQuery.of(context).orientation == Orientation.portrait;
+                      MediaQuery.of(context).orientation ==
+                      Orientation.portrait;
 
                   if (isPortrait) {
-                    return KeyboardPortrait(
-                      controller: _controller,
-                      focusNode: _focusNode,
-                    );
+                    return KeyboardPortScreen();
                   } else {
-                    return KeyboardLandscape(
-                      controller: _controller,
-                      focusNode: _focusNode,
-                    );
+                    return KeyboardLandScreen();
                   }
                 },
               ),
