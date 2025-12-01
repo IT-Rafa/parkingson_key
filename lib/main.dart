@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/core/providers/theme_provider.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/select_keybord_screen.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_screen.dart';
 import 'package:parkingson_key/src/features/uix/screens/settigns/settings_screen.dart';
 import 'package:parkingson_key/src/features/uix/themes/my_themes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

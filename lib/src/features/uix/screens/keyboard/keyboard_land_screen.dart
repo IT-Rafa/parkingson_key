@@ -161,41 +161,118 @@ class _KeyboardLandScreenState extends ConsumerState<KeyboardLandScreen> {
 
               // Teclado
               Expanded(
-                child: Container(
-                  color: Colors.blue,
-                  padding: const EdgeInsets.all(15),
-                  child: Column(
-                    spacing: spacing,
-                    children: [
-                      for (int r = 0; r < rowsData.length; r++)
-                        Expanded(
-                          child: LayoutBuilder(
-                            builder: (context, rowConstraints) {
-                              // --- Calcular fontSize mínimo para la fila ---
-                              double minFontSize = double.infinity;
-                              for (var key in rowsData[r]) {
-                                String label = key.label == 'Space'
-                                    ? 'Esp'
-                                    : key.label;
-                                double fontSizeHeight =
-                                    rowConstraints.maxHeight * 0.55;
-                                double fontSizeWidth =
-                                    (rowConstraints.maxWidth /
-                                        rowsData[r].fold<int>(
-                                          0,
-                                          (p, e) => p + e.units,
-                                        )) *
-                                    key.units *
-                                    0.5;
-                                double fontSizeButton =
-                                    fontSizeHeight < fontSizeWidth
-                                    ? fontSizeHeight
-                                    : fontSizeWidth;
-                                if (fontSizeButton < minFontSize)
-                                  minFontSize = fontSizeButton;
-                              }
+                child: LayoutBuilder(
+                  builder: (context, screenConstraints) {
+                    // Padding interno del contenedor (coincide con el child Container padding)
+                    const double containerPadding = 15.0;
 
-                              return Row(
+                    // Espacio util disponible dentro del contenedor (restamos padding lateral)
+                    final double availableWidth =
+                        (screenConstraints.maxWidth - containerPadding * 2)
+                            .clamp(0.0, double.infinity);
+                    final double availableHeight =
+                        (screenConstraints.maxHeight - containerPadding * 2)
+                            .clamp(0.0, double.infinity);
+
+                    double globalMinFontSize = double.infinity;
+
+                    // Número de filas
+                    final int rowsCount = rowsData.length;
+
+                    // Altura disponible por fila (restamos spacing vertical entre filas)
+                    final double totalVerticalSpacing =
+                        spacing * (rowsCount - 1);
+                    final double rowHeight =
+                        ((availableHeight - totalVerticalSpacing) / rowsCount)
+                            .clamp(1.0, double.infinity);
+
+                    // Recorremos todas las filas y teclas para calcular el font mínimo global
+                    for (var row in rowsData) {
+                      // total de unidades de esa fila (suma de key.units)
+                      final int totalUnits = row.fold<int>(
+                        0,
+                        (p, e) => p + e.units,
+                      );
+
+                      // restamos el spacing horizontal entre teclas de la fila
+                      final double totalHorizontalSpacing =
+                          spacing * (row.length - 1);
+
+                      // ancho util para las unidades de esta fila
+                      final double unitsAvailableWidth =
+                          (availableWidth - totalHorizontalSpacing).clamp(
+                            1.0,
+                            double.infinity,
+                          );
+
+                      final double unitWidth = unitsAvailableWidth / totalUnits;
+
+                      for (var key in row) {
+                        // ancho y alto de la tecla (su espacio util)
+                        final double buttonWidth = (unitWidth * key.units)
+                            .clamp(1.0, double.infinity);
+
+                        // Dejamos un pequeño margen interior para que el texto no quede pegado
+                        final double innerHorizontalMargin = 6.0;
+                        final double innerVerticalMargin = 4.0;
+
+                        final double usableWidth =
+                            (buttonWidth - innerHorizontalMargin * 2).clamp(
+                              1.0,
+                              double.infinity,
+                            );
+                        final double usableHeight =
+                            (rowHeight - innerVerticalMargin * 2).clamp(
+                              1.0,
+                              double.infinity,
+                            );
+
+                        // font por altura (proporcional)
+                        final double fontH = usableHeight * 0.6;
+
+                        // font por anchura (aprox): dejamos que ocupe hasta un % del ancho por carácter
+                        // para letras cortas esto funciona bien; usamos label length mínima 1
+                        final int len = (key.label == 'Space')
+                            ? 3
+                            : key.label.length;
+                        final double charSpace = usableWidth / len;
+                        final double fontW =
+                            charSpace * 0.85; // factor empirico para que quepa
+
+                        final double fontForButton = fontH < fontW
+                            ? fontH
+                            : fontW;
+
+                        if (fontForButton < globalMinFontSize) {
+                          globalMinFontSize = fontForButton;
+                        }
+                      }
+                    }
+
+                    // Si por alguna razón no se actualizó (defensa), aplicamos un valor por defecto
+                    if (globalMinFontSize.isInfinite ||
+                        globalMinFontSize.isNaN) {
+                      globalMinFontSize = rowHeight * 0.45;
+                    }
+
+                    // Clamp final para evitar tamaños aberrantes
+                    final double minSize = 8.0;
+                    final double maxSize = rowHeight * 0.9;
+                    globalMinFontSize = globalMinFontSize.clamp(
+                      minSize,
+                      maxSize,
+                    );
+
+                    // Ahora renderizamos el teclado usando globalMinFontSize
+                    return Container(
+                      color: Colors.blue,
+                      padding: const EdgeInsets.all(containerPadding),
+                      child: Column(
+                        spacing: spacing,
+                        children: [
+                          for (int r = 0; r < rowsData.length; r++)
+                            Expanded(
+                              child: Row(
                                 children: [
                                   for (int i = 0; i < rowsData[r].length; i++)
                                     Expanded(
@@ -220,29 +297,27 @@ class _KeyboardLandScreenState extends ConsumerState<KeyboardLandScreen> {
                                                   BorderRadius.circular(8),
                                             ),
                                           ),
-                                          child: FittedBox(
-                                            fit: BoxFit.scaleDown,
-                                            child: Text(
-                                              rowsData[r][i].label == 'Space'
-                                                  ? 'Esp'
-                                                  : rowsData[r][i].label,
-                                              maxLines: 1,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize: minFontSize,
-                                              ),
+                                          child: Text(
+                                            rowsData[r][i].label == 'Space'
+                                                ? 'Esp'
+                                                : rowsData[r][i].label,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              fontSize: globalMinFontSize,
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
                                 ],
-                              );
-                            },
-                          ),
-                        ),
-                    ],
-                  ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
             ],
