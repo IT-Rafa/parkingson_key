@@ -4,11 +4,11 @@ import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_tex
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/del_word_inkwell.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/read_inkwell.dart';
 
-class KeyboardHeader extends StatelessWidget {
+class KeyboardPortHeader extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
 
-  const KeyboardHeader({
+  const KeyboardPortHeader({
     super.key,
     required this.controller,
     required this.focusNode,
@@ -44,7 +44,7 @@ class KeyboardHeader extends StatelessWidget {
             IconButton(
               onPressed: () => Navigator.pushNamed(context, '/settings'),
               icon: const Icon(Icons.menu, size: 40),
-            )
+            ),
           ],
         ),
 
@@ -76,7 +76,7 @@ class KeyboardHeader extends StatelessWidget {
                   DelAllInkWell(controller: controller),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ],

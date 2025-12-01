@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_base.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/row_header.dart';
-
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_land_header.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_port_header.dart';
 
 class KeyboardScreen extends ConsumerStatefulWidget {
   const KeyboardScreen({super.key});
@@ -37,8 +37,7 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
   void _insertText(String value) {
     final newText = _controller.text + value;
     _controller.text = newText;
-    _controller.selection =
-        TextSelection.collapsed(offset: newText.length);
+    _controller.selection = TextSelection.collapsed(offset: newText.length);
 
     if (!_focusNode.hasFocus) _focusNode.requestFocus();
   }
@@ -55,44 +54,26 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
 
             return Padding(
               padding: const EdgeInsets.all(20),
-              child: isPortrait
-                  ? Column(
-                      children: [
-                        KeyboardHeader(
+              child: Column(
+                children: [
+                  isPortrait
+                      ? KeyboardPortHeader(
+                          controller: _controller,
+                          focusNode: _focusNode,
+                        )
+                      : KeyboardLandHeader(
                           controller: _controller,
                           focusNode: _focusNode,
                         ),
-                        const SizedBox(height: 10),
-                        Expanded(
-                          child: KeyboardBase(
-                            layout: layout,
-                            onKeyPressed: _insertText,
-                          ),
-                        ),
-                      ],
-                    )
-                  : Row(
-                      children: [
-                        SizedBox(
-                          width: 260,
-                          child: Column(
-                            children: [
-                              KeyboardHeader(
-                                controller: _controller,
-                                focusNode: _focusNode,
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 20),
-                        Expanded(
-                          child: KeyboardBase(
-                            layout: layout,
-                            onKeyPressed: _insertText,
-                          ),
-                        ),
-                      ],
+                  const SizedBox(height: 20),
+                  Expanded(
+                    child: KeyboardBase(
+                      layout: layout,
+                      onKeyPressed: _insertText,
                     ),
+                  ),
+                ],
+              ),
             );
           },
         ),

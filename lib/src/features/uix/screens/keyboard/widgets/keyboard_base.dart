@@ -19,7 +19,7 @@ class KeyboardBase extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, screenConstraints) {
-        const double containerPadding = 15.0;
+        const double containerPadding = 8.0;
 
         final double availableWidth =
             (screenConstraints.maxWidth - containerPadding * 2)
