@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg376"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   sodipodi:docname="dibujo.svg"
+   inkscape:export-filename="dibujo.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview378"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.25745651"
+     inkscape:cx="-384.53096"
+     inkscape:cy="473.86644"
+     inkscape:window-width="1366"
+     inkscape:window-height="736"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs373" />
+  <g
+     inkscape:label="Capa 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="opacity:0.99;fill:#ffffff;stroke-width:0.529167"
+       id="rect1281"
+       width="210"
+       height="297"
+       x="0"
+       y="0"
+       ry="6.1428132" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.1721px;font-family:Amiri;-inkscape-font-specification:Amiri;opacity:0.99;fill:#000000;stroke:none;stroke-width:1.06214"
+       x="22.777046"
+       y="80.447975"
+       id="text1420"><tspan
+         sodipodi:role="line"
+         id="tspan1418"
+         x="22.777046"
+         y="80.447975"
+         style="stroke-width:1.06214" /></text>
+    <g
+       id="g910"
+       transform="matrix(0.80656047,0,0,0.80656047,11.127227,-19.540744)">
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.1721px;font-family:Amiri;-inkscape-font-specification:Amiri;opacity:0.99;fill:#000000;stroke:none;stroke-width:1.06214"
+         x="32.754139"
+         y="73.039635"
+         id="text1530"><tspan
+           sodipodi:role="line"
+           id="tspan1528"
+           x="32.754139"
+           y="73.039635"
+           style="stroke-width:1.06214">Nombre_boton_1</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.1721px;font-family:Amiri;-inkscape-font-specification:Amiri;opacity:0.99;fill:#000000;stroke:none;stroke-width:1.06214"
+         x="14.771185"
+         y="53.584084"
+         id="text1530-3"><tspan
+           sodipodi:role="line"
+           id="tspan1528-6"
+           x="14.771185"
+           y="53.584084"
+           style="stroke-width:1.06214">Botón al inicio</tspan></text>
+      <rect
+         style="opacity:0.99;fill:none;stroke:#666666;stroke-width:0.881119"
+         id="rect1584"
+         width="140.79646"
+         height="14.92704"
+         x="30.538853"
+         y="60.784958"
+         ry="3.5046554" />
+      <g
+         id="g2020"
+         transform="matrix(0.12627151,0,0,0.24112456,-164.34602,-34.006708)"
+         style="fill:#000000;stroke:none">
+        <path
+           style="opacity:0.99;fill:#000000;stroke:none;stroke-width:2"
+           d="m 2565.4401,411.378 25.3747,12.69821 25.3746,-12.69821 z"
+           id="path1970"
+           sodipodi:nodetypes="cccc" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.1721px;font-family:Amiri;-inkscape-font-specification:Amiri;opacity:0.99;fill:#000000;stroke:none;stroke-width:1.06214"
+         x="35.399975"
+         y="132.29745"
+         id="text744"><tspan
+           sodipodi:role="line"
+           id="tspan742"
+           x="35.399975"
+           y="132.29745"
+           style="stroke-width:1.06214">Topic_1</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.1721px;font-family:Amiri;-inkscape-font-specification:Amiri;opacity:0.99;fill:#000000;stroke:none;stroke-width:1.06214"
+         x="14.771185"
+         y="109.13768"
+         id="text748"><tspan
+           sodipodi:role="line"
+           id="tspan746"
+           x="14.771185"
+           y="109.13768"
+           style="stroke-width:1.06214">Pulsamos botón</tspan></text>
+      <rect
+         style="opacity:0.99;fill:none;stroke:#666666;stroke-width:1.80982"
+         id="rect750"
+         width="139.86777"
+         height="63.394146"
+         x="31.003202"
+         y="116.80293"
+         ry="3.9525712" />
+      <g
+         id="g754"
+         transform="matrix(0.12627151,0,0,0.24112456,-164.34602,21.54689)"
+         style="fill:#000000;stroke:none">
+        <path
+           style="opacity:0.99;fill:#000000;stroke:none;stroke-width:2"
+           d="m 2565.4401,411.378 25.3747,12.69821 25.3746,-12.69821 z"
+           id="path752"
+           sodipodi:nodetypes="cccc" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.1721px;font-family:Amiri;-inkscape-font-specification:Amiri;opacity:0.99;fill:#000000;stroke:none;stroke-width:1.06214"
+         x="35.399975"
+         y="151.52477"
+         id="text805"><tspan
+           sodipodi:role="line"
+           id="tspan803"
+           x="35.399975"
+           y="151.52477"
+           style="stroke-width:1.06214">Topic_2</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.1721px;font-family:Amiri;-inkscape-font-specification:Amiri;opacity:0.99;fill:#000000;stroke:none;stroke-width:1.06214"
+         x="35.399975"
+         y="170.75208"
+         id="text809"><tspan
+           sodipodi:role="line"
+           id="tspan807"
+           x="35.399975"
+           y="170.75208"
+           style="stroke-width:1.06214">Topic_3</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.1721px;font-family:Amiri;-inkscape-font-specification:Amiri;opacity:0.99;fill:#000000;stroke:none;stroke-width:1.06214"
+         x="35.399975"
+         y="225.95528"
+         id="text813"><tspan
+           sodipodi:role="line"
+           id="tspan811"
+           x="35.399975"
+           y="225.95528"
+           style="stroke-width:1.06214">frase_1</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.1721px;font-family:Amiri;-inkscape-font-specification:Amiri;opacity:0.99;fill:#000000;stroke:none;stroke-width:1.06214"
+         x="14.771185"
+         y="202.7955"
+         id="text817"><tspan
+           sodipodi:role="line"
+           id="tspan815"
+           x="14.771185"
+           y="202.7955"
+           style="stroke-width:1.06214">Seleccionamos topic</tspan></text>
+      <rect
+         style="opacity:0.99;fill:none;stroke:#666666;stroke-width:1.80982"
+         id="rect819"
+         width="139.86777"
+         height="63.394146"
+         x="31.003202"
+         y="210.46075"
+         ry="3.9525712" />
+      <g
+         id="g823"
+         transform="matrix(0.12627151,0,0,0.24112456,-164.34602,115.20472)"
+         style="fill:#000000;stroke:none">
+        <path
+           style="opacity:0.99;fill:#000000;stroke:none;stroke-width:2"
+           d="m 2565.4401,411.378 25.3747,12.69821 25.3746,-12.69821 z"
+           id="path821"
+           sodipodi:nodetypes="cccc" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.1721px;font-family:Amiri;-inkscape-font-specification:Amiri;opacity:0.99;fill:#000000;stroke:none;stroke-width:1.06214"
+         x="35.399975"
+         y="245.18259"
+         id="text827"><tspan
+           sodipodi:role="line"
+           id="tspan825"
+           x="35.399975"
+           y="245.18259"
+           style="stroke-width:1.06214">frase_2</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.1721px;font-family:Amiri;-inkscape-font-specification:Amiri;opacity:0.99;fill:#000000;stroke:none;stroke-width:1.06214"
+         x="35.399975"
+         y="264.40991"
+         id="text831"><tspan
+           sodipodi:role="line"
+           id="tspan829"
+           x="35.399975"
+           y="264.40991"
+           style="stroke-width:1.06214">frase_3</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.1721px;font-family:Amiri;-inkscape-font-specification:Amiri;opacity:0.99;fill:#000000;stroke:none;stroke-width:1.06214"
+         x="14.771185"
+         y="299.27814"
+         id="text839"><tspan
+           sodipodi:role="line"
+           id="tspan837"
+           x="14.771185"
+           y="299.27814"
+           style="stroke-width:1.06214">Seleccionamos frase</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.1721px;font-family:Amiri;-inkscape-font-specification:Amiri;opacity:0.99;fill:#000000;stroke:none;stroke-width:1.06214"
+         x="32.754139"
+         y="353.88803"
+         id="text857"><tspan
+           sodipodi:role="line"
+           id="tspan855"
+           x="32.754139"
+           y="353.88803"
+           style="stroke-width:1.06214">Nombre_boton_1</tspan></text>
+      <rect
+         style="opacity:0.99;fill:none;stroke:#666666;stroke-width:0.881119"
+         id="rect859"
+         width="140.79646"
+         height="14.92704"
+         x="30.538853"
+         y="341.63336"
+         ry="3.5046554" />
+      <g
+         id="g863"
+         transform="matrix(0.12627151,0,0,0.24112456,-164.34602,246.84169)"
+         style="fill:#000000;stroke:none">
+        <path
+           style="opacity:0.99;fill:#000000;stroke:none;stroke-width:2"
+           d="m 2565.4401,411.378 25.3747,12.69821 25.3746,-12.69821 z"
+           id="path861"
+           sodipodi:nodetypes="cccc" />
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.1721px;font-family:Amiri;-inkscape-font-specification:Amiri;opacity:0.99;fill:#000000;stroke:none;stroke-width:1.06214"
+         x="34.860279"
+         y="317.21838"
+         id="text867"><tspan
+           sodipodi:role="line"
+           id="tspan865"
+           x="34.860279"
+           y="317.21838"
+           style="stroke-width:1.06214">(frase se envia al texfield)</tspan><tspan
+           sodipodi:role="line"
+           x="34.860279"
+           y="332.4335"
+           style="stroke-width:1.06214"
+           id="tspan869">(botón vuelve al inicio</tspan></text>
+    </g>
+  </g>
+</svg>
