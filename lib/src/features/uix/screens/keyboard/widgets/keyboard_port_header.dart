@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/del_all_inkwell.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/del_letter_inkwell.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/del_word_inkwell.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/read_inkwell.dart';
+
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_textfield_icons/del_all_inkwell.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_textfield_icons/del_letter_inkwell.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_textfield_icons/del_word_inkwell.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_textfield_icons/read_inkwell.dart';
 
 class KeyboardPortHeader extends StatelessWidget {
   final TextEditingController controller;
@@ -40,6 +41,7 @@ class KeyboardPortHeader extends StatelessWidget {
                 ),
               ),
             ),
+
             const SizedBox(width: 10),
             IconButton(
               onPressed: () => Navigator.pushNamed(context, '/settings'),
@@ -47,7 +49,6 @@ class KeyboardPortHeader extends StatelessWidget {
             ),
           ],
         ),
-
         Row(
           children: [
             Container(

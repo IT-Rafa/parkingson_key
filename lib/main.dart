@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/core/providers/theme_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_screen.dart';
-import 'package:parkingson_key/src/features/uix/screens/settigns/settings_screen.dart';
+import 'package:parkingson_key/src/features/uix/screens/settings/settings_screen.dart';
 import 'package:parkingson_key/src/features/uix/themes/my_themes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -48,7 +48,7 @@ class MainApp extends ConsumerWidget {
       darkTheme: MyThemes.darkTheme,
       themeMode: themeMode,
 
-      // RUTA PRINCIPAL
+      // RUTA PRINCIPAL,
       home: const KeyboardScreen(),
 
       // Navegación dinámica

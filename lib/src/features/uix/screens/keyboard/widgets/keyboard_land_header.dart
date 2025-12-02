@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/del_all_inkwell.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/del_letter_inkwell.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/del_word_inkwell.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_texfield_icons/read_inkwell.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_textfield_icons/del_all_inkwell.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_textfield_icons/del_letter_inkwell.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_textfield_icons/del_word_inkwell.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/del_textfield_icons/read_inkwell.dart';
 
 class KeyboardLandHeader extends StatelessWidget {
   final TextEditingController controller;
