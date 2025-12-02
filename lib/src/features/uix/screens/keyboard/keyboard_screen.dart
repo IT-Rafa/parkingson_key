@@ -44,38 +44,31 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final layout = ref.watch(keyboardProvider);
+    final orientation = MediaQuery.of(context).orientation;
+    final layout = ref.watch(keyboardProvider(orientation));
 
     return SafeArea(
       child: Scaffold(
-        body: OrientationBuilder(
-          builder: (context, orientation) {
-            final isPortrait = orientation == Orientation.portrait;
-
-            return Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  isPortrait
-                      ? KeyboardPortHeader(
-                          controller: _controller,
-                          focusNode: _focusNode,
-                        )
-                      : KeyboardLandHeader(
-                          controller: _controller,
-                          focusNode: _focusNode,
-                        ),
-                  const SizedBox(height: 20),
-                  Expanded(
-                    child: KeyboardBase(
-                      layout: layout,
-                      onKeyPressed: _insertText,
+        body: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              orientation == Orientation.portrait
+                  ? KeyboardPortHeader(
+                      controller: _controller,
+                      focusNode: _focusNode,
+                    )
+                  : KeyboardLandHeader(
+                      controller: _controller,
+                      focusNode: _focusNode,
                     ),
-                  ),
-                ],
+
+              const SizedBox(height: 10),
+              Expanded(
+                child: KeyboardBase(layout: layout, onKeyPressed: _insertText),
               ),
-            );
-          },
+            ],
+          ),
         ),
       ),
     );
