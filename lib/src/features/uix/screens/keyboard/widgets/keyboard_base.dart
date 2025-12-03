@@ -117,6 +117,16 @@ class KeyboardBase extends StatelessWidget {
                                 onKeyPressed(label);
                               },
                               style: ElevatedButton.styleFrom(
+                                foregroundColor: Colors.black,
+                                backgroundColor: switch (rowsData[r][i].label) {
+                                  'Space' => Colors.green,
+                                  'A' ||
+                                  'E' ||
+                                  'I' ||
+                                  'O' ||
+                                  'U' => Colors.indigo,
+                                  _ => Colors.blue,
+                                },
                                 padding: EdgeInsets.zero,
                                 alignment: Alignment.center,
                                 shape: RoundedRectangleBorder(
@@ -124,9 +134,7 @@ class KeyboardBase extends StatelessWidget {
                                 ),
                               ),
                               child: Text(
-                                rowsData[r][i].label == 'Space'
-                                    ? 'Esp'
-                                    : rowsData[r][i].label,
+                                rowsData[r][i].label,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.center,

@@ -6,10 +6,10 @@
     "KEYBOARD_savePhrase": "Save Phrase",
     "KEYBOARD_sendWhatsApp": "send to WhatsApp",
     "SETTINGS_settings": "Settings",
-    "SETTINGS_language": "Language",
+    "SETTINGS_language": "Language:",
     "SETTINGS_english": "English",
     "SETTINGS_spanish": "Spanish",
-    "SETTINGS_theme": "Theme",
+    "SETTINGS_theme": "Theme:",
     "SETTINGS_light": "Light",
     "SETTINGS_dark": "Dark",
     "SETTINGS_system": "System"

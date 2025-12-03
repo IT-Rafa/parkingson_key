@@ -74,7 +74,7 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                 height: 48,
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 decoration: BoxDecoration(
-                  color: Colors.grey,
+                  color: Colors.black,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
@@ -134,11 +134,11 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Icon(Icons.backspace, color: Colors.red),
+                          Icon(Icons.backspace, color: Colors.green),
                           Text(
                             "KEYBOARD_letter",
                             style: Theme.of(context).textTheme.labelMedium!
-                                .copyWith(color: Colors.red),
+                                .copyWith(color: Colors.green),
                           ).tr(),
                         ],
                       ),

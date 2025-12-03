@@ -16,98 +16,107 @@ class SettingsScreen extends ConsumerWidget {
     final keyboards = ref.watch(keyboardsProvider);
     final selectedId = ref.watch(selectedKeyboardIdProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: const Text("SETTINGS_settings").tr()),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            const Text("SETTINGS_language").tr(),
-            DropdownButton<String>(
-              value: lang,
-              items: [
-                DropdownMenuItem(
-                  value: "en",
-                  child: Text("SETTINGS_english").tr(),
-                ),
-                DropdownMenuItem(
-                  value: "es",
-                  child: Text("SETTINGS_spanish").tr(),
-                ),
-              ],
-              onChanged: (value) {
-                // Actualizar Riverpod (persistencia)
-                ref.read(languageProvider.notifier).setLanguage(value!);
-                // Actualizar EasyLocalization
-                // EasyLocalization tiene su propio estado interno
-
-                context.setLocale(Locale(value));
-              },
-            ),
-            const SizedBox(height: 32),
-            const Text("SETTINGS_theme").tr(),
-
-            DropdownButton<String>(
-              value: theme,
-              items: [
-                DropdownMenuItem(
-                  value: "light",
-                  child: Text("SETTINGS_light").tr(),
-                ),
-                DropdownMenuItem(
-                  value: "dark",
-                  child: Text("SETTINGS_dark").tr(),
-                ),
-                DropdownMenuItem(
-                  value: "system",
-                  child: Text("SETTINGS_system").tr(),
-                ),
-              ],
-              onChanged: (value) {
-                ref.read(themeProvider.notifier).setTheme(value!);
-              },
-            ),
-
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(title: const Text("SETTINGS_settings").tr()),
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
-                  const Text(
-                    "Teclado preferido",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
+                  const Text("SETTINGS_language").tr(),
+                  const SizedBox(width: 20),
+                  DropdownButton<String>(
+                    value: lang,
+                    items: [
+                      DropdownMenuItem(
+                        value: "en",
+                        child: Text("SETTINGS_english").tr(),
+                      ),
+                      DropdownMenuItem(
+                        value: "es",
+                        child: Text("SETTINGS_spanish").tr(),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      // Actualizar Riverpod (persistencia)
+                      ref.read(languageProvider.notifier).setLanguage(value!);
+                      // Actualizar EasyLocalization
+                      // EasyLocalization tiene su propio estado interno
 
-                  const SizedBox(height: 20),
-
-                  DropdownButtonFormField<String>(
-                    initialValue: selectedId ?? keyboards.first.id,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Selecciona teclado",
-                    ),
-                    items: keyboards.map((k) {
-                      return DropdownMenuItem(value: k.id, child: Text(k.name));
-                    }).toList(),
-                    onChanged: (newId) {
-                      if (newId != null) {
-                        ref
-                            .read(selectedKeyboardIdProvider.notifier)
-                            .setKeyboard(newId);
-                      }
+                      context.setLocale(Locale(value));
                     },
-                  ),
-
-                  const SizedBox(height: 30),
-
-                  const Text(
-                    "La app elegirá automáticamente la versión portrait/landscape según la orientación.",
-                    style: TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                 ],
               ),
-            ),
-          ],
+
+              const SizedBox(height: 15),
+              Row(
+                children: [
+                  const Text("SETTINGS_theme").tr(),
+                  const SizedBox(width: 20),
+                  DropdownButton<String>(
+                    value: theme,
+                    items: [
+                      DropdownMenuItem(
+                        value: "light",
+                        child: Text("SETTINGS_light").tr(),
+                      ),
+                      DropdownMenuItem(
+                        value: "dark",
+                        child: Text("SETTINGS_dark").tr(),
+                      ),
+                      DropdownMenuItem(
+                        value: "system",
+                        child: Text("SETTINGS_system").tr(),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      ref.read(themeProvider.notifier).setTheme(value!);
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 15),
+
+              const Text("Selecciona teclado:"),
+
+              Container(
+                margin: const EdgeInsets.only(left: 8),
+                child: 
+                  DropdownButtonFormField<String>(
+                    isExpanded: true, // 🔥 oculta overflow y usa todo el ancho
+                    decoration: const InputDecoration(
+                      border: InputBorder.none, // ❌ sin subrayado
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      contentPadding: EdgeInsets.zero,
+                    ), // 🔥 hace que el dropdown use todo el ancho disponible
+                    initialValue: selectedId ?? keyboards.first.id,
+                    items: keyboards
+                        .map(
+                          (k) => DropdownMenuItem(
+                            value: k.id,
+                            child: Flexible(
+                              // 👈 permite varias líneas
+                              child: Text(
+                                k.name,
+                                maxLines: 2,
+                                softWrap: true,
+                                overflow: TextOverflow.visible,
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) {},
+                  ),
+                
+              ),
+            ],
+          ),
         ),
       ),
     );

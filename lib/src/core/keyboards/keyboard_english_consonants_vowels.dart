@@ -1,9 +1,9 @@
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/key_item.dart';
 import 'package:parkingson_key/src/models/keyboard_layout_model.dart';
 
-final keyboardSpanishConsonantsVowels = KeyboardLayoutModel(
-  id: 'spanishConsonantsVowels',
-  name: 'Teclado Español de Consonantes y Vocales',
+final keyboardEnglishConsonantsVowels = KeyboardLayoutModel(
+  id: 'englishConsonantsVowels',
+  name: 'English keyboard of Consonants and Vowels',
   portrait: [
     [
       KeyItem('B', 1),
@@ -17,15 +17,15 @@ final keyboardSpanishConsonantsVowels = KeyboardLayoutModel(
       KeyItem('J', 1),
       KeyItem('K', 1),
       KeyItem('L', 1),
-      KeyItem('LL', 1),
+      KeyItem('LL', 2),
     ],
 
-    [KeyItem('M', 1), KeyItem('N', 1), KeyItem('Ñ', 1), KeyItem('P', 1)],
+    [KeyItem('M', 1), KeyItem('N', 1), KeyItem('P', 1)],
     [
       KeyItem('Q', 1),
-      KeyItem('QU', 1),
+      KeyItem('QU', 2),
       KeyItem('R', 1),
-      KeyItem('RR', 1),
+      KeyItem('RR', 2),
       KeyItem('S', 1),
       KeyItem('T', 1),
     ],
@@ -59,19 +59,20 @@ final keyboardSpanishConsonantsVowels = KeyboardLayoutModel(
 
     [
       KeyItem('L', 1),
-      KeyItem('LL', 1),
+      KeyItem('LL', 2),
       KeyItem('M', 1),
       KeyItem('N', 1),
-      KeyItem('Ñ', 1),
       KeyItem('P', 1),
-            KeyItem('Q', 1),
-      KeyItem('QU', 1),
+    ],
+
+    [
+      KeyItem('Q', 1),
+      KeyItem('QU', 2),
+      KeyItem('R', 1),
+      KeyItem('RR', 2),
+      KeyItem('S', 1),
     ],
     [
-
-      KeyItem('R', 1),
-      KeyItem('RR', 1),
-      KeyItem('S', 1),
       KeyItem('T', 1),
       KeyItem('V', 1),
       KeyItem('W', 1),
