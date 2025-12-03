@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parkingson_key/src/core/providers/keyboards_provider.dart';
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
+import 'package:parkingson_key/src/core/providers/selected_keyboard_id_provider.dart';
 import 'package:parkingson_key/src/core/providers/theme_provider.dart';
 
 class SettingsScreen extends ConsumerWidget {
@@ -11,6 +13,8 @@ class SettingsScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final lang = ref.watch(languageProvider);
     final theme = ref.watch(themeProvider);
+    final keyboards = ref.watch(keyboardsProvider);
+    final selectedId = ref.watch(selectedKeyboardIdProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text("SETTINGS_settings").tr()),
@@ -62,6 +66,46 @@ class SettingsScreen extends ConsumerWidget {
               onChanged: (value) {
                 ref.read(themeProvider.notifier).setTheme(value!);
               },
+            ),
+
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Teclado preferido",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  DropdownButtonFormField<String>(
+                    initialValue: selectedId ?? keyboards.first.id,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Selecciona teclado",
+                    ),
+                    items: keyboards.map((k) {
+                      return DropdownMenuItem(value: k.id, child: Text(k.name));
+                    }).toList(),
+                    onChanged: (newId) {
+                      if (newId != null) {
+                        ref
+                            .read(selectedKeyboardIdProvider.notifier)
+                            .setKeyboard(newId);
+                      }
+                    },
+                  ),
+
+                  const SizedBox(height: 30),
+
+                  const Text(
+                    "La app elegirá automáticamente la versión portrait/landscape según la orientación.",
+                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
