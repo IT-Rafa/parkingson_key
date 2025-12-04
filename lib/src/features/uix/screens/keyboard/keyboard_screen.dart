@@ -5,6 +5,7 @@ import 'package:parkingson_key/src/core/providers/keyboard_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_base.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_land_header.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_port_header.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/symbols_dropdown.dart';
 
 class KeyboardScreen extends ConsumerStatefulWidget {
   const KeyboardScreen({super.key});
@@ -122,27 +123,12 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                         ],
                       ),
                     ),
-                    InkWell(
-                      onTap: () {
-                        if (_controller.text.isNotEmpty) {
-                          _controller.text = _controller.text.substring(
-                            0,
-                            _controller.text.length - 1,
-                          );
-                        }
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(Icons.backspace, color: Colors.green),
-                          Text(
-                            "KEYBOARD_letter",
-                            style: Theme.of(context).textTheme.labelMedium!
-                                .copyWith(color: Colors.green),
-                          ).tr(),
-                        ],
-                      ),
-                    ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: SymbolsDropdown(
+                onSymbolSelected: _insertText,
+              ),
+            ),
                   ],
                 ),
               ),

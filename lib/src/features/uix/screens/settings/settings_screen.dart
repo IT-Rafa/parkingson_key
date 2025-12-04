@@ -5,16 +5,17 @@ import 'package:parkingson_key/src/core/providers/keyboards_provider.dart';
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/core/providers/selected_keyboard_id_provider.dart';
 import 'package:parkingson_key/src/core/providers/theme_provider.dart';
+import 'package:parkingson_key/src/models/keyboard_layout_model.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final lang = ref.watch(languageProvider);
-    final theme = ref.watch(themeProvider);
-    final keyboards = ref.watch(keyboardsProvider);
-    final selectedId = ref.watch(selectedKeyboardIdProvider);
+    final String lang = ref.watch(languageProvider);
+    final String theme = ref.watch(themeProvider);
+    final List<KeyboardLayoutModel> keyboards = ref.watch(keyboardsProvider);
+    final String? selectedId = ref.watch(selectedKeyboardIdProvider);
 
     return SafeArea(
       child: Scaffold(
@@ -80,40 +81,53 @@ class SettingsScreen extends ConsumerWidget {
                 ],
               ),
               const SizedBox(height: 15),
+              Row(
+                children: [
+                  const Text("SETTINGS_theme").tr(),
+                  const SizedBox(width: 20),
+                  DropdownButton<String>(
+                    value: theme,
+                    items: [
+                      DropdownMenuItem(
+                        value: "light",
+                        child: Text("SETTINGS_light").tr(),
+                      ),
+                      DropdownMenuItem(
+                        value: "dark",
+                        child: Text("SETTINGS_dark").tr(),
+                      ),
+                      DropdownMenuItem(
+                        value: "system",
+                        child: Text("SETTINGS_system").tr(),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      ref.read(themeProvider.notifier).setTheme(value!);
+                    },
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 15),
 
               const Text("Selecciona teclado:"),
 
               Container(
                 margin: const EdgeInsets.only(left: 8),
-                child: 
-                  DropdownButtonFormField<String>(
-                    isExpanded: true, // 🔥 oculta overflow y usa todo el ancho
-                    decoration: const InputDecoration(
-                      border: InputBorder.none, // ❌ sin subrayado
-                      enabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      contentPadding: EdgeInsets.zero,
-                    ), // 🔥 hace que el dropdown use todo el ancho disponible
-                    initialValue: selectedId ?? keyboards.first.id,
-                    items: keyboards
-                        .map(
-                          (k) => DropdownMenuItem(
-                            value: k.id,
-                            child: Flexible(
-                              // 👈 permite varias líneas
-                              child: Text(
-                                k.name,
-                                maxLines: 2,
-                                softWrap: true,
-                                overflow: TextOverflow.visible,
-                              ),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (value) {},
-                  ),
-                
+                child: DropdownButton<String>(
+                  value: selectedId,
+                  items: keyboards.map((keyboard) {
+                    return DropdownMenuItem(
+                      value: keyboard.id,
+                      child: Text(keyboard.name),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    ref
+                        .read(selectedKeyboardIdProvider.notifier)
+                        .setKeyboard(value!);
+                  },
+                ),
               ),
             ],
           ),
