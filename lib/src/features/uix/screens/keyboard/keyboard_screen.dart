@@ -1,10 +1,11 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_base.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_land_header.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_port_header.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/numbers_dropdown.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/phrases_dropdown.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/symbols_dropdown.dart';
 
 class KeyboardScreen extends ConsumerStatefulWidget {
@@ -48,88 +49,70 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
     final layout = ref.watch(keyboardProvider(orientation));
-
+    
     return SafeArea(
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              orientation == Orientation.portrait
-                  ? KeyboardPortHeader(
-                      controller: _controller,
-                      focusNode: _focusNode,
-                    )
-                  : KeyboardLandHeader(
-                      controller: _controller,
-                      focusNode: _focusNode,
-                    ),
+              // ------ HEADER (portrait/landscape) ------
+              if (orientation == Orientation.portrait)
+                KeyboardPortHeader(
+                  controller: _controller,
+                  focusNode: _focusNode,
+                )
+              else
+                KeyboardLandHeader(
+                  controller: _controller,
+                  focusNode: _focusNode,
+                ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
+
+              // --------- TECLADO PRINCIPAL ----------
               Expanded(
                 child: KeyboardBase(layout: layout, onKeyPressed: _insertText),
               ),
-              const SizedBox(height: 20),
 
-              Container(
-                height: 48,
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  borderRadius: BorderRadius.circular(8),
+              const SizedBox(height: 10),
+
+              // ----------- BLOQUE DE DROPDOWNS -----------
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        if (_controller.text.isNotEmpty) {
-                          _controller.text = _controller.text.substring(
-                            0,
-                            _controller.text.length - 1,
-                          );
-                        }
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(Icons.backspace, color: Colors.red),
-                          Text(
-                            "KEYBOARD_letter",
-                            style: Theme.of(context).textTheme.labelMedium!
-                                .copyWith(color: Colors.red),
-                          ).tr(),
-                        ],
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 10,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: NumbersDropdown(
+                          onSelected: _insertText,
+                        ),
                       ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        if (_controller.text.isNotEmpty) {
-                          _controller.text = _controller.text.substring(
-                            0,
-                            _controller.text.length - 1,
-                          );
-                        }
-                      },
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Icon(Icons.backspace, color: Colors.red),
-                          Text(
-                            "KEYBOARD_letter",
-                            style: Theme.of(context).textTheme.labelMedium!
-                                .copyWith(color: Colors.red),
-                          ).tr(),
-                        ],
+                      Expanded(
+                        child: SymbolsDropdown(
+                          onSelected: _insertText,
+                        ),
                       ),
-                    ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: SymbolsDropdown(
-                onSymbolSelected: _insertText,
-              ),
-            ),
-                  ],
+                      Expanded(
+                        child: PhrasesDropdown(
+                          phrases: const [
+                            "¿En qué puedo ayudarte?",
+                            "Voy hacia allí",
+                            "Gracias",
+                          ],
+                          onSelected: _insertText,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

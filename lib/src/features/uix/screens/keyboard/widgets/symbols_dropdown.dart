@@ -1,39 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/base_dropdown_box.dart';
 
 class SymbolsDropdown extends StatelessWidget {
-  final void Function(String symbol) onSymbolSelected;
+  final ValueChanged<String> onSelected;
 
-  const SymbolsDropdown({
-    super.key,
-    required this.onSymbolSelected,
-  });
-
-  static const symbols = [
-    '.', ',', ';', ':', '!', '?', '…', '"', "'", '-', '_',
-  ];
+  const SymbolsDropdown({super.key, required this.onSelected});
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField<String>(
-      isExpanded: true,
-      decoration: const InputDecoration(
-        border: InputBorder.none,
-        enabledBorder: InputBorder.none,
-        focusedBorder: InputBorder.none,
-      ),
-      hint: const Text("Selecciona símbolo"),
-      items: symbols.map(
-        (s) => DropdownMenuItem(
-          value: s,
-          child: Text(
-            s,
-            style: const TextStyle(fontSize: 22),
-          ),
-        ),
-      ).toList(),
-      onChanged: (value) {
-        if (value != null) onSymbolSelected(value); // 👈 mágicamente insertado
-      },
+    final orientation = MediaQuery.of(context).orientation;
+
+    const symbols = [
+      ".",
+      ",",
+      ":",
+      ";",
+      "?",
+      "!",
+      "-",
+      "_",
+      "@",
+      "#",
+      "%",
+      "&",
+      "/",
+      "+",
+      "*",
+    ];
+
+    return BaseDropdownBox(
+      title: "Symbols",
+      items: symbols
+          .map(
+            (s) => DropdownMenuItem(
+              value: s,
+              child: Text(s, style: const TextStyle(fontSize: 18)),
+            ),
+          )
+          .toList(),
+      onSelected: onSelected,
+      orientation: orientation,
     );
   }
 }

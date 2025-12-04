@@ -17,13 +17,13 @@ class KeyboardLandHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      spacing: 10,
+      spacing: 5,
       children: [
         Row(
           children: [
             Expanded(
               child: SizedBox(
-                height: 48,
+                height: 40,
                 child: TextField(
                   controller: controller,
                   focusNode: focusNode,
@@ -33,7 +33,7 @@ class KeyboardLandHeader extends StatelessWidget {
                   decoration: const InputDecoration(
                     contentPadding: EdgeInsets.symmetric(
                       vertical: 8,
-                      horizontal: 12,
+                      horizontal: 8,
                     ),
                     border: OutlineInputBorder(),
                   ),
@@ -43,7 +43,7 @@ class KeyboardLandHeader extends StatelessWidget {
             const SizedBox(width: 10),
 
             Container(
-              height: 48,
+              height: 40,
               padding: const EdgeInsets.symmetric(horizontal: 15),
               decoration: BoxDecoration(
                 color: Colors.grey,
@@ -53,14 +53,14 @@ class KeyboardLandHeader extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             Container(
-              height: 48,
+              height: 40,
               padding: const EdgeInsets.symmetric(horizontal: 15),
               decoration: BoxDecoration(
                 color: Colors.grey,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
-                spacing: 20,
+                spacing: 10,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   DelLetterInkWell(controller: controller),
