@@ -42,7 +42,13 @@ final keyboardSpanishConsonantsVowels = KeyboardLayoutModel(
       KeyItem('I', 1),
       KeyItem('O', 1),
       KeyItem('U', 1),
-      KeyItem('Space', 2),
+      KeyItem('ESPACIO', 2),
+    ],
+    
+    [
+
+      KeyItem('SÍ', 2),
+      KeyItem('NO', 2),
     ],
   ],
   landscape: [
@@ -64,11 +70,10 @@ final keyboardSpanishConsonantsVowels = KeyboardLayoutModel(
       KeyItem('N', 1),
       KeyItem('Ñ', 1),
       KeyItem('P', 1),
-            KeyItem('Q', 1),
+      KeyItem('Q', 1),
       KeyItem('QU', 1),
     ],
     [
-
       KeyItem('R', 1),
       KeyItem('RR', 1),
       KeyItem('S', 1),
@@ -85,7 +90,13 @@ final keyboardSpanishConsonantsVowels = KeyboardLayoutModel(
       KeyItem('I', 1),
       KeyItem('O', 1),
       KeyItem('U', 1),
-      KeyItem('Space', 2),
+      KeyItem('ESPACIO', 2),
+    ],
+    
+    [
+
+      KeyItem('SÍ', 2),
+      KeyItem('NO', 2),
     ],
   ],
 );

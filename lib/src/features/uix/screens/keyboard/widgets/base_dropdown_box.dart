@@ -20,10 +20,11 @@ class BaseDropdownBox extends StatelessWidget {
     final double verticalPadding = orientation == Orientation.portrait ? 4 : 2;
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: verticalPadding, horizontal: 6),
+      padding: EdgeInsets.symmetric(vertical: verticalPadding, horizontal: 6,),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.shade400),
+        border: Border.all(color: Colors.white),
+        color: Colors.grey.shade200,
       ),
       child: DropdownButtonHideUnderline(
         child: DropdownButton<String>(
@@ -32,8 +33,9 @@ class BaseDropdownBox extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(fontSize: 14),
           ),
+          isDense: true,
           isExpanded: true,
-          icon: const Icon(Icons.arrow_drop_down, size: 20),
+          icon: const Icon(Icons.arrow_drop_down, size: 18),
           value: null, // ❌ Siempre null para mostrar solo título
           items: items,
           onChanged: (value) {

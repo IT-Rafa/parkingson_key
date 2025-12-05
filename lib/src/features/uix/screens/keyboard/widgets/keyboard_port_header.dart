@@ -24,7 +24,7 @@ class KeyboardPortHeader extends StatelessWidget {
           children: [
             Expanded(
               child: SizedBox(
-                height: 40,
+                height: 45,
                 child: TextField(
                   controller: controller,
                   focusNode: focusNode,
@@ -41,7 +41,11 @@ class KeyboardPortHeader extends StatelessWidget {
                 ),
               ),
             ),
-
+            const SizedBox(width: 10),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.add_comment_outlined, size: 40),
+            ),
             const SizedBox(width: 10),
             IconButton(
               onPressed: () => Navigator.pushNamed(context, '/settings'),
@@ -52,7 +56,7 @@ class KeyboardPortHeader extends StatelessWidget {
         Row(
           children: [
             Container(
-              height: 40,
+              height: 45,
               padding: const EdgeInsets.symmetric(horizontal: 15),
               decoration: BoxDecoration(
                 color: Colors.grey,
@@ -62,7 +66,7 @@ class KeyboardPortHeader extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             Container(
-              height: 40,
+              height: 45,
               padding: const EdgeInsets.symmetric(horizontal: 15),
               decoration: BoxDecoration(
                 color: Colors.grey,

@@ -63,8 +63,8 @@ class KeyboardBase extends StatelessWidget {
               double.infinity,
             );
 
-            const double innerHorizontalMargin = 6.0;
-            const double innerVerticalMargin = 4.0;
+            const double innerHorizontalMargin = 1.0;
+            const double innerVerticalMargin = 1.0;
 
             final double usableWidth = (buttonWidth - innerHorizontalMargin * 2)
                 .clamp(1.0, double.infinity);
@@ -119,12 +119,13 @@ class KeyboardBase extends StatelessWidget {
                               style: ElevatedButton.styleFrom(
                                 foregroundColor: Colors.black,
                                 backgroundColor: switch (rowsData[r][i].label) {
-                                  'Space' => Colors.green,
+                                  'ESPACIO' || 'SPACE' => Colors.green,
+                                  'YES' || 'SÍ' || 'NO' => Colors.red,
                                   'A' ||
                                   'E' ||
                                   'I' ||
                                   'O' ||
-                                  'U' => Colors.indigo,
+                                  'U' => Colors.indigo.shade300,
                                   _ => Colors.blue,
                                 },
                                 padding: EdgeInsets.zero,
@@ -134,11 +135,11 @@ class KeyboardBase extends StatelessWidget {
                                 ),
                               ),
                               child: Text(
-                                rowsData[r][i].label,
+                                rowsData[r][i].label.toUpperCase(),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: globalMinFontSize),
+                                style: TextStyle(fontSize: globalMinFontSize, fontWeight: FontWeight.bold,),
                               ),
                             ),
                           ),

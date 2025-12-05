@@ -23,7 +23,7 @@ class KeyboardLandHeader extends StatelessWidget {
           children: [
             Expanded(
               child: SizedBox(
-                height: 40,
+                height: 45,
                 child: TextField(
                   controller: controller,
                   focusNode: focusNode,
@@ -41,9 +41,15 @@ class KeyboardLandHeader extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 10),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.bookmark_add, size: 40),
+            ),
+
+            const SizedBox(width: 10),
 
             Container(
-              height: 40,
+              height: 45,
               padding: const EdgeInsets.symmetric(horizontal: 15),
               decoration: BoxDecoration(
                 color: Colors.grey,
@@ -53,7 +59,7 @@ class KeyboardLandHeader extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             Container(
-              height: 40,
+              height: 45,
               padding: const EdgeInsets.symmetric(horizontal: 15),
               decoration: BoxDecoration(
                 color: Colors.grey,

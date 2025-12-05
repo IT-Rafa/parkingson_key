@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/base_dropdown_box.dart';
 
@@ -29,7 +30,7 @@ class SymbolsDropdown extends StatelessWidget {
     ];
 
     return BaseDropdownBox(
-      title: "Symbols",
+      title: "KEYBOARD_symbols".tr(),
       items: symbols
           .map(
             (s) => DropdownMenuItem(

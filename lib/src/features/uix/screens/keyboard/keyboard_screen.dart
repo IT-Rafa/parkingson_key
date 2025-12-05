@@ -49,11 +49,11 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
     final layout = ref.watch(keyboardProvider(orientation));
-    
+
     return SafeArea(
       child: Scaffold(
         body: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(10),
           child: Column(
             children: [
               // ------ HEADER (portrait/landscape) ------
@@ -68,39 +68,30 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                   focusNode: _focusNode,
                 ),
 
-              const SizedBox(height: 10),
 
               // --------- TECLADO PRINCIPAL ----------
               Expanded(
                 child: KeyboardBase(layout: layout, onKeyPressed: _insertText),
               ),
 
-              const SizedBox(height: 10),
-
               // ----------- BLOQUE DE DROPDOWNS -----------
               Card(
+                color: Colors.indigo.shade300,
                 elevation: 4,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                    vertical: 10,
-                    horizontal: 10,
+                    vertical: 8,
+                    horizontal: 8,
                   ),
                   child: Row(
+                    spacing: 10,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        child: NumbersDropdown(
-                          onSelected: _insertText,
-                        ),
-                      ),
-                      Expanded(
-                        child: SymbolsDropdown(
-                          onSelected: _insertText,
-                        ),
-                      ),
+                      Expanded(child: NumbersDropdown(onSelected: _insertText)),
+                      Expanded(child: SymbolsDropdown(onSelected: _insertText)),
                       Expanded(
                         child: PhrasesDropdown(
                           phrases: const [
