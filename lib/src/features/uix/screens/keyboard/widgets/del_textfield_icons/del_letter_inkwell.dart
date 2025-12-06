@@ -21,13 +21,12 @@ class DelLetterInkWell extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Icon(Icons.backspace, color: Colors.red),
+          Icon(Icons.backspace, color: Colors.red, size: 18,),
           Text(
             "KEYBOARD_letter",
             style: Theme.of(
               context,
-            ).textTheme.labelMedium!.copyWith(color: Colors.red),
-          ).tr(),
+            ).textTheme.labelMedium!.copyWith(color: Colors.black),          ).tr(),
         ],
       ),
     );

@@ -18,12 +18,12 @@ class DelWordInkWell extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Icon(Icons.backspace, color: Colors.blue),
+          Icon(Icons.backspace, color: Colors.blue, size: 18,),
           Text(
             "KEYBOARD_word",
-            style: Theme.of(context).textTheme.labelMedium!
-                .copyWith(color: Colors.blue),
-          ).tr(),
+            style: Theme.of(
+              context,
+            ).textTheme.labelMedium!.copyWith(color: Colors.black),          ).tr(),
         ],
       ),
     );

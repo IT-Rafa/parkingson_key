@@ -52,62 +52,67 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
 
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              // ------ HEADER (portrait/landscape) ------
-              if (orientation == Orientation.portrait)
-                KeyboardPortHeader(
-                  controller: _controller,
-                  focusNode: _focusNode,
-                )
-              else
-                KeyboardLandHeader(
-                  controller: _controller,
-                  focusNode: _focusNode,
-                ),
-
-
-              // --------- TECLADO PRINCIPAL ----------
-              Expanded(
-                child: KeyboardBase(layout: layout, onKeyPressed: _insertText),
+        body: Column(
+          children: [
+            // ------ HEADER (portrait/landscape) ------
+            if (orientation == Orientation.portrait)
+              KeyboardPortHeader(
+                controller: _controller,
+                focusNode: _focusNode,
+              )
+            else
+              KeyboardLandHeader(
+                controller: _controller,
+                focusNode: _focusNode,
               ),
-
-              // ----------- BLOQUE DE DROPDOWNS -----------
-              Card(
-                color: Colors.indigo.shade300,
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 8,
+        
+            // --------- TECLADO PRINCIPAL ----------
+        
+               Expanded(
+        
+                child: Card(
+                  color: Colors.grey ,
+                  child: KeyboardBase(
+                    layout: layout,
+                    onKeyPressed: _insertText,
                   ),
-                  child: Row(
-                    spacing: 10,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(child: NumbersDropdown(onSelected: _insertText)),
-                      Expanded(child: SymbolsDropdown(onSelected: _insertText)),
-                      Expanded(
-                        child: PhrasesDropdown(
-                          phrases: const [
-                            "¿En qué puedo ayudarte?",
-                            "Voy hacia allí",
-                            "Gracias",
-                          ],
-                          onSelected: _insertText,
-                        ),
+                ),
+              ),
+            
+        
+            // ----------- BLOQUE DE DROPDOWNS -----------
+            Card(
+              color: Colors.indigo.shade300,
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8,
+                  horizontal: 8,
+                ),
+                child: Row(
+                  spacing: 10,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(child: NumbersDropdown(onSelected: _insertText)),
+                    Expanded(child: SymbolsDropdown(onSelected: _insertText)),
+                    Expanded(
+                      child: PhrasesDropdown(
+                        phrases: const [
+                          "¿En qué puedo ayudarte?",
+                          "Voy hacia allí",
+                          "Gracias",
+                        ],
+                        onSelected: _insertText,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
