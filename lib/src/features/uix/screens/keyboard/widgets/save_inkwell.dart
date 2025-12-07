@@ -8,7 +8,7 @@ class SaveInkwell extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {},
-      child: Column(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           //Icon(Icons.volume_up, color: Colors.green, size: 18),
