@@ -12,7 +12,7 @@ class KeyboardBase extends StatelessWidget {
     super.key,
     required this.layout,
     required this.onKeyPressed,
-    this.spacing = 10,
+    this.spacing = 5,
   });
 
   @override
@@ -139,7 +139,11 @@ class KeyboardBase extends StatelessWidget {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(fontSize: globalMinFontSize, fontWeight: FontWeight.bold,),
+                                textHeightBehavior: const TextHeightBehavior(
+                                  applyHeightToFirstAscent: false,
+                                  applyHeightToLastDescent: false,
+                                ),
+                                style: TextStyle(fontSize: globalMinFontSize+13, fontWeight: FontWeight.bold,),
                               ),
                             ),
                           ),
