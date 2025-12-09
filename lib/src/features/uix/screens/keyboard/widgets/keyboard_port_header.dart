@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/settings_menu.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/write_text_field.dart';
 
 class KeyboardPortHeader extends StatefulWidget {
   final TextEditingController controller;
@@ -21,80 +23,93 @@ class _KeyboardPortHeaderState extends State<KeyboardPortHeader> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // ---------------- TEXTFIELD + CONFIG ----------------
+        // Row with TextField + Menu Icon
         Row(
           children: [
+            // TextField
             Expanded(
               child: SizedBox(
                 height: 45,
-                child: TextField(
-                  controller: widget.controller,
-                  focusNode: widget.focusNode,
-                  readOnly: true,
-                  showCursor: true,
-                  decoration: const InputDecoration(
-                    suffixIcon: Icon(Icons.volume_up),
-                    border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 8),
-                  ),
-                ),
+                child: WriteTextField(widget: widget),
               ),
             ),
-            IconButton(
-              icon: const Icon(Icons.menu, size: 40),
-              onPressed: () => Navigator.pushNamed(context, '/settings'),
-            ),
+            // Menu Icon
+            SettingsMenu(),
           ],
         ),
 
-        const SizedBox(height: 10),
-
-        // ---------------- SELECTOR VERTICAL + BOTONES ----------------
-        Row(
+        // Grupo Selector botones + botones
+        // Selector + divisor
+        Container(
+  padding: const EdgeInsets.all(8),
+  margin: const EdgeInsets.symmetric(horizontal: 5),
+  decoration: BoxDecoration(
+    borderRadius: BorderRadius.circular(10),
+    color: Colors.orange,
+  ),
+  child: Row(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      // ---------------- SELECTOR + DIVISOR ----------------
+      Container(
+        padding: const EdgeInsets.all(4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.green,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            // SELECTOR PEQUEÑO VERTICAL
-            Column(
-              children: [
-                // Borrar
-                SizedBox(
-                  width: 100,
-                  height: 40,
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: selectedMode == 0
-                          ? Colors.blue.shade100
-                          : Colors.grey.shade200,
-                      padding: EdgeInsets.zero,
-                    ),
-                    onPressed: () => setState(() => selectedMode = 0),
-                    child: const Text("Borrar", style: TextStyle(fontSize: 15)),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                // Acción
-                SizedBox(
-                  width: 100,
-                  height: 40,
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                      backgroundColor: selectedMode == 1
-                          ? Colors.blue.shade100
-                          : Colors.grey.shade200,
-                      padding: EdgeInsets.zero,
-                    ),
-                    onPressed: () => setState(() => selectedMode = 1),
-                    child: const Text("Acción", style: TextStyle(fontSize: 15)),
-                  ),
-                ),
+            ToggleButtons(
+              borderRadius: BorderRadius.circular(6),
+              constraints: const BoxConstraints(
+                minHeight: 30,
+                minWidth: 55,
+              ),
+              textStyle: const TextStyle(fontSize: 12),
+              isSelected: [
+                selectedMode == 0,
+                selectedMode == 1,
+              ],
+              onPressed: (index) {
+                setState(() => selectedMode = index);
+              },
+              children: const [
+                Text("Borrar"),
+                Text("Acción"),
               ],
             ),
 
-            Wrap(
-              alignment: WrapAlignment.center,
-              children: selectedMode == 0 ? _deleteButtons() : _actionButtons(),
+            // divisor entre selector y botones
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8),
+              width: 2,
+              height: 35,
+              color: Colors.black26,
             ),
           ],
         ),
+      ),
+
+      const SizedBox(width: 10),
+
+      // ---------------- BOTONES A LA DERECHA ----------------
+      Expanded(
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Wrap(
+            spacing: 12,            // separación entre los botones
+            runSpacing: 8,          // por si algún día saltan a otra linea
+            children: selectedMode == 0
+                ? _deleteButtons()
+                : _actionButtons(),
+          ),
+        ),
+      ),
+    ],
+  ),
+)
+
       ],
     );
   }
@@ -121,157 +136,20 @@ class _KeyboardPortHeaderState extends State<KeyboardPortHeader> {
       borderRadius: BorderRadius.circular(10),
       onTap: () {},
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 4),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.grey.shade200,
+          color: Colors.limeAccent,
         ),
-        width: 80,
+        width: 60,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 20),
-            const SizedBox(height: 3),
+            Icon(icon, size: 18),
             Text(
               label,
-              style: const TextStyle(fontSize: 11),
+              style: const TextStyle(fontSize: 12),
               textAlign: TextAlign.center,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ActionSelector extends StatefulWidget {
-  final VoidCallback onDeleteLetter;
-  final VoidCallback onDeleteWord;
-  final VoidCallback onDeleteAll;
-
-  final VoidCallback onSave;
-  final VoidCallback onSend;
-
-  const ActionSelector({
-    super.key,
-    required this.onDeleteLetter,
-    required this.onDeleteWord,
-    required this.onDeleteAll,
-    required this.onSave,
-    required this.onSend,
-  });
-
-  @override
-  State<ActionSelector> createState() => _ActionSelectorState();
-}
-
-class _ActionSelectorState extends State<ActionSelector> {
-  int selected = 0; // 0 = borrar, 1 = acción
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // SELECTOR VERTICAL CENTRADO
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Column(
-              children: [
-                _buildSelectorButton("Borrar", Icons.backspace, 0),
-                const SizedBox(height: 10),
-                _buildSelectorButton("Acción", Icons.settings, 1),
-              ],
-            ),
-          ],
-        ),
-
-        const SizedBox(height: 20),
-
-        // BOTONES A LA DERECHA — CENTRADOS
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: selected == 0 ? _buttonsDelete() : _buttonsAction(),
-        ),
-      ],
-    );
-  }
-
-  // -------------------------
-  // SELECTOR BUTTON (Título + icono)
-  // -------------------------
-  Widget _buildSelectorButton(String text, IconData icon, int index) {
-    final bool isSelected = selected == index;
-
-    return GestureDetector(
-      onTap: () => setState(() => selected = index),
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.blue.shade100 : Colors.grey.shade200,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: isSelected ? Colors.blue : Colors.grey.shade400,
-          ),
-        ),
-        child: Column(
-          children: [
-            Icon(icon, size: 26),
-            const SizedBox(height: 4),
-            Text(text, style: const TextStyle(fontSize: 12)),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // ----------------------------------
-  //    BOTONES DE BORRAR
-  // ----------------------------------
-  List<Widget> _buttonsDelete() {
-    return [
-      _bigButton(Icons.keyboard_backspace, "Letra", widget.onDeleteLetter),
-      const SizedBox(width: 14),
-      _bigButton(Icons.subdirectory_arrow_left, "Palabra", widget.onDeleteWord),
-      const SizedBox(width: 14),
-      _bigButton(Icons.delete_forever, "Todo", widget.onDeleteAll),
-    ];
-  }
-
-  // ----------------------------------
-  //    BOTONES DE ACCIÓN
-  // ----------------------------------
-  List<Widget> _buttonsAction() {
-    return [
-      _bigButton(Icons.save, "Guardar", widget.onSave),
-      const SizedBox(width: 14),
-      _bigButton(Icons.send, "Enviar", widget.onSend),
-    ];
-  }
-
-  // ----------------------------------
-  // BOTÓN GRANDE (Icono + Texto debajo)
-  // ----------------------------------
-  Widget _bigButton(IconData icon, String label, VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: SizedBox(
-        width: 85, // 👈 ANCHO FIJO PARA QUE NO SE PARTA EL TEXTO
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade300,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Icon(icon, size: 32),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              label,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 13),
             ),
           ],
         ),
