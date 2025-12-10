@@ -143,7 +143,7 @@ class KeyboardBase extends StatelessWidget {
                                   applyHeightToFirstAscent: false,
                                   applyHeightToLastDescent: false,
                                 ),
-                                style: TextStyle(fontSize: globalMinFontSize+13, fontWeight: FontWeight.bold,),
+                                style: TextStyle(fontSize: globalMinFontSize+10, fontWeight: FontWeight.bold,),
                               ),
                             ),
                           ),

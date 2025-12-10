@@ -22,7 +22,7 @@ class PhrasesDropdown extends StatelessWidget {
           .map(
             (p) => DropdownMenuItem(
               value: p,
-              child: Text(p, maxLines: 2, overflow: TextOverflow.ellipsis),
+              child: Text(p, maxLines: 2, overflow: TextOverflow.visible),
             ),
           )
           .toList(),

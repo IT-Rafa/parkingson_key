@@ -30,7 +30,7 @@ class BaseDropdownBox extends StatelessWidget {
         child: DropdownButton<String>(
           hint: Text(
             title,
-            overflow: TextOverflow.ellipsis,
+            overflow: TextOverflow.visible,
             style: const TextStyle(fontSize: 14),
           ),
           isDense: true,
