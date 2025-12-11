@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/settings_menu.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/write_text_field.dart';
 
 class KeyboardPortHeader extends StatefulWidget {
@@ -21,26 +20,69 @@ class _KeyboardPortHeaderState extends State<KeyboardPortHeader> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Row with TextField + Menu Icon
-        Row(
-          children: [
-            // TextField
-            Expanded(
-              child: SizedBox(
-                height: 45,
-                child: WriteTextField(widget: widget),
-              ),
+        // Preparamos el espacio para el TextField
+        Expanded(
+          // -- Columna con el TextField y los iconos de borrar
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: BorderRadius.circular(8),
             ),
-            // Menu Icon
-            SettingsMenu(),
-          ],
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // -- TextField
+                SizedBox(height: 45, child: WriteTextField(widget: widget)),
+                // -- Iconos de borrar
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    // -- Icono Borrado Caracter
+                    SizedBox(
+                      width: 32,
+                      height: 32,
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        iconSize: 20,
+                        onPressed: () {},
+                        icon: Icon(Icons.backspace_outlined),
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    // -- Icono Borrado Palabra
+                    SizedBox(
+                      width: 32,
+                      height: 32,
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        iconSize: 20,
+                        onPressed: () {},
+                        icon: Icon(Icons.undo),
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    // -- Icono Borrado Total
+                    SizedBox(
+                      width: 32,
+                      height: 32,
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        iconSize: 20,
+                        onPressed: () {},
+                        icon: Icon(Icons.delete_forever_outlined),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
         ),
-
-        // Grupo Selector botones + botones
-        // Selector + divisor
-      ],
+     ],
     );
   }
 }

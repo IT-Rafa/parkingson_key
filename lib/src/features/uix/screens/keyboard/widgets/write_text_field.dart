@@ -13,7 +13,6 @@ class WriteTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: widget.controller,
-      focusNode: widget.focusNode,
       readOnly: true,
       showCursor: true,
       decoration: const InputDecoration(
