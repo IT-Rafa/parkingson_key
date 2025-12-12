@@ -216,7 +216,7 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 20),
+            //Icon(icon, size: 20),
             const SizedBox(height: 2),
             Text(
               label,
