@@ -60,72 +60,171 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: _showAppBar
-            ? AppBar(title: const Text('Parkingson Key'), actions: [        SettingsMenu(),])
+            ? AppBar(
+                title: const Text('Parkingson Key'),
+                actions: [SettingsMenu()],
+              )
             : null,
 
         body: GestureDetector(
           onTap: _toggleAppBarVisibility,
-          child: Column(
-            children: [
-              // ------ HEADER (portrait/landscape) ------
-              if (orientation == Orientation.portrait)
-                Container(
-                  margin: const EdgeInsets.fromLTRB(8, 4, 0, 0),
-                  child: KeyboardPortHeader(
-                    controller: _controller,
-                    focusNode: _focusNode,
+          child: OrientationBuilder(
+            builder: (context, orientation) {
+              final isPortrait = orientation == Orientation.portrait;
+
+              return Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                    child: KeyboardPortHeader(
+                      controller: _controller,
+                      focusNode: _focusNode,
+                    ),
                   ),
-                )
-              else
-                Container(
-                  margin: const EdgeInsets.fromLTRB(8, 4, 0, 0),
-                  child: KeyboardPortHeader(
-                    controller: _controller,
-                    focusNode: _focusNode,
+
+                  // ---------- BOTONES + TECLADO SEGÚN ORIENTACIÓN ----------
+                  Expanded(
+                    child: isPortrait
+                        ? Column(
+                            children: [
+                              // ⭐ Botones encima del teclado
+                              Container(
+                                margin: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[300],
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    _iconLabelButton(Icons.save, "Guardar"),
+                                    _iconLabelButton(Icons.send, "Enviar"),
+                                  ],
+                                ),
+                              ),
+
+                              Expanded(
+                                child: Card(
+                                  color: Colors.grey,
+                                  margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                                  child: KeyboardBase(
+                                    layout: layout,
+                                    onKeyPressed: _insertText,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        : Row(
+                            children: [
+                              // Teclado ocupa casi todo
+                              Expanded(
+                                child: Card(
+                                  color: Colors.grey,
+                                  margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                                  child: KeyboardBase(
+                                    layout: layout,
+                                    onKeyPressed: _insertText,
+                                  ),
+                                ),
+                              ),
+
+                              // ⭐ Botones a la derecha del teclado
+                              Container(
+                                margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                                padding: const EdgeInsets.all(8),
+
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[300],
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+
+                                    children: [
+                                      _iconLabelButton(Icons.save, "Guardar"),
+                                      _iconLabelButton(Icons.send, "Enviar"),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                   ),
-                ),
-              // --------- ICONOS BORRADO ----------
-          
-              // --------- TECLADO PRINCIPAL ----------
-              Expanded(
-                child: Card(
-                  color: Colors.grey,
-                  margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                  child: KeyboardBase(layout: layout, onKeyPressed: _insertText),
-                ),
-              ),
-          
-              // ----------- BLOQUE DE DROPDOWNS -----------
-              Card(
-                margin: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                color: Colors.indigo.shade300,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                  child: Row(
-                    spacing: 10,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(child: NumbersDropdown(onSelected: _insertText)),
-                      Expanded(child: SymbolsDropdown(onSelected: _insertText)),
-                      Expanded(
-                        child: PhrasesDropdown(
-                          phrases: const [
-                            "¿En qué puedo ayudarte?",
-                            "Voy hacia allí",
-                            "Gracias",
-                          ],
-                          onSelected: _insertText,
-                        ),
+
+                  // ----------- DROPDOWNS -----------
+                  Card(
+                    margin: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                    color: Colors.indigo.shade300,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                        horizontal: 8,
                       ),
-                    ],
+                      child: Row(
+                        spacing: 10,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: NumbersDropdown(onSelected: _insertText),
+                          ),
+                          Expanded(
+                            child: SymbolsDropdown(onSelected: _insertText),
+                          ),
+                          Expanded(
+                            child: PhrasesDropdown(
+                              phrases: const [
+                                "¿En qué puedo ayudarte?",
+                                "Voy hacia allí",
+                                "Gracias",
+                              ],
+                              onSelected: _insertText,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ],
+                ],
+              );
+            },
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _iconLabelButton(IconData icon, String label) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(10),
+      onTap: () {},
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.limeAccent,
+        ),
+        width: 65, // ancho suficiente para que el texto no rompa mal
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 20),
+            const SizedBox(height: 2),
+            Text(
+              label,
+              style: const TextStyle(fontSize: 11),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
         ),
       ),
     );
