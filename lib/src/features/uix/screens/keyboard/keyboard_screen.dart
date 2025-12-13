@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parkingson_key/src/core/providers/keyboard_provider.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_base.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_layout.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_port_header.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/numbers_dropdown.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/phrases_dropdown.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/settings_menu.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/symbols_dropdown.dart';
+import 'package:parkingson_key/src/models/keyboard_layout.dart';
 
 class KeyboardScreen extends ConsumerStatefulWidget {
   const KeyboardScreen({super.key});
@@ -54,9 +52,6 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final orientation = MediaQuery.of(context).orientation;
-    final layout = ref.watch(keyboardProvider(orientation));
-
     return SafeArea(
       child: Scaffold(
         appBar: _showAppBar
@@ -82,12 +77,10 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                     ),
                   ),
 
-                  // ---------- BOTONES + TECLADO SEGÚN ORIENTACIÓN ----------
                   Expanded(
                     child: isPortrait
                         ? Column(
                             children: [
-                              // ⭐ Botones encima del teclado
                               Container(
                                 margin: const EdgeInsets.fromLTRB(8, 0, 8, 8),
                                 padding: const EdgeInsets.all(8),
@@ -105,14 +98,12 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                                 ),
                               ),
 
+                              // teclado
                               Expanded(
                                 child: Card(
                                   color: Colors.grey,
                                   margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                  child: KeyboardBase(
-                                    layout: layout,
-                                    onKeyPressed: _insertText,
-                                  ),
+                                  child: KeyboardLayout(layout: keyboardLayout),
                                 ),
                               ),
                             ],
@@ -124,10 +115,7 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                                 child: Card(
                                   color: Colors.grey,
                                   margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                  child: KeyboardBase(
-                                    layout: layout,
-                                    onKeyPressed: _insertText,
-                                  ),
+                                  child: KeyboardLayout(layout: keyboardLayout),
                                 ),
                               ),
 
@@ -149,6 +137,17 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                                     children: [
                                       _iconLabelButton(Icons.save, "Guardar"),
                                       _iconLabelButton(Icons.send, "Enviar"),
+                                      SizedBox(
+                                        width: 100,
+                                        child: PhrasesDropdown(
+                                          phrases: const [
+                                            "¿En qué puedo ayudarte?",
+                                            "Voy hacia allí",
+                                            "Gracias",
+                                          ],
+                                          onSelected: _insertText,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -157,42 +156,6 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                           ),
                   ),
 
-                  // ----------- DROPDOWNS -----------
-                  Card(
-                    margin: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                    color: Colors.indigo.shade300,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8,
-                        horizontal: 8,
-                      ),
-                      child: Row(
-                        spacing: 10,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: NumbersDropdown(onSelected: _insertText),
-                          ),
-                          Expanded(
-                            child: SymbolsDropdown(onSelected: _insertText),
-                          ),
-                          Expanded(
-                            child: PhrasesDropdown(
-                              phrases: const [
-                                "¿En qué puedo ayudarte?",
-                                "Voy hacia allí",
-                                "Gracias",
-                              ],
-                              onSelected: _insertText,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                 ],
               );
             },
