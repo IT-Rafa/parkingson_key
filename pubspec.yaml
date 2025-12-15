@@ -23,3 +23,15 @@ flutter:
   uses-material-design: true
   assets:
     - assets/langs/
+
+  fonts:
+    - family: RobotoMono
+      fonts:
+        - asset: assets/fonts/roboto_mono/static/RobotoMono-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/roboto_mono/static/RobotoMono-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/roboto_mono/static/RobotoMono-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/roboto_mono/static/RobotoMono-Bold.ttf
+          weight: 700

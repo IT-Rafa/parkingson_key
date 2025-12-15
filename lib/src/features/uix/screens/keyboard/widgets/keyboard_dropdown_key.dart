@@ -18,46 +18,70 @@ class KeyboardDropdownKey extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KeyboardKeyContainer(
-      flex: flex,
-      onTap: () {}, // mantiene ripple
+      onTap: () {},
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
                   child: LayoutBuilder(
                     builder: (context, constraints) {
-                      double fontSize = constraints.maxHeight * 0.5;
-                      return Text(
-                        title,
-                        style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w600),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                      final baseFontSize = constraints.maxHeight * 0.32;
+                      return FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          title,
+                          style: TextStyle(
+                            fontSize: baseFontSize,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          maxLines: 1,
+                        ),
                       );
                     },
                   ),
                 ),
-                const Icon(
-                  Icons.arrow_drop_down,
-                  size: 28,
-                ),
+                const Icon(Icons.arrow_drop_down),
               ],
             ),
           ),
+
+          /// Dropdown invisible
           Positioned.fill(
             child: DropdownButton<String>(
               isExpanded: true,
               underline: const SizedBox(),
-              icon: const SizedBox(), // ocultamos icono original
-              items: items
-                  .map((e) => DropdownMenuItem(
-                        value: e,
-                        child: Text(e),
-                      ))
-                  .toList(),
+              icon: const SizedBox(),
+              items: items.map((e) {
+                return DropdownMenuItem(value: e, child: Text(e));
+              }).toList(),
+
+              /// 🔑 ESTO ES CRÍTICO
+              selectedItemBuilder: (context) {
+                return items.map((e) {
+                  return LayoutBuilder(
+                    builder: (context, constraints) {
+                      final baseFontSize = constraints.maxHeight * 0.32;
+                      return Align(
+                        alignment: Alignment.centerLeft,
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            e,
+                            style: TextStyle(
+                              fontFamily: 'RobotoMono',
+                              fontSize: baseFontSize,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }).toList();
+              },
               onChanged: onChanged,
             ),
           ),

@@ -16,7 +16,6 @@ class KeyboardPortHeader extends StatefulWidget {
 }
 
 class _KeyboardPortHeaderState extends State<KeyboardPortHeader> {
-  int selectedMode = 0; // 0 = BORRAR, 1 = ACCIÓN
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +25,8 @@ class _KeyboardPortHeaderState extends State<KeyboardPortHeader> {
         // Preparamos el espacio para el TextField
         Expanded(
           // -- Columna con el TextField y los iconos de borrar
-          child: Container(
-            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Column(
+          child: 
+             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // -- TextField
@@ -80,7 +74,7 @@ class _KeyboardPortHeaderState extends State<KeyboardPortHeader> {
                 ),
               ],
             ),
-          ),
+          
         ),
      ],
     );

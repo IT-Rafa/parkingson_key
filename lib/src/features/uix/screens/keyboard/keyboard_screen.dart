@@ -67,16 +67,36 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
             builder: (context, orientation) {
               final isPortrait = orientation == Orientation.portrait;
 
+              var buttonList = [
+                _iconLabelButton(Icons.save, "Guardar"),
+                _iconLabelButton(Icons.send, "Enviar"),
+                SizedBox(
+                  width: 100,
+                  child: PhrasesDropdown(
+                    phrases: const [
+                      "¿En qué puedo ayudarte?",
+                      "Voy hacia allí",
+                      "Gracias",
+                    ],
+                    onSelected: _insertText,
+                  ),
+                ),
+              ];
               return Column(
                 children: [
+                  // Contenedor de 
                   Container(
-                    margin: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                    margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    decoration: BoxDecoration(
+                      color: Colors.grey[300],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                     child: KeyboardPortHeader(
                       controller: _controller,
-                      focusNode: _focusNode,
+                      focusNode: _focusNode, 
                     ),
                   ),
-
                   Expanded(
                     child: isPortrait
                         ? Column(
@@ -91,32 +111,21 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    _iconLabelButton(Icons.save, "Guardar"),
-                                    _iconLabelButton(Icons.send, "Enviar"),
-                                  ],
+                                  children: buttonList,
                                 ),
                               ),
 
                               // teclado
                               Expanded(
-                                child: Card(
-                                  color: Colors.grey,
-                                  margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                  child: KeyboardLayout(layout: keyboardLayout),
-                                ),
+                                child: KeyboardLayout(layout: keyboardLayout),
                               ),
                             ],
                           )
                         : Row(
                             children: [
-                              // Teclado ocupa casi todo
+                              // teclado
                               Expanded(
-                                child: Card(
-                                  color: Colors.grey,
-                                  margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                                  child: KeyboardLayout(layout: keyboardLayout),
-                                ),
+                                child: KeyboardLayout(layout: keyboardLayout),
                               ),
 
                               // ⭐ Botones a la derecha del teclado
@@ -133,29 +142,13 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                                   child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
-
-                                    children: [
-                                      _iconLabelButton(Icons.save, "Guardar"),
-                                      _iconLabelButton(Icons.send, "Enviar"),
-                                      SizedBox(
-                                        width: 100,
-                                        child: PhrasesDropdown(
-                                          phrases: const [
-                                            "¿En qué puedo ayudarte?",
-                                            "Voy hacia allí",
-                                            "Gracias",
-                                          ],
-                                          onSelected: _insertText,
-                                        ),
-                                      ),
-                                    ],
+                                    children: buttonList,
                                   ),
                                 ),
                               ),
                             ],
                           ),
                   ),
-
                 ],
               );
             },
@@ -175,7 +168,7 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
           borderRadius: BorderRadius.circular(10),
           color: Colors.limeAccent,
         ),
-        width: 65, // ancho suficiente para que el texto no rompa mal
+        width: 100, // ancho suficiente para que el texto no rompa mal
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

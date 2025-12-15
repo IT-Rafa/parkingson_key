@@ -9,14 +9,14 @@ class KeyboardLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: layout
-          .map((row) => Expanded(
-                flex: 1,
-                child: KeyboardRow(items: row),
-              ))
-          .toList(),
+    return Card(
+      color: Colors.grey,
+      margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+      child: Column(
+        children: layout
+            .map((row) => Expanded(flex: 1, child: KeyboardRow(items: row)))
+            .toList(),
+      ),
     );
   }
 }

@@ -16,17 +16,25 @@ class KeyboardButtonKey extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return KeyboardKeyContainer(
-      flex: flex,
       onTap: onPressed,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          double fontSize = constraints.maxHeight * 0.5; // 50% del alto
-          return Text(
-            label,
-            style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.w600),
-            maxLines: 1,
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
+          final baseFontSize = constraints.maxHeight * 0.75; // 👈 grande
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 6),
+            child: FittedBox(
+              fit: BoxFit.scaleDown, // 👈 solo reduce
+              child: Text(
+                label.toUpperCase(),
+                style: TextStyle(
+                  fontFamily: 'RobotoMono',
+                  fontSize: baseFontSize,
+                  fontWeight: FontWeight.w600,
+                ),
+                maxLines: 1,
+                textAlign: TextAlign.center,
+              ),
+            ),
           );
         },
       ),

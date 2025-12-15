@@ -21,8 +21,15 @@ class KeyboardItem {
     this.flex = 1,
   });
 
-  factory KeyboardItem.char(String label, {int flex = 1}) =>
-      KeyboardItem._(type: KeyboardItemType.char, label: label, flex: flex);
+  factory KeyboardItem.char(String label) {
+    final isDouble = label.length > 1;
+
+    return KeyboardItem._(
+      type: KeyboardItemType.char,
+      label: label,
+      flex: isDouble ? 2 : 1, // 👈 CLAVE
+    );
+  }
 
   factory KeyboardItem.action(String label, {int flex = 1}) =>
       KeyboardItem._(type: KeyboardItemType.action, label: label, flex: flex);
@@ -33,15 +40,14 @@ class KeyboardItem {
     String? initialValue,
     ValueChanged<String?>? onChanged,
     int flex = 1,
-  }) =>
-      KeyboardItem._(
-        type: KeyboardItemType.dropdown,
-        title: title,
-        items: items,
-        initialValue: initialValue,
-        onChanged: onChanged,
-        flex: flex,
-      );
+  }) => KeyboardItem._(
+    type: KeyboardItemType.dropdown,
+    title: title,
+    items: items,
+    initialValue: initialValue,
+    onChanged: onChanged,
+    flex: flex,
+  );
 
   factory KeyboardItem.spacer({int flex = 1}) =>
       KeyboardItem._(type: KeyboardItemType.spacer, flex: flex);
