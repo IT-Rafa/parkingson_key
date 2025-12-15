@@ -39,11 +39,12 @@ final keyboardLayout = [
     KeyboardItem.char('i'),
     KeyboardItem.char('o'),
     KeyboardItem.char('u'),
-    KeyboardItem.action('⎵', flex: 2),
-  ],
-  [
+    KeyboardItem.char('  '),
     KeyboardItem.action('Sí'),
     KeyboardItem.action('No'),
+  ],
+  [
+
     KeyboardItem.dropdown(
       title: "KEYBOARD_numbers".tr(),
       items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
