@@ -5,19 +5,21 @@ class KeyboardDropdownKey extends StatelessWidget {
   final String title;
   final List<String> items;
   final ValueChanged<String?>? onChanged;
-  final int flex;
+   final Color? color;
 
   const KeyboardDropdownKey({
     super.key,
     required this.title,
     required this.items,
     this.onChanged,
-    this.flex = 1,
+    this.color,
+
   });
 
   @override
   Widget build(BuildContext context) {
     return KeyboardKeyContainer(
+      color:color,
       onTap: () {},
       child: Stack(
         children: [

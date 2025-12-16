@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_layout.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_port_header.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_row.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/phrases_dropdown.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/settings_menu.dart';
 import 'package:parkingson_key/src/models/keyboard_layout.dart';
@@ -52,6 +52,12 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
+
+    final rows = orientation == Orientation.portrait
+        ? keyboardLayout.portrait
+        : keyboardLayout.landscape;
+
     return SafeArea(
       child: Scaffold(
         appBar: _showAppBar
@@ -87,8 +93,8 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                 children: [
                   // Contenedor de
                   Container(
-                    margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    margin: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                    padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                     decoration: BoxDecoration(
                       color: Colors.grey[300],
                       borderRadius: BorderRadius.circular(8),
@@ -103,8 +109,6 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                         ? Column(
                             children: [
                               Container(
-                                margin: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                                padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
                                   color: Colors.grey[300],
                                   borderRadius: BorderRadius.circular(8),
@@ -117,21 +121,25 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                               ),
 
                               // teclado
-                              Expanded(
-                                child: KeyboardLayout(layout: keyboardLayout),
+                              Column(
+                                children: rows
+                                    .map((row) => KeyboardRow(items: row))
+                                    .toList(),
                               ),
                             ],
                           )
                         : Row(
                             children: [
                               // teclado
-                              Expanded(
-                                child: KeyboardLayout(layout: keyboardLayout),
+                              Column(
+                                children: rows
+                                    .map((row) => KeyboardRow(items: row))
+                                    .toList(),
                               ),
 
                               // ⭐ Botones a la derecha del teclado
                               Container(
-                                margin: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                                margin: const EdgeInsets.fromLTRB(8, 4, 8, 4),
                                 padding: const EdgeInsets.all(8),
 
                                 decoration: BoxDecoration(

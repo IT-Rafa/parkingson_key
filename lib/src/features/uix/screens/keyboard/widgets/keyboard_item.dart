@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum KeyboardItemType { char, action, dropdown, spacer }
+enum KeyboardItemType { char, dropdown }
 
 class KeyboardItem {
   final KeyboardItemType type;
@@ -9,7 +9,7 @@ class KeyboardItem {
   final List<String>? items;
   final String? initialValue;
   final ValueChanged<String?>? onChanged;
-  final int flex;
+  final Color? color;
 
   const KeyboardItem._({
     required this.type,
@@ -18,37 +18,29 @@ class KeyboardItem {
     this.items,
     this.initialValue,
     this.onChanged,
-    this.flex = 1,
+    this.color,
   });
 
-  factory KeyboardItem.char(String label) {
-    final isDouble = label.length > 1;
-
+  factory KeyboardItem.char(String label, {Color? color}) {
     return KeyboardItem._(
       type: KeyboardItemType.char,
       label: label,
-      flex: isDouble ? 2 : 1, // 👈 CLAVE
+      color: color,
     );
   }
-
-  factory KeyboardItem.action(String label, {int flex = 1}) =>
-      KeyboardItem._(type: KeyboardItemType.action, label: label, flex: flex);
 
   factory KeyboardItem.dropdown({
     required String title,
     required List<String> items,
     String? initialValue,
     ValueChanged<String?>? onChanged,
-    int flex = 1,
+    Color? color,
   }) => KeyboardItem._(
     type: KeyboardItemType.dropdown,
     title: title,
     items: items,
     initialValue: initialValue,
     onChanged: onChanged,
-    flex: flex,
+    color: color,
   );
-
-  factory KeyboardItem.spacer({int flex = 1}) =>
-      KeyboardItem._(type: KeyboardItemType.spacer, flex: flex);
 }

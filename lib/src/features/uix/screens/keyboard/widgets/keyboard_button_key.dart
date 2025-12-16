@@ -4,26 +4,29 @@ import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboar
 class KeyboardButtonKey extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
-  final int flex;
+  final Color? color;
+
 
   const KeyboardButtonKey({
     super.key,
     required this.label,
     required this.onPressed,
-    this.flex = 1,
+    this.color,
   });
 
   @override
   Widget build(BuildContext context) {
     return KeyboardKeyContainer(
+      color: color,
       onTap: onPressed,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final baseFontSize = constraints.maxHeight * 0.75; // 👈 grande
+          final baseFontSize = constraints.maxHeight * 0.80; // 👈 grande
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 6),
             child: FittedBox(
               fit: BoxFit.scaleDown, // 👈 solo reduce
+              
               child: Text(
                 label.toUpperCase(),
                 style: TextStyle(
