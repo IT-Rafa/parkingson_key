@@ -7,6 +7,5 @@ class KeyboardLayout {
   const KeyboardLayout({
     required this.portrait,
     required this.landscape,
-    required List<List<KeyboardItem>> layout,
   });
 }

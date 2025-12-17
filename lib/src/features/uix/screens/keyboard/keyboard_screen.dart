@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_port_header.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_row.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/phrases_dropdown.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/settings_menu.dart';
@@ -78,7 +78,8 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                 _iconLabelButton(Icons.send, "Enviar"),
 
                 SizedBox(
-                  width: 100,
+                  width: 85,
+                  height: 40,
                   child: PhrasesDropdown(
                     phrases: const [
                       "¿En qué puedo ayudarte?",
@@ -91,24 +92,29 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
               ];
               return Column(
                 children: [
-                  // Contenedor de
+                  // TextfieldRow Container
                   Container(
-                    margin: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                    margin: const EdgeInsets.fromLTRB(8, 8, 8, 4),
                     padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
                     decoration: BoxDecoration(
                       color: Colors.grey[300],
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: KeyboardPortHeader(
+                    child: TextFieldRow(
                       controller: _controller,
                       focusNode: _focusNode,
                     ),
                   ),
+                  // keyboard and buttons (portrait and lanscape)
                   Expanded(
-                    child: isPortrait
+                    child:
+                        isPortrait // buttons and below keyboard
                         ? Column(
                             children: [
+                              // buttons Container
                               Container(
+                                margin: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                                padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
                                 decoration: BoxDecoration(
                                   color: Colors.grey[300],
                                   borderRadius: BorderRadius.circular(8),
@@ -120,39 +126,76 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                                 ),
                               ),
 
-                              // teclado
-                              Column(
-                                children: rows
-                                    .map((row) => KeyboardRow(items: row))
-                                    .toList(),
+                              // Keyboard
+                              Expanded(
+                                // Keyboard Container
+                                child: Container(
+                                  margin: const EdgeInsets.fromLTRB(8, 4, 8, 8),
+                                  padding: const EdgeInsets.fromLTRB(
+                                    8,
+                                    8,
+                                    8,
+                                    8,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[300],
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Column(
+                                    children: rows
+                                        .map(
+                                          (row) => Expanded(
+                                            child: KeyboardRow(items: row),
+                                          ),
+                                        )
+                                        .toList(),
+                                  ),
+                                ),
                               ),
                             ],
                           )
                         : Row(
+                            // keyboard and buttons to its right
                             children: [
-                              // teclado
-                              Column(
-                                children: rows
-                                    .map((row) => KeyboardRow(items: row))
-                                    .toList(),
+                              // keyboard
+                              Expanded(
+                                // Keyboard Container
+                                child: Container(
+                                  margin: const EdgeInsets.fromLTRB(8, 4, 0, 8),
+                                  padding: const EdgeInsets.fromLTRB(
+                                    8,
+                                    8,
+                                    8,
+                                    8,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[300],
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Column(
+                                    children: keyboardLayout.landscape
+                                        .map(
+                                          (row) => Expanded(
+                                            child: KeyboardRow(items: row),
+                                          ),
+                                        )
+                                        .toList(),
+                                  ),
+                                ),
                               ),
 
-                              // ⭐ Botones a la derecha del teclado
+                              // buttons
                               Container(
-                                margin: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                                margin: const EdgeInsets.fromLTRB(8, 4, 8, 8),
                                 padding: const EdgeInsets.all(8),
-
                                 decoration: BoxDecoration(
                                   color: Colors.grey[300],
                                   borderRadius: BorderRadius.circular(8),
                                 ),
-                                child: Container(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: buttonList,
-                                  ),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: buttonList,
                                 ),
                               ),
                             ],
@@ -178,7 +221,6 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
           color: Colors.limeAccent,
         ),
         height: 40,
-        width: 100, // ancho suficiente para que el texto no rompa mal
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

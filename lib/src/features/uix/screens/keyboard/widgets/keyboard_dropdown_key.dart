@@ -4,22 +4,23 @@ import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboar
 class KeyboardDropdownKey extends StatelessWidget {
   final String title;
   final List<String> items;
+  final String? value;
   final ValueChanged<String?>? onChanged;
-   final Color? color;
+  final Color? color;
 
   const KeyboardDropdownKey({
     super.key,
     required this.title,
     required this.items,
+    this.value,
     this.onChanged,
     this.color,
-
   });
 
   @override
   Widget build(BuildContext context) {
     return KeyboardKeyContainer(
-      color:color,
+      color: color,
       onTap: () {},
       child: Stack(
         children: [
@@ -54,36 +55,14 @@ class KeyboardDropdownKey extends StatelessWidget {
           /// Dropdown invisible
           Positioned.fill(
             child: DropdownButton<String>(
+              value: value, 
               isExpanded: true,
+              isDense: true,
               underline: const SizedBox(),
               icon: const SizedBox(),
-              items: items.map((e) {
-                return DropdownMenuItem(value: e, child: Text(e));
-              }).toList(),
-
-              /// 🔑 ESTO ES CRÍTICO
-              selectedItemBuilder: (context) {
-                return items.map((e) {
-                  return LayoutBuilder(
-                    builder: (context, constraints) {
-                      final baseFontSize = constraints.maxHeight * 0.32;
-                      return Align(
-                        alignment: Alignment.centerLeft,
-                        child: FittedBox(
-                          fit: BoxFit.scaleDown,
-                          child: Text(
-                            e,
-                            style: TextStyle(
-                              fontFamily: 'RobotoMono',
-                              fontSize: baseFontSize,
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                }).toList();
-              },
+              items: items
+                  .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+                  .toList(),
               onChanged: onChanged,
             ),
           ),
