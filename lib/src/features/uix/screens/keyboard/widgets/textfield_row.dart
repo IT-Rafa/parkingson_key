@@ -40,10 +40,24 @@ class _TextFieldRowState extends State<TextFieldRow> {
                   ),
                 ),
               ),
-              // -- Iconos de borrar
+              // -
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  // -- Icono esconder barra
+                  SizedBox(
+                    width: 32,
+                    height: 32,
+                    child: IconButton(
+                      padding: EdgeInsets.zero,
+                      iconSize: 20,
+                      onPressed: () {},
+                      icon: Icon(Icons.touch_app),
+                    ),
+                  ),
+
+                  // -- Espacio
+                  Spacer(),
                   // -- Icono Borrado Caracter
                   SizedBox(
                     width: 32,
@@ -81,6 +95,8 @@ class _TextFieldRowState extends State<TextFieldRow> {
                   ),
                 ],
               ),
+
+              //- Iconos de borrar
             ],
           ),
         ),

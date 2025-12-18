@@ -25,26 +25,15 @@ class KeyboardDropdownKey extends StatelessWidget {
       child: Stack(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Row(
               children: [
                 Expanded(
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      final baseFontSize = constraints.maxHeight * 0.32;
-                      return FittedBox(
-                        fit: BoxFit.scaleDown,
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          title,
-                          style: TextStyle(
-                            fontSize: baseFontSize,
-                            fontWeight: FontWeight.w600,
-                          ),
-                          maxLines: 1,
-                        ),
-                      );
-                    },
+                  child: Text(
+                    value ?? title, // 👈 AQUÍ ESTÁ LA CLAVE
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ),
                 const Icon(Icons.arrow_drop_down),
@@ -52,12 +41,11 @@ class KeyboardDropdownKey extends StatelessWidget {
             ),
           ),
 
-          /// Dropdown invisible
+          // DROPDOWN INVISIBLE
           Positioned.fill(
             child: DropdownButton<String>(
-              value: value, 
+              value: value,
               isExpanded: true,
-              isDense: true,
               underline: const SizedBox(),
               icon: const SizedBox(),
               items: items

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_item.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_layout.dart';
 
-final keyboardLayout = KeyboardLayout(
+final alphaVowelsKeyboardLayout = KeyboardLayout(
   // ───────────────── PORTRAIT ─────────────────
   portrait: [
     [

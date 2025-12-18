@@ -4,7 +4,7 @@ import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfie
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_row.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/phrases_dropdown.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/settings_menu.dart';
-import 'package:parkingson_key/src/models/keyboard_layout.dart';
+import 'package:parkingson_key/src/models/alpha_vowels_keyboard_layout.dart';
 
 class KeyboardScreen extends ConsumerStatefulWidget {
   const KeyboardScreen({super.key});
@@ -50,161 +50,161 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
     if (!_focusNode.hasFocus) _focusNode.requestFocus();
   }
 
+  Widget _toggleAppBarButton() {
+    return InkWell(
+      borderRadius: BorderRadius.circular(10),
+      onTap: _toggleAppBarVisibility,
+      child: Container(
+        height: 40,
+        width: 40,
+        decoration: BoxDecoration(
+          color: Colors.blueGrey.shade200,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Icon(
+          _showAppBar ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final orientation = MediaQuery.of(context).orientation;
-
-    final rows = orientation == Orientation.portrait
-        ? keyboardLayout.portrait
-        : keyboardLayout.landscape;
-
     return SafeArea(
       child: Scaffold(
-        appBar: _showAppBar
-            ? AppBar(
-                title: const Text('Parkingson Key'),
-                actions: [SettingsMenu()],
-              )
-            : null,
+        appBar: AppBar(
+          title: const Text('Parkingson Key'),
+          actions: [SettingsMenu()],
+        ),
 
-        body: GestureDetector(
-          onTap: _toggleAppBarVisibility,
-          child: OrientationBuilder(
-            builder: (context, orientation) {
-              final isPortrait = orientation == Orientation.portrait;
+        body: OrientationBuilder(
+          builder: (context, orientation) {
+            final isPortrait = orientation == Orientation.portrait;
 
-              var buttonList = [
-                _iconLabelButton(Icons.save, "Guardar"),
-                _iconLabelButton(Icons.send, "Enviar"),
+            var buttonList = [
+              _iconLabelButton(Icons.save, "Guardar"),
+              _iconLabelButton(Icons.send, "Enviar"),
 
-                SizedBox(
-                  width: 85,
-                  height: 40,
-                  child: PhrasesDropdown(
-                    phrases: const [
-                      "¿En qué puedo ayudarte?",
-                      "Voy hacia allí",
-                      "Gracias",
-                    ],
-                    onSelected: _insertText,
-                  ),
+              SizedBox(
+                width: 85,
+                height: 40,
+                child: PhrasesDropdown(
+                  phrases: const [
+                    "¿En qué puedo ayudarte?",
+                    "Voy hacia allí",
+                    "Gracias",
+                  ],
+                  onSelected: _insertText,
                 ),
-              ];
-              return Column(
-                children: [
-                  // TextfieldRow Container
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(8, 8, 8, 4),
-                    padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: TextFieldRow(
-                      controller: _controller,
-                      focusNode: _focusNode,
-                    ),
+              ),
+            ];
+            return Column(
+              children: [
+                // TextfieldRow Container
+                Container(
+                  margin: const EdgeInsets.fromLTRB(8, 8, 8, 4),
+                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  // keyboard and buttons (portrait and lanscape)
-                  Expanded(
-                    child:
-                        isPortrait // buttons and below keyboard
-                        ? Column(
-                            children: [
-                              // buttons Container
-                              Container(
-                                margin: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                  child: TextFieldRow(
+                    controller: _controller,
+                    focusNode: _focusNode,
+                  ),
+
+                  
+                ),
+
+                // keyboard and buttons (portrait and lanscape)
+                Expanded(
+                  child:
+                      isPortrait // buttons and below keyboard
+                      ? Column(
+                          children: [
+                            // buttons Container
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+                              padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: buttonList,
+                              ),
+                            ),
+
+                            // Keyboard
+                            Expanded(
+                              // Keyboard Container
+                              child: Container(
+                                margin: const EdgeInsets.fromLTRB(8, 4, 8, 8),
                                 padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
                                 decoration: BoxDecoration(
                                   color: Colors.grey[300],
                                   borderRadius: BorderRadius.circular(8),
                                 ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: buttonList,
+                                child: Column(
+                                  children: alphaVowelsKeyboardLayout.portrait
+                                      .map(
+                                        (row) => Expanded(
+                                          child: KeyboardRow(items: row),
+                                        ),
+                                      )
+                                      .toList(),
                                 ),
                               ),
-
-                              // Keyboard
-                              Expanded(
-                                // Keyboard Container
-                                child: Container(
-                                  margin: const EdgeInsets.fromLTRB(8, 4, 8, 8),
-                                  padding: const EdgeInsets.fromLTRB(
-                                    8,
-                                    8,
-                                    8,
-                                    8,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[300],
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Column(
-                                    children: rows
-                                        .map(
-                                          (row) => Expanded(
-                                            child: KeyboardRow(items: row),
-                                          ),
-                                        )
-                                        .toList(),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        : Row(
-                            // keyboard and buttons to its right
-                            children: [
-                              // keyboard
-                              Expanded(
-                                // Keyboard Container
-                                child: Container(
-                                  margin: const EdgeInsets.fromLTRB(8, 4, 0, 8),
-                                  padding: const EdgeInsets.fromLTRB(
-                                    8,
-                                    8,
-                                    8,
-                                    8,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[300],
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Column(
-                                    children: keyboardLayout.landscape
-                                        .map(
-                                          (row) => Expanded(
-                                            child: KeyboardRow(items: row),
-                                          ),
-                                        )
-                                        .toList(),
-                                  ),
-                                ),
-                              ),
-
-                              // buttons
-                              Container(
-                                margin: const EdgeInsets.fromLTRB(8, 4, 8, 8),
-                                padding: const EdgeInsets.all(8),
+                            ),
+                          ],
+                        )
+                      : Row(
+                          // keyboard and buttons to its right
+                          children: [
+                            // keyboard
+                            Expanded(
+                              // Keyboard Container
+                              child: Container(
+                                margin: const EdgeInsets.fromLTRB(8, 4, 0, 8),
+                                padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
                                 decoration: BoxDecoration(
                                   color: Colors.grey[300],
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: buttonList,
+                                  children: alphaVowelsKeyboardLayout.landscape
+                                      .map(
+                                        (row) => Expanded(
+                                          child: KeyboardRow(items: row),
+                                        ),
+                                      )
+                                      .toList(),
                                 ),
                               ),
-                            ],
-                          ),
-                  ),
-                ],
-              );
-            },
-          ),
+                            ),
+
+                            // buttons
+                            Container(
+                              margin: const EdgeInsets.fromLTRB(8, 4, 8, 8),
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: buttonList,
+                              ),
+                            ),
+                          ],
+                        ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

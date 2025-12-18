@@ -63,7 +63,7 @@ class KeyboardRow extends StatelessWidget {
         return KeyboardDropdownKey(
           title: item.title!,
           items: item.items!,
-          value: item.initialValue, // 👈 AQUÍ
+          value: item.initialValue,
           onChanged: item.onChanged,
           color: item.color,
         );
