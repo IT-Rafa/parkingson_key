@@ -18,12 +18,6 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
   late final FocusNode _focusNode;
   late bool _showAppBar = true;
 
-  void _toggleAppBarVisibility() {
-    setState(() {
-      _showAppBar = !_showAppBar;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
@@ -50,32 +44,16 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
     if (!_focusNode.hasFocus) _focusNode.requestFocus();
   }
 
-  Widget _toggleAppBarButton() {
-    return InkWell(
-      borderRadius: BorderRadius.circular(10),
-      onTap: _toggleAppBarVisibility,
-      child: Container(
-        height: 40,
-        width: 40,
-        decoration: BoxDecoration(
-          color: Colors.blueGrey.shade200,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Icon(
-          _showAppBar ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Parkingson Key'),
-          actions: [SettingsMenu()],
-        ),
+        appBar: _showAppBar
+            ? AppBar(
+                title: const Text('Parkingson Key'),
+                actions: [SettingsMenu()],
+              )
+            : null,
 
         body: OrientationBuilder(
           builder: (context, orientation) {
@@ -111,9 +89,13 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                   child: TextFieldRow(
                     controller: _controller,
                     focusNode: _focusNode,
+                    isAppBarVisible: _showAppBar,
+                    onToggleAppBar: () {
+                      setState(() {
+                        _showAppBar = !_showAppBar;
+                      });
+                    },
                   ),
-
-                  
                 ),
 
                 // keyboard and buttons (portrait and lanscape)
@@ -218,15 +200,14 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.limeAccent,
+          color: Colors.grey,
         ),
         height: 40,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               label,
-              style: const TextStyle(fontSize: 15),
+              style: const TextStyle(fontSize: 14),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
             ),

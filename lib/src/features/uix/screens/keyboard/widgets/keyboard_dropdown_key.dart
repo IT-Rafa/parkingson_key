@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_key_container.dart';
 
-class KeyboardDropdownKey extends StatelessWidget {
+class KeyboardDropdownKey extends StatefulWidget {
   final String title;
   final List<String> items;
-  final String? value;
+  final String? initialValue;
   final ValueChanged<String?>? onChanged;
   final Color? color;
 
@@ -12,15 +12,28 @@ class KeyboardDropdownKey extends StatelessWidget {
     super.key,
     required this.title,
     required this.items,
-    this.value,
+    this.initialValue,
     this.onChanged,
     this.color,
   });
 
   @override
+  State<KeyboardDropdownKey> createState() => _KeyboardDropdownKeyState();
+}
+
+class _KeyboardDropdownKeyState extends State<KeyboardDropdownKey> {
+  late String _value;
+
+  @override
+  void initState() {
+    super.initState();
+    _value = widget.initialValue ?? widget.items.first;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return KeyboardKeyContainer(
-      color: color,
+      color: widget.color,
       onTap: () {},
       child: Stack(
         children: [
@@ -30,7 +43,7 @@ class KeyboardDropdownKey extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    value ?? title, // 👈 AQUÍ ESTÁ LA CLAVE
+                    _value,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontWeight: FontWeight.w600),
@@ -44,14 +57,14 @@ class KeyboardDropdownKey extends StatelessWidget {
           // DROPDOWN INVISIBLE
           Positioned.fill(
             child: DropdownButton<String>(
-              value: value,
+              value: widget.initialValue,
               isExpanded: true,
               underline: const SizedBox(),
               icon: const SizedBox(),
-              items: items
+              items: widget.items
                   .map((e) => DropdownMenuItem(value: e, child: Text(e)))
                   .toList(),
-              onChanged: onChanged,
+              onChanged: widget.onChanged,
             ),
           ),
         ],

@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 class TextFieldRow extends StatefulWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
+  final VoidCallback onToggleAppBar;
+  final bool isAppBarVisible;
 
   const TextFieldRow({
     super.key,
     required this.controller,
     required this.focusNode,
+    required this.onToggleAppBar,
+    required this.isAppBarVisible,
   });
 
   @override
@@ -44,54 +48,40 @@ class _TextFieldRowState extends State<TextFieldRow> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  SizedBox(width: 4),
+
                   // -- Icono esconder barra
                   SizedBox(
-                    width: 32,
-                    height: 32,
-                    child: IconButton(
+                    width: 25,
+                    height: 25,
+                    child: IconButton.outlined(
                       padding: EdgeInsets.zero,
                       iconSize: 20,
-                      onPressed: () {},
-                      icon: Icon(Icons.touch_app),
+                      onPressed: widget.onToggleAppBar,
+                      icon: AnimatedRotation(
+                        duration: const Duration(milliseconds: 200),
+                        turns: widget.isAppBarVisible ? 0.0 : 0.5, // 0° → 180°
+                        child: Icon(Icons.expand_less),
+                      ),
                     ),
                   ),
 
                   // -- Espacio
                   Spacer(),
                   // -- Icono Borrado Caracter
-                  SizedBox(
-                    width: 32,
-                    height: 32,
-                    child: IconButton(
-                      padding: EdgeInsets.zero,
-                      iconSize: 20,
-                      onPressed: () {},
-                      icon: Icon(Icons.backspace_outlined),
-                    ),
+                  // ⌫ borrar carácter
+                  _icon(
+                    icon: Icons.backspace_outlined,
+                    onTap: () {},
+                    containerSize: 32,
                   ),
-                  const SizedBox(width: 6),
-                  // -- Icono Borrado Palabra
-                  SizedBox(
-                    width: 32,
-                    height: 32,
-                    child: IconButton(
-                      padding: EdgeInsets.zero,
-                      iconSize: 20,
-                      onPressed: () {},
-                      icon: Icon(Icons.undo),
-                    ),
-                  ),
-                  const SizedBox(width: 6),
-                  // -- Icono Borrado Total
-                  SizedBox(
-                    width: 32,
-                    height: 32,
-                    child: IconButton(
-                      padding: EdgeInsets.zero,
-                      iconSize: 20,
-                      onPressed: () {},
-                      icon: Icon(Icons.delete_forever_outlined),
-                    ),
+                  // ↩ borrar palabra
+                  _icon(icon: Icons.undo, onTap: () {}, containerSize: 32),
+                  // 🗑 borrar todo
+                  _icon(
+                    icon: Icons.delete_forever_outlined,
+                    onTap: () {},
+                    containerSize: 32,
                   ),
                 ],
               ),
@@ -103,4 +93,21 @@ class _TextFieldRowState extends State<TextFieldRow> {
       ],
     );
   }
+}
+
+Widget _icon({
+  required IconData icon,
+  required double containerSize,
+  required VoidCallback onTap,
+}) {
+  return SizedBox(
+    width: containerSize,
+    height: containerSize,
+    child: IconButton(
+      padding: EdgeInsets.zero,
+      iconSize: 20,
+      onPressed: onTap,
+      icon: Icon(icon),
+    ),
+  );
 }
