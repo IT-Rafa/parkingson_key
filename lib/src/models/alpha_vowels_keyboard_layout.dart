@@ -1,9 +1,8 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_item.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_layout.dart';
 
-final alphaVowelsKeyboardLayout = KeyboardLayout(
+final esAlphaAndVowelsKeyboardLayout = KeyboardLayout(
   // ───────────────── PORTRAIT ─────────────────
   portrait: [
     [
@@ -51,32 +50,7 @@ final alphaVowelsKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('No', color: Colors.red),
       KeyboardItem.char('  ', color: Colors.grey),
     ],
-    [
-      KeyboardItem.dropdown(
-        title: "KEYBOARD_numbers".tr(),
-        items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-      ),
-      KeyboardItem.dropdown(
-        title: "KEYBOARD_symbols".tr(),
-        items: [
-          '.',
-          ',',
-          ':',
-          ';',
-          '?',
-          '!',
-          '-',
-          '_',
-          '@',
-          '#',
-          '%',
-          '&',
-          '/',
-          '+',
-          '*',
-        ],
-      ),
-    ],
+   
   ],
 
   // ───────────────── LANDSCAPE ─────────────────
@@ -123,32 +97,6 @@ final alphaVowelsKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('u', color: Colors.cyan),
       KeyboardItem.char('  ', color: Colors.grey),
     ],
-    [
-      KeyboardItem.dropdown(
-        title: "KEYBOARD_numbers".tr(),
-        items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-      ),
-
-      KeyboardItem.dropdown(
-        title: "KEYBOARD_symbols".tr(),
-        items: [
-          '.',
-          ',',
-          ':',
-          ';',
-          '?',
-          '!',
-          '-',
-          '_',
-          '@',
-          '#',
-          '%',
-          '&',
-          '/',
-          '+',
-          '*',
-        ],
-      ),
-    ],
+    
   ],
 );

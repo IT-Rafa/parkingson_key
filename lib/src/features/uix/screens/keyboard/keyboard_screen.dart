@@ -60,12 +60,13 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
             final isPortrait = orientation == Orientation.portrait;
 
             var buttonList = [
-              _iconLabelButton(Icons.save, "Guardar"),
-              _iconLabelButton(Icons.send, "Enviar"),
+              HideTitleButton(),
+              SavePhraseButton(),
+              SendTextButton(),
 
               SizedBox(
                 width: 85,
-                height: 40,
+                height: 60,
                 child: PhrasesDropdown(
                   phrases: const [
                     "¿En qué puedo ayudarte?",
@@ -89,12 +90,6 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                   child: TextFieldRow(
                     controller: _controller,
                     focusNode: _focusNode,
-                    isAppBarVisible: _showAppBar,
-                    onToggleAppBar: () {
-                      setState(() {
-                        _showAppBar = !_showAppBar;
-                      });
-                    },
                   ),
                 ),
 
@@ -130,7 +125,8 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Column(
-                                  children: alphaVowelsKeyboardLayout.portrait
+                                  children: esAlphaAndVowelsKeyboardLayout
+                                      .portrait
                                       .map(
                                         (row) => Expanded(
                                           child: KeyboardRow(items: row),
@@ -139,6 +135,22 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                                       .toList(),
                                 ),
                               ),
+                            ),
+                            PhrasesDropdown(
+                              phrases: const [
+                                "¿En qué puedo ayudarte?",
+                                "Voy hacia allí",
+                                "Gracias",
+                              ],
+                              onSelected: _insertText,
+                            ),
+                            PhrasesDropdown(
+                              phrases: const [
+                                "¿En qué puedo ayudarte?",
+                                "Voy hacia allí",
+                                "Gracias",
+                              ],
+                              onSelected: _insertText,
                             ),
                           ],
                         )
@@ -156,7 +168,8 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Column(
-                                  children: alphaVowelsKeyboardLayout.landscape
+                                  children: esAlphaAndVowelsKeyboardLayout
+                                      .landscape
                                       .map(
                                         (row) => Expanded(
                                           child: KeyboardRow(items: row),
@@ -191,27 +204,86 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
       ),
     );
   }
+}
 
-  Widget _iconLabelButton(IconData icon, String label) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(10),
-      onTap: () {},
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.grey,
+class SendTextButton extends StatelessWidget {
+  const SendTextButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton.icon(
+      style: TextButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.red,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      onPressed: () {},
+      label: SizedBox(
+        width: 67, // change width as you need
+        height: 47, // change height as you need
+        child: Align(
+          alignment: Alignment.center,
+          child: Text(
+            "Enviar texto",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 14), // change max line you need
+          ),
         ),
-        height: 40,
-        child: Column(
-          children: [
-            Text(
-              label,
-              style: const TextStyle(fontSize: 14),
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ],
+      ),
+    );
+  }
+}
+
+class SavePhraseButton extends StatelessWidget {
+  const SavePhraseButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton.icon(
+      style: TextButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.red,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      onPressed: () {},
+      label: SizedBox(
+        width: 67, // change width as you need
+        height: 47, // change height as you need
+        child: Align(
+          alignment: Alignment.center,
+          child: Text(
+            "Guardar frase",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 14), // change max line you need
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class HideTitleButton extends StatelessWidget {
+  const HideTitleButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton.icon(
+      style: TextButton.styleFrom(
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.red,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      onPressed: () {},
+      label: SizedBox(
+        width: 60, // change width as you need
+        height: 47, // change height as you need
+        child: Align(
+          alignment: Alignment.center,
+          child: Text(
+            "Mostrar título",
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 14), // change max line you need
+          ),
         ),
       ),
     );

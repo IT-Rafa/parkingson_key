@@ -3,15 +3,13 @@ import 'package:flutter/material.dart';
 class TextFieldRow extends StatefulWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
-  final VoidCallback onToggleAppBar;
-  final bool isAppBarVisible;
+
 
   const TextFieldRow({
     super.key,
     required this.controller,
     required this.focusNode,
-    required this.onToggleAppBar,
-    required this.isAppBarVisible,
+
   });
 
   @override
@@ -46,28 +44,8 @@ class _TextFieldRowState extends State<TextFieldRow> {
               ),
               // -
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  SizedBox(width: 4),
-
-                  // -- Icono esconder barra
-                  SizedBox(
-                    width: 25,
-                    height: 25,
-                    child: IconButton.outlined(
-                      padding: EdgeInsets.zero,
-                      iconSize: 20,
-                      onPressed: widget.onToggleAppBar,
-                      icon: AnimatedRotation(
-                        duration: const Duration(milliseconds: 200),
-                        turns: widget.isAppBarVisible ? 0.0 : 0.5, // 0° → 180°
-                        child: Icon(Icons.expand_less),
-                      ),
-                    ),
-                  ),
-
-                  // -- Espacio
-                  Spacer(),
                   // -- Icono Borrado Caracter
                   // ⌫ borrar carácter
                   _icon(
