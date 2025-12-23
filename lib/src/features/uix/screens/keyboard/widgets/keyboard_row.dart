@@ -19,6 +19,7 @@ class KeyboardRow extends StatelessWidget {
         final totalWeight = weights.fold<double>(0, (sum, w) => sum + w);
 
         return Row(
+
           children: List.generate(items.length, (index) {
             final item = items[index];
             final weight = weights[index];
@@ -63,7 +64,6 @@ class KeyboardRow extends StatelessWidget {
         return KeyboardDropdownKey(
           title: item.title!,
           items: item.items!,
-          initialValue: item.initialValue,
           onChanged: item.onChanged,
           color: item.color,
         );

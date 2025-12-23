@@ -1,33 +1,59 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/base_dropdown_box.dart';
 
-class PhrasesDropdown extends StatelessWidget {
-  final List<String> phrases;
-  final ValueChanged<String> onSelected;
-
+class PhrasesDropdown extends StatefulWidget {
   const PhrasesDropdown({
     super.key,
     required this.phrases,
     required this.onSelected,
   });
 
+  final List<String> phrases;
+  final ValueChanged<String> onSelected;
+
+  @override
+  State<PhrasesDropdown> createState() => _PhrasesDropdownState();
+}
+
+class _PhrasesDropdownState extends State<PhrasesDropdown> {
+  final MenuController _controller = MenuController();
+
   @override
   Widget build(BuildContext context) {
-    final orientation = MediaQuery.of(context).orientation;
+    final screenWidth = MediaQuery.of(context).size.width;
 
-    return BaseDropdownBox(
-      title: "KEYBOARD_phrases".tr(),
-      items: phrases
-          .map(
-            (p) => DropdownMenuItem(
-              value: p,
-              child: Text(p),
+    return MenuAnchor(
+      controller: _controller,
+      style: MenuStyle(
+        // 👇 AQUÍ controlas el ancho REAL
+        minimumSize: WidgetStateProperty.all(Size(screenWidth * 0.95, 0)),
+      ),
+      menuChildren: widget.phrases.map((phrase) {
+        return MenuItemButton(
+          onPressed: () {
+            widget.onSelected(phrase);
+            _controller.close();
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Text(
+              phrase,
+              softWrap: true,
+              style: TextStyle(
+                fontSize: 15,
+                height: 1.2, // 👈 interlineado compacto
+              ),
             ),
-          )
-          .toList(),
-      onSelected: onSelected,
-      orientation: orientation,
+          ),
+        );
+      }).toList(),
+
+      // 👇 ESTE es tu botón pequeño
+      child: TextButton(
+        onPressed: () {
+          _controller.open();
+        },
+        child: const Text('Frases', textAlign: TextAlign.center),
+      ),
     );
   }
 }

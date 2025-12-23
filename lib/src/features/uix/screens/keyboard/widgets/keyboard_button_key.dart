@@ -6,7 +6,6 @@ class KeyboardButtonKey extends StatelessWidget {
   final VoidCallback onPressed;
   final Color? color;
 
-
   const KeyboardButtonKey({
     super.key,
     required this.label,
@@ -26,13 +25,13 @@ class KeyboardButtonKey extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 6),
             child: FittedBox(
               fit: BoxFit.scaleDown, // 👈 solo reduce
-              
+
               child: Text(
                 label.toUpperCase(),
                 style: TextStyle(
                   fontFamily: 'RobotoMono',
                   fontSize: baseFontSize,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.bold,
                 ),
                 maxLines: 1,
                 textAlign: TextAlign.center,

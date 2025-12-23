@@ -4,12 +4,10 @@ class TextFieldRow extends StatefulWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
 
-
   const TextFieldRow({
     super.key,
     required this.controller,
     required this.focusNode,
-
   });
 
   @override
@@ -17,6 +15,23 @@ class TextFieldRow extends StatefulWidget {
 }
 
 class _TextFieldRowState extends State<TextFieldRow> {
+  Widget _icon({
+    required IconData icon,
+    required double containerSize,
+    required VoidCallback onTap,
+  }) {
+    return SizedBox(
+      width: containerSize,
+      height: containerSize,
+      child: IconButton(
+        padding: EdgeInsets.zero,
+        iconSize: 20,
+        onPressed: onTap,
+        icon: Icon(icon),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -71,21 +86,4 @@ class _TextFieldRowState extends State<TextFieldRow> {
       ],
     );
   }
-}
-
-Widget _icon({
-  required IconData icon,
-  required double containerSize,
-  required VoidCallback onTap,
-}) {
-  return SizedBox(
-    width: containerSize,
-    height: containerSize,
-    child: IconButton(
-      padding: EdgeInsets.zero,
-      iconSize: 20,
-      onPressed: onTap,
-      icon: Icon(icon),
-    ),
-  );
 }

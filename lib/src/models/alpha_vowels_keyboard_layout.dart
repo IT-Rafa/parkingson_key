@@ -50,9 +50,17 @@ final esAlphaAndVowelsKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('No', color: Colors.red),
       KeyboardItem.char('  ', color: Colors.grey),
     ],
-   
+    [
+      KeyboardItem.dropdown(
+        title: 'Symbols',
+        items: ['!', '@', '#', '\$', '%', '^', '&', '*'],
+      ),
+      KeyboardItem.dropdown(
+        title: 'Numbers',
+        items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+      ),
+    ],
   ],
-
   // ───────────────── LANDSCAPE ─────────────────
   landscape: [
     [
@@ -97,6 +105,16 @@ final esAlphaAndVowelsKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('u', color: Colors.cyan),
       KeyboardItem.char('  ', color: Colors.grey),
     ],
-    
+    [
+      KeyboardItem.dropdown(
+        title: 'Symbols',
+        items: ['!', '@', '#', '\$', '%', '^', '&', '*'],
+      ),
+
+      KeyboardItem.dropdown(
+        title: 'Numbers',
+        items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+      ),
+    ],
   ],
 );
