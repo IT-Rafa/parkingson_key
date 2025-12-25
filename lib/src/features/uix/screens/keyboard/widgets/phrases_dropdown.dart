@@ -24,7 +24,6 @@ class _PhrasesDropdownState extends State<PhrasesDropdown> {
     return MenuAnchor(
       controller: _controller,
       style: MenuStyle(
-        // 👇 AQUÍ controlas el ancho REAL
         minimumSize: WidgetStateProperty.all(Size(screenWidth * 0.95, 0)),
       ),
       menuChildren: widget.phrases.map((phrase) {
@@ -40,19 +39,28 @@ class _PhrasesDropdownState extends State<PhrasesDropdown> {
               softWrap: true,
               style: TextStyle(
                 fontSize: 15,
-                height: 1.2, // 👈 interlineado compacto
+                height: 1.2, 
               ),
             ),
           ),
         );
       }).toList(),
 
-      // 👇 ESTE es tu botón pequeño
-      child: TextButton(
+      child: TextButton.icon(
+        style: TextButton.styleFrom(
+          foregroundColor: Colors.black,
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+
         onPressed: () {
           _controller.open();
         },
-        child: const Text('Frases', textAlign: TextAlign.center),
+        icon: const Icon(Icons.arrow_drop_down),
+        iconAlignment: IconAlignment.end,
+        label: const Text('Frases', textAlign: TextAlign.center),
       ),
     );
   }
