@@ -15,7 +15,7 @@ class PortraitLayout  extends ConsumerWidget {
       context,
       ref: ref,
       controller: controller,
-      isPortrait: false,
+      isPortrait: true,
     );
 
 
@@ -30,7 +30,7 @@ class PortraitLayout  extends ConsumerWidget {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: buttonsWidgetList,
           ),
         ),

@@ -46,7 +46,7 @@ class  LandscapeLayout extends ConsumerWidget {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: buttonsWidgetList,
           ),
         ),

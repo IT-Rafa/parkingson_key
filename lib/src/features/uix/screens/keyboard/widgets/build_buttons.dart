@@ -37,8 +37,8 @@ List<Widget> buildButtons(
     ),
 
     SizedBox(
-      width: isPortrait ? 90 : 120,
-      height: isPortrait ? 50 : 35,
+      width: isPortrait ? 85 : 112,
+      height: isPortrait ? 55 : 35,
       child: PhrasesMenuAnchor(
         phrases: const ["¿En qué puedo ayudarte?", "Voy hacia allí", "Gracias"],
         onSelected: (value) {
