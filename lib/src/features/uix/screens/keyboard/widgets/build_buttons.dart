@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/appbar_visibility_notifier.dart';
@@ -11,9 +12,13 @@ List<Widget> buildButtons(
   required TextEditingController controller,
   required bool isPortrait,
 }) {
+  final showAppBar = ref.watch(appBarVisibilityProvider);
+
   return [
     AppButton(
-      label: "Mostrar título",
+      label: showAppBar
+          ? 'appbar_hide'.tr()
+          : 'appbar_show'.tr(),
       onPressed: () {
         ref.read(appBarVisibilityProvider.notifier).toggle();
       },

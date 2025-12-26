@@ -8,6 +8,8 @@
     "KEYBOARD_numbers": "Numbers",
     "KEYBOARD_symbols": "Symbols",
     "KEYBOARD_phrases": "Phrases",
+    "appbar_show": "Show title",
+    "appbar_hide": "Hide title",
     
     "SETTINGS_settings": "Settings",
     "SETTINGS_language": "Language:",
