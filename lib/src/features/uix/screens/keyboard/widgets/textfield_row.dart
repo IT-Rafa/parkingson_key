@@ -45,7 +45,7 @@ class _TextFieldRowState extends State<TextFieldRow> {
             children: [
               // -- TextField
               SizedBox(
-                height: 45,
+                height: 35,
                 child: TextField(
                   controller: widget.controller,
                   readOnly: true,
@@ -66,7 +66,7 @@ class _TextFieldRowState extends State<TextFieldRow> {
                   _icon(
                     icon: Icons.backspace_outlined,
                     onTap: () {},
-                    containerSize: 32,
+                    containerSize: 28,
                   ),
                   // ↩ borrar palabra
                   _icon(icon: Icons.undo, onTap: () {}, containerSize: 32),

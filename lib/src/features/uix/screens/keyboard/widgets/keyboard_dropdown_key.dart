@@ -17,7 +17,8 @@ class KeyboardDropdownKey extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.fromLTRB( 4,0,4,0),
+      height: 50,
+      margin: const EdgeInsets.fromLTRB(4, 4, 4, 0),
       decoration: BoxDecoration(
         color: color ?? Colors.green[400],
         borderRadius: BorderRadius.circular(8),
@@ -27,7 +28,7 @@ class KeyboardDropdownKey extends StatelessWidget {
         child: DropdownButton<String>(
           isExpanded: true,
           isDense: true,
-          icon: const Icon(Icons.arrow_drop_down, size: 35),
+          icon: const Icon(Icons.arrow_drop_down, size: 30),
 
           // 👇 SIEMPRE visible
           hint: _titleWidget(),

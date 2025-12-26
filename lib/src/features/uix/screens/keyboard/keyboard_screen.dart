@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parkingson_key/src/core/providers/appbar_visibility_notifier.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/landscape_layout.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/portrait_layout.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/settings_menu.dart';
@@ -15,7 +16,6 @@ class KeyboardScreen extends ConsumerStatefulWidget {
 class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
   late final TextEditingController _controller;
   late final FocusNode _focusNode;
-  late bool _showAppBar = true;
 
   @override
   void initState() {
@@ -35,19 +35,13 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
     super.dispose();
   }
 
-  void _insertText(String value) {
-    final newText = _controller.text + value;
-    _controller.text = newText;
-    _controller.selection = TextSelection.collapsed(offset: newText.length);
-
-    if (!_focusNode.hasFocus) _focusNode.requestFocus();
-  }
-
   @override
   Widget build(BuildContext context) {
+  final showAppBar = ref.watch(appBarVisibilityProvider);
+
     return SafeArea(
       child: Scaffold(
-        appBar: _showAppBar
+        appBar: showAppBar
             ? AppBar(
                 title: const Text('Parkingson Key'),
                 actions: const [SettingsMenu()],
@@ -74,8 +68,8 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                 ),
                 Expanded(
                   child: isPortrait
-                      ? PortraitLayout(onInsertText: _insertText)
-                      : LandscapeLayout(onInsertText: _insertText),
+                      ? PortraitLayout(controller: _controller)
+                      : LandscapeLayout(controller: _controller),
                 ),
               ],
             );

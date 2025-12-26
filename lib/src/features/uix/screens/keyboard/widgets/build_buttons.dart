@@ -1,28 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parkingson_key/src/core/providers/appbar_visibility_notifier.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/app_button.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/phrases_dropdown.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/phrases_menuanchor.dart';
 
 List<Widget> buildButtons(
-  BuildContext context,
-  void Function(String) onInsertText,
-) {
-  final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
+  BuildContext context, {
+  required WidgetRef ref,
+
+  required TextEditingController controller,
+  required bool isPortrait,
+}) {
   return [
-    AppButton(label: "Mostrar título", onPressed: () {}),
-    isPortrait ? SizedBox(width: 3) : SizedBox(height: 3),
+    AppButton(
+      label: "Mostrar título",
+      onPressed: () {
+        ref.read(appBarVisibilityProvider.notifier).toggle();
+      },
+    ),
 
-    AppButton(label: "Guardar frase", onPressed: () {}),
-    isPortrait ? SizedBox(width: 3) : SizedBox(height: 3),
-
-    AppButton(label: "Enviar texto", onPressed: () {}),
-    isPortrait ? SizedBox(width: 3) : SizedBox(height: 3),
+    AppButton(
+      label: "Guardar frase",
+      onPressed: () {
+        final newText = "${controller.text} [TEXTO GUARDADO]";
+        controller.text = newText;
+        controller.selection = TextSelection.collapsed(offset: newText.length);
+      },
+    ),
+    AppButton(
+      label: "Enviar texto",
+      onPressed: () {
+        final newText = "${controller.text} [TEXTO ENVIADO]";
+        controller.text = newText;
+        controller.selection = TextSelection.collapsed(offset: newText.length);
+      },
+    ),
 
     SizedBox(
-      width: isPortrait ? 90 : 100,
-      height: isPortrait ? 60 : 100,
-      child: PhrasesDropdown(
+      width: isPortrait ? 90 : 120,
+      height: isPortrait ? 50 : 35,
+      child: PhrasesMenuAnchor(
         phrases: const ["¿En qué puedo ayudarte?", "Voy hacia allí", "Gracias"],
-        onSelected: onInsertText,
+        onSelected: (value) {
+          final newText = controller.text + value;
+          controller.text = newText;
+          controller.selection = TextSelection.collapsed(
+            offset: newText.length,
+          );
+        },
       ),
     ),
   ];

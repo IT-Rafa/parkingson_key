@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PhrasesDropdown extends StatefulWidget {
-  const PhrasesDropdown({
+class PhrasesMenuAnchor extends StatefulWidget {
+  const PhrasesMenuAnchor({
     super.key,
     required this.phrases,
     required this.onSelected,
@@ -11,10 +11,10 @@ class PhrasesDropdown extends StatefulWidget {
   final ValueChanged<String> onSelected;
 
   @override
-  State<PhrasesDropdown> createState() => _PhrasesDropdownState();
+  State<PhrasesMenuAnchor> createState() => _PhrasesMenuAnchorState();
 }
 
-class _PhrasesDropdownState extends State<PhrasesDropdown> {
+class _PhrasesMenuAnchorState extends State<PhrasesMenuAnchor> {
   final MenuController _controller = MenuController();
 
   @override
@@ -32,35 +32,28 @@ class _PhrasesDropdownState extends State<PhrasesDropdown> {
             widget.onSelected(phrase);
             _controller.close();
           },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Text(
-              phrase,
-              softWrap: true,
-              style: TextStyle(
-                fontSize: 15,
-                height: 1.2, 
-              ),
-            ),
+          child: Text(
+            phrase,
+            softWrap: true,
+            style: TextStyle(fontSize: 15, height: 1.2),
           ),
         );
       }).toList(),
 
       child: TextButton.icon(
         style: TextButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
           foregroundColor: Colors.black,
           backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         ),
 
         onPressed: () {
           _controller.open();
         },
+        label: const Text('Frases', textAlign: TextAlign.center),
         icon: const Icon(Icons.arrow_drop_down),
         iconAlignment: IconAlignment.end,
-        label: const Text('Frases', textAlign: TextAlign.center),
       ),
     );
   }
