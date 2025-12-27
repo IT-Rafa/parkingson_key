@@ -4,12 +4,12 @@ import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/build_b
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_row.dart';
 import 'package:parkingson_key/src/models/alpha_vowels_keyboard_layout.dart';
 
-class  LandscapeLayout extends ConsumerWidget {
+class LandscapeLayout extends ConsumerWidget {
   const LandscapeLayout({super.key, required this.controller});
 
   final TextEditingController controller;
 
-@override
+  @override
   Widget build(BuildContext context, WidgetRef ref) {
     final buttonsWidgetList = buildButtons(
       context,
@@ -31,7 +31,15 @@ class  LandscapeLayout extends ConsumerWidget {
             ),
             child: Column(
               children: esAlphaAndVowelsKeyboardLayout.landscape
-                  .map((row) => Expanded(child: KeyboardRow(items: row)))
+                  .map(
+                    (row) => Expanded(
+                      child: KeyboardRow(
+                        items: row,
+                        controller: controller,
+                        isPortrait: false,
+                      ),
+                    ),
+                  )
                   .toList(),
             ),
           ),

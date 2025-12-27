@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/insert_from_keyboard_char.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/insert_from_keyboard_dropdown.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_button_key.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_dropdown_key.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_item.dart';
 
 class KeyboardRow extends StatelessWidget {
-  final List<KeyboardItem> items;
+  const KeyboardRow({
+    super.key,
+    required this.items,
+    required this.controller,
+    required this.isPortrait,
+  });
 
-  const KeyboardRow({super.key, required this.items});
+  final List<KeyboardItem> items;
+  final TextEditingController controller;
+  final bool isPortrait;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +28,6 @@ class KeyboardRow extends StatelessWidget {
         final totalWeight = weights.fold<double>(0, (sum, w) => sum + w);
 
         return Row(
-
           children: List.generate(items.length, (index) {
             final item = items[index];
             final weight = weights[index];
@@ -35,9 +43,6 @@ class KeyboardRow extends StatelessWidget {
 
   /// 🔑 AQUÍ está toda la lógica de anchura
   double _effectiveWeight(KeyboardItem item, BuildContext context) {
-    final orientation = MediaQuery.of(context).orientation;
-    final isPortrait = orientation == Orientation.portrait;
-
     switch (item.type) {
       case KeyboardItemType.char:
         // Letras simples vs dobles
@@ -56,7 +61,9 @@ class KeyboardRow extends StatelessWidget {
       case KeyboardItemType.char:
         return KeyboardButtonKey(
           label: item.label!,
-          onPressed: () {},
+          onPressed: () {
+            insertFromKeyboardChar(controller, item.label!);
+          },
           color: item.color,
         );
 
@@ -64,7 +71,10 @@ class KeyboardRow extends StatelessWidget {
         return KeyboardDropdownKey(
           title: item.title!,
           items: item.items!,
-          onChanged: item.onChanged,
+          onChanged: (value) {
+            if (value == null) return;
+            insertFromKeyboardDropdown(controller, value);
+          },
           color: item.color,
         );
     }

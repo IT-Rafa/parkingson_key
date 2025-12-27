@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:parkingson_key/src/core/services/tts_service.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/delete_all.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/delete_char.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/delete_word.dart';
 
 class TextFieldRow extends StatefulWidget {
   final TextEditingController controller;
@@ -15,17 +19,15 @@ class TextFieldRow extends StatefulWidget {
 }
 
 class _TextFieldRowState extends State<TextFieldRow> {
-  Widget _icon({
-    required IconData icon,
-    required double containerSize,
-    required VoidCallback onTap,
-  }) {
+  final TtsService _ttsService = TtsService(); // Instancia TTS
+
+  Widget _icon({required IconData icon, required VoidCallback onTap}) {
     return SizedBox(
-      width: containerSize,
-      height: containerSize,
+      width: 40,
+      height: 40,
       child: IconButton(
         padding: EdgeInsets.zero,
-        iconSize: 20,
+        iconSize: 30,
         onPressed: onTap,
         icon: Icon(icon),
       ),
@@ -37,49 +39,47 @@ class _TextFieldRowState extends State<TextFieldRow> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Preparamos el espacio para el TextField
         Expanded(
-          // -- Columna con el TextField y los iconos de borrar
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // -- TextField
+              // -- TextField con icono de TTS
               SizedBox(
                 height: 35,
                 child: TextField(
                   controller: widget.controller,
                   readOnly: true,
                   showCursor: true,
-                  decoration: const InputDecoration(
-                    suffixIcon: Icon(Icons.volume_up),
-                    border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.volume_up),
+                      onPressed: () {
+                        _ttsService.speak(widget.controller.text);
+                      },
+                    ),
+                    border: const OutlineInputBorder(),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 8),
                   ),
                 ),
               ),
-              // -
+              // -- Iconos de borrado
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  // -- Icono Borrado Caracter
-                  // ⌫ borrar carácter
                   _icon(
                     icon: Icons.backspace_outlined,
-                    onTap: () {},
-                    containerSize: 28,
+                    onTap: () => deleteChar(widget.controller),
                   ),
-                  // ↩ borrar palabra
-                  _icon(icon: Icons.undo, onTap: () {}, containerSize: 32),
-                  // 🗑 borrar todo
+                  _icon(
+                    icon: Icons.undo,
+                    onTap: () => deleteWord(widget.controller),
+                  ),
                   _icon(
                     icon: Icons.delete_forever_outlined,
-                    onTap: () {},
-                    containerSize: 32,
+                    onTap: () => deleteAll(widget.controller),
                   ),
                 ],
               ),
-
-              //- Iconos de borrar
             ],
           ),
         ),

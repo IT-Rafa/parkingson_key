@@ -4,7 +4,7 @@ import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/build_b
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_row.dart';
 import 'package:parkingson_key/src/models/alpha_vowels_keyboard_layout.dart';
 
-class PortraitLayout  extends ConsumerWidget {
+class PortraitLayout extends ConsumerWidget {
   const PortraitLayout({super.key, required this.controller});
 
   final TextEditingController controller;
@@ -17,7 +17,6 @@ class PortraitLayout  extends ConsumerWidget {
       controller: controller,
       isPortrait: true,
     );
-
 
     return Column(
       children: [
@@ -45,9 +44,17 @@ class PortraitLayout  extends ConsumerWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: esAlphaAndVowelsKeyboardLayout.portrait
-                  .map((row) => Expanded(child: KeyboardRow(items: row)))
+                  .map(
+                    (row) => Expanded(
+                      child: KeyboardRow(
+                        items: row,
+                        controller: controller,
+                        isPortrait: true,
+                      ),
+                    ),
+                  )
                   .toList(),
             ),
           ),

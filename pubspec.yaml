@@ -12,6 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_riverpod: ^3.0.3
+  flutter_tts: ^4.2.3
+  logger: ^2.6.2
   shared_preferences: ^2.5.3
 
 dev_dependencies:
