@@ -1,15 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parkingson_key/src/core/providers/app_language_enum.dart';
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/core/providers/theme_provider.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/locale_from_language_code.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final String lang = ref.watch(languageProvider);
+    final AppLanguage lang = ref.watch(languageProvider);
     final String theme = ref.watch(themeProvider);
     return SafeArea(
       child: Scaffold(
@@ -23,15 +25,15 @@ class SettingsScreen extends ConsumerWidget {
                 children: [
                   const Text("SETTINGS_language").tr(),
                   const SizedBox(width: 20),
-                  DropdownButton<String>(
+                  DropdownButton<AppLanguage>(
                     value: lang,
                     items: [
                       DropdownMenuItem(
-                        value: "en",
+                        value: AppLanguage.en,
                         child: Text("SETTINGS_english").tr(),
                       ),
                       DropdownMenuItem(
-                        value: "es",
+                        value: AppLanguage.es,
                         child: Text("SETTINGS_spanish").tr(),
                       ),
                     ],
@@ -40,8 +42,9 @@ class SettingsScreen extends ConsumerWidget {
                       ref.read(languageProvider.notifier).setLanguage(value!);
                       // Actualizar EasyLocalization
                       // EasyLocalization tiene su propio estado interno
-
-                      context.setLocale(Locale(value));
+                      context.setLocale(
+                        localeFromLanguageCode(value),
+                      ); // map AppLanguage -> Locale
                     },
                   ),
                 ],
@@ -103,7 +106,6 @@ class SettingsScreen extends ConsumerWidget {
               ),
 
               const SizedBox(height: 15),
-
             ],
           ),
         ),

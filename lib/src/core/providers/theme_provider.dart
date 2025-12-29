@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parkingson_key/src/core/providers/app_settings_provider.dart'
+import 'package:parkingson_key/src/core/providers/app_settings_service_provider.dart'
     show appSettingsServiceProvider;
 import 'package:parkingson_key/src/core/services/app_settings_service.dart';
 

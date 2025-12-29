@@ -1,57 +1,40 @@
-import 'dart:io' show Platform, Process;
-import 'package:flutter/foundation.dart' show kIsWeb, kDebugMode;
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:logger/logger.dart';
 
 class TtsService {
-  final FlutterTts _flutterTts = FlutterTts();
-  final Logger _logger = Logger(
-    printer: PrettyPrinter(
-      methodCount: 0,
-      dateTimeFormat: DateTimeFormat.onlyTimeAndSinceStart, // reemplaza printTime
-    ),
-    level: kDebugMode ? Level.debug : Level.off, // reemplaza Level.nothing
-  );
+  final FlutterTts _tts;
+  final Logger _logger;
+  bool _initialized = false;
 
-  TtsService() {
-    if (_isFlutterTtsSupported()) {
-      _flutterTts.setLanguage("es-ES");
-      _flutterTts.setSpeechRate(0.5);
-      _flutterTts.setPitch(1.0);
-    }
+  TtsService(this._tts, this._logger);
+
+  Future<void> _init() async {
+    if (_initialized) return;
+    await _tts.awaitSpeakCompletion(true); // opcional, asegura secuencia
+    _initialized = true;
   }
-
-  bool _isFlutterTtsSupported() {
-    if (kIsWeb) return false;
-    return Platform.isAndroid || Platform.isIOS || Platform.isWindows || Platform.isMacOS;
-  }
-
-  bool _isLinux() => !kIsWeb && Platform.isLinux;
 
   Future<void> speak(String text) async {
     if (text.isEmpty) return;
+    await _init();
+    await _tts.stop();
+    await _tts.speak(text);
+  }
 
-    if (_isFlutterTtsSupported()) {
-      _logger.d("TTS (flutter_tts) hablando: $text");
-      await _flutterTts.stop();
-      await _flutterTts.speak(text);
-    } else if (_isLinux()) {
-      _logger.d("TTS Linux (espeak) hablando: $text");
-      try {
-        await Process.run('espeak', [text]);
-      } catch (e) {
-        _logger.w("No se pudo ejecutar espeak en Linux: $e");
-      }
-    } else if (kIsWeb) {
-      _logger.w("TTS no soportado en Web");
-    } else {
-      _logger.w("TTS no soportado en esta plataforma");
+  Future<bool> safeSetLocale(String locale) async {
+    await _init(); // <--- asegura que el plugin está listo
+    final langs = await _tts.getLanguages;
+    if (!langs.contains(locale)) {
+      _logger.w('TTS locale not supported: $locale');
+      return false;
     }
+    await _tts.setLanguage(locale);
+    _logger.i('TTS locale set: $locale');
+    return true;
   }
 
   Future<void> stop() async {
-    if (_isFlutterTtsSupported()) {
-      await _flutterTts.stop();
-    }
+    await _init();
+    await _tts.stop();
   }
 }

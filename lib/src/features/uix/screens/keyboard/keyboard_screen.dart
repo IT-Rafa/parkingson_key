@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parkingson_key/src/core/providers/app_language_enum.dart';
 import 'package:parkingson_key/src/core/providers/appbar_visibility_notifier.dart';
+import 'package:parkingson_key/src/core/providers/language_config.dart';
+import 'package:parkingson_key/src/core/providers/language_provider.dart';
+import 'package:parkingson_key/src/core/providers/tts_service_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/landscape_layout.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/portrait_layout.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/settings_menu.dart';
@@ -37,7 +41,12 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-  final showAppBar = ref.watch(appBarVisibilityProvider);
+    final showAppBar = ref.watch(appBarVisibilityProvider);
+
+    ref.listen<AppLanguage>(languageProvider, (prev, next) {
+      final locale = ttsLocaleFromLanguage(next);
+      ref.read(ttsServiceProvider).safeSetLocale(locale);
+    });
 
     return SafeArea(
       child: Scaffold(
@@ -47,7 +56,6 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                 actions: const [SettingsMenu()],
               )
             : null,
-            
         body: OrientationBuilder(
           builder: (context, orientation) {
             final isPortrait = orientation == Orientation.portrait;
