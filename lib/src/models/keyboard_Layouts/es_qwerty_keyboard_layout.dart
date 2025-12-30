@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_item.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_layout.dart';
-import 'package:parkingson_key/src/features/uix/themes/app_colors.dart';
 
-final esAlphaAndVowelsKeyboardLayout = KeyboardLayout(
+final esQwertyKeyboardLayout = KeyboardLayout(
+  id: 'es_qwerty',
   // ───────────────── PORTRAIT ─────────────────
   portrait: [
     [
@@ -40,16 +39,16 @@ final esAlphaAndVowelsKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('z'),
     ],
     [
-      KeyboardItem.char('a', color: Colors.cyan),
-      KeyboardItem.char('e', color: Colors.cyan),
-      KeyboardItem.char('i', color: Colors.cyan),
-      KeyboardItem.char('o', color: Colors.cyan),
-      KeyboardItem.char('u', color: Colors.cyan),
+      KeyboardItem.char('a'),
+      KeyboardItem.char('e'),
+      KeyboardItem.char('i'),
+      KeyboardItem.char('o'),
+      KeyboardItem.char('u'),
     ],
     [
-      KeyboardItem.char('Sí', color: Colors.red),
-      KeyboardItem.char('No', color: Colors.red),
-      KeyboardItem.char('  ', color: Colors.grey),
+      KeyboardItem.char('Sí'),
+      KeyboardItem.char('No'),
+      KeyboardItem.char('  '),
     ],
     [
       KeyboardItem.dropdown(
@@ -96,15 +95,15 @@ final esAlphaAndVowelsKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('z'),
     ],
     [
-      KeyboardItem.char('Sí', color: Colors.red),
-      KeyboardItem.char('No', color: Colors.red),
+      KeyboardItem.char('Sí'),
+      KeyboardItem.char('No'),
 
-      KeyboardItem.char('a', color: Colors.cyan),
-      KeyboardItem.char('e', color: Colors.cyan),
-      KeyboardItem.char('i', color: Colors.cyan),
-      KeyboardItem.char('o', color: Colors.cyan),
-      KeyboardItem.char('u', color: Colors.cyan),
-      KeyboardItem.char('  ', color: AppColors.vowels),
+      KeyboardItem.char('a'),
+      KeyboardItem.char('e'),
+      KeyboardItem.char('i'),
+      KeyboardItem.char('o'),
+      KeyboardItem.char('u'),
+      KeyboardItem.char(' '),
     ],
     [
       KeyboardItem.dropdown(
