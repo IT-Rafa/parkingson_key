@@ -64,7 +64,8 @@ class KeyboardRow extends StatelessWidget {
           onPressed: () {
             insertFromKeyboardChar(controller, item.label!);
           },
-          color: item.color,
+          lightColor: item.lightColor,
+          darkColor: item.darkColor,
         );
 
       case KeyboardItemType.dropdown:
@@ -75,8 +76,8 @@ class KeyboardRow extends StatelessWidget {
             if (value == null) return;
             insertFromKeyboardDropdown(controller, value);
           },
-          color: item.color,
-        );
+          lightColor: item.lightColor,
+          darkColor: item.darkColor,        );
     }
   }
 }

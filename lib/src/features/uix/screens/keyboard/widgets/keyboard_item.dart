@@ -9,7 +9,8 @@ class KeyboardItem {
   final List<String>? items;
   final String? initialValue;
   final ValueChanged<String?>? onChanged;
-  final Color? color;
+  final Color? lightColor;
+  final Color? darkColor;
 
   const KeyboardItem._({
     required this.type,
@@ -18,14 +19,20 @@ class KeyboardItem {
     this.items,
     this.initialValue,
     this.onChanged,
-    this.color,
+    this.lightColor,
+    this.darkColor,
   });
 
-  factory KeyboardItem.char(String label, {Color? color}) {
+  factory KeyboardItem.char(
+    String label, {
+    Color? lightColor,
+    Color? darkColor,
+  }) {
     return KeyboardItem._(
       type: KeyboardItemType.char,
       label: label,
-      color: color,
+      lightColor: lightColor,
+      darkColor: darkColor,
     );
   }
 
@@ -34,13 +41,15 @@ class KeyboardItem {
     required List<String> items,
     String? initialValue,
     ValueChanged<String?>? onChanged,
-    Color? color,
+    final Color? lightColor,
+    final Color? darkColor,
   }) => KeyboardItem._(
     type: KeyboardItemType.dropdown,
     title: title,
     items: items,
     initialValue: initialValue,
     onChanged: onChanged,
-    color: color,
+    lightColor: lightColor,
+    darkColor: darkColor,
   );
 }

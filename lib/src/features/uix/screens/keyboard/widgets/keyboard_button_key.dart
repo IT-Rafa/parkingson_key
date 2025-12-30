@@ -10,7 +10,7 @@ class KeyboardButtonKey extends StatelessWidget {
     super.key,
     required this.label,
     required this.onPressed,
-    this.color,
+    this.color, Color? lightColor, Color? darkColor,
   });
 
   @override

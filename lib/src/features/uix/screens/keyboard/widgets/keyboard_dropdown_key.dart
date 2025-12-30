@@ -6,7 +6,7 @@ class KeyboardDropdownKey extends StatelessWidget {
     required this.title,
     required this.items,
     required this.onChanged,
-    this.color,
+    this.color, Color? darkColor, Color? lightColor,
   });
 
   final String title;
