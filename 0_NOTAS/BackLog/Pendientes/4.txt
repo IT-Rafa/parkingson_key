@@ -1,0 +1,13 @@
+Idioma:
+
+    En KeyboardScreen:
+        FIXED: AppBar, el título sale siempre en inglés: Parkingson key
+
+        - En teclado:
+            con idioma español
+                Dropdown sale en inglés, 
+            con idioma inglés están en español siempre.
+                botón: Guardar frase
+                botón: Enviar texto
+                dropdown: frases
+                

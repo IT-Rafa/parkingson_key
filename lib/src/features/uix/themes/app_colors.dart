@@ -20,6 +20,14 @@ class AppColors {
   static const Color foregroundAppBarLight = Colors.white;
   static const Color foregroundAppBarDark = Colors.white;
 
+  // key vowels color
+  static const Color keyVowelColorLight = Color.fromARGB(96, 0, 0, 0);
+  static const Color keyVowelColorDark = Colors.black38;
+
+  // key affirmative/negative color
+  static const Color keyYesNOColorLight = Colors.red;
+  static const Color keyYesNOColorDark = Colors.red;
+
   // Getters upon brightness
   static Color primary(BuildContext context) =>
       Theme.of(context).brightness == Brightness.light
@@ -35,7 +43,7 @@ class AppColors {
       Theme.of(context).brightness == Brightness.light
       ? Colors.white
       : Colors.black54;
-      
+
   static Color onKey(BuildContext context) =>
       Theme.of(context).brightness == Brightness.light
       ? Colors.black
@@ -58,4 +66,9 @@ class AppColors {
       Theme.of(context).brightness == Brightness.light
       ? foregroundAppBarLight
       : foregroundAppBarDark;
+
+        static Color vowels(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.light
+      ? keyVowelColorLight
+      : keyVowelColorDark;
 }

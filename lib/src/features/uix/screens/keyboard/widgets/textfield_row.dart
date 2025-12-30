@@ -5,7 +5,6 @@ import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/delete_
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/delete_char.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/delete_word.dart';
 
-
 class TextFieldRow extends ConsumerStatefulWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
@@ -38,7 +37,6 @@ class _TextFieldRowState extends ConsumerState<TextFieldRow> {
   Widget build(BuildContext context) {
     final ttsService = ref.read(ttsServiceProvider);
 
-
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -61,8 +59,7 @@ class _TextFieldRowState extends ConsumerState<TextFieldRow> {
                       },
                     ),
                     border: const OutlineInputBorder(),
-                    contentPadding:
-                        const EdgeInsets.symmetric(horizontal: 8),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 8),
                   ),
                 ),
               ),

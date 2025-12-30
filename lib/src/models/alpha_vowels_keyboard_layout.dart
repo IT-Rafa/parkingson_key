@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_item.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_layout.dart';
+import 'package:parkingson_key/src/features/uix/themes/app_colors.dart';
 
 final esAlphaAndVowelsKeyboardLayout = KeyboardLayout(
   // ───────────────── PORTRAIT ─────────────────
@@ -103,7 +104,7 @@ final esAlphaAndVowelsKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('i', color: Colors.cyan),
       KeyboardItem.char('o', color: Colors.cyan),
       KeyboardItem.char('u', color: Colors.cyan),
-      KeyboardItem.char('  ', color: Colors.grey),
+      KeyboardItem.char('  ', color: AppColors.vowels),
     ],
     [
       KeyboardItem.dropdown(

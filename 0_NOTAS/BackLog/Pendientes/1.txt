@@ -1,0 +1,16 @@
+Colores light/Dark
+
+En modo Dark:
+    - En textField:
+        - No se ve el texto.
+        - Icono sonido:
+            - muy claro. como borroso.
+    - Iconos de borrado (3) bajo textField:
+        - muy claro. como borroso.
+
+    - Keyboard.
+        - Teclas con color siguen con color de light
+            (Si,No, vocales, espacio, dropdowns)
+
+    - botones:
+        - Teclas usan mismo color de light

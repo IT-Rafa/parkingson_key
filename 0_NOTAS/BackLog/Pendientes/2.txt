@@ -1,0 +1,14 @@
+Fallos sónido.
+
+Al cambiar idioma en settins, salen avisos por logger:
+    MissingPluginExceptionzz
+        (No implementation found for 
+        method awaitSpeakCompletion 
+        on channel flutter_tts)
+
+    MissingPluginException
+        (No implementation found for 
+        method getLanguages 
+        on channel flutter_tts)
+
+    TTS setLocale failed (plugin not ready yet)
