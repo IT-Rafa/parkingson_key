@@ -29,6 +29,7 @@ class _TextFieldRowState extends ConsumerState<TextFieldRow> {
         iconSize: 30,
         onPressed: onTap,
         icon: Icon(icon),
+        color: Colors.black54,
       ),
     );
   }
@@ -51,14 +52,30 @@ class _TextFieldRowState extends ConsumerState<TextFieldRow> {
                   controller: widget.controller,
                   readOnly: true,
                   showCursor: true,
+                  style: const TextStyle(color: Colors.black87),
                   decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    hoverColor: const Color.fromRGBO(255, 255, 255, 1),
+
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.black87,
+                        width: 1.5,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.black87,
+                        width: 1.5,
+                      ),
+                    ),
                     suffixIcon: IconButton(
                       icon: const Icon(Icons.volume_up),
                       onPressed: () {
                         ttsService.speak(widget.controller.text);
                       },
                     ),
-                    border: const OutlineInputBorder(),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 8),
                   ),
                 ),
