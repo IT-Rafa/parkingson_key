@@ -72,12 +72,13 @@ class KeyboardRow extends StatelessWidget {
         return KeyboardDropdownKey(
           title: item.title!,
           items: item.items!,
-          onChanged: (value) {
+          onSelected: (value) {
             if (value == null) return;
             insertFromKeyboardDropdown(controller, value);
           },
           lightColor: item.lightColor,
-          darkColor: item.darkColor,        );
+          darkColor: item.darkColor,
+        );
     }
   }
 }

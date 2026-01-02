@@ -1,68 +1,92 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
-class KeyboardDropdownKey extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_key_container.dart';
+
+class KeyboardDropdownKey extends StatefulWidget {
   const KeyboardDropdownKey({
     super.key,
     required this.title,
     required this.items,
-    required this.onChanged,
-    this.color, Color? darkColor, Color? lightColor,
+    required this.onSelected,
+    this.color,
+    Color? darkColor,
+    Color? lightColor,
   });
 
   final String title;
   final List<String> items;
-  final ValueChanged<String?>? onChanged;
+  final ValueChanged<String?>? onSelected;
   final Color? color;
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      margin: const EdgeInsets.fromLTRB(4, 4, 4, 0),
-      decoration: BoxDecoration(
-        color: color ?? Colors.green[400],
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          isExpanded: true,
-          isDense: true,
-          icon: const Icon(Icons.arrow_drop_down, size: 30),
+  State<KeyboardDropdownKey> createState() => _KeyboardDropdownKeyState();
+}
 
-          // 👇 SIEMPRE visible
-          hint: _titleWidget(),
+class _KeyboardDropdownKeyState extends State<KeyboardDropdownKey> {
+  Timer? _timer;
 
-          // 👇 SIEMPRE visible incluso tras seleccionar
-          selectedItemBuilder: (context) {
-            return items.map((_) => _titleWidget()).toList();
-          },
-
-          items: items
-              .map(
-                (item) => DropdownMenuItem<String>(
-                  value: item,
-                  child: Center(child: Text(item)),
-                ),
-              )
-              .toList(),
-
-          // 👇 AQUÍ está la acción real
-          onChanged: (value) {
-            if (value == null) return;
-            onChanged?.call(value);
-          },
-        ),
-      ),
-    );
+  void _startAcceptTimer(BuildContext context) {
+    _timer?.cancel();
+    _timer = Timer(const Duration(milliseconds: 500), () {
+      _openMenu(context);
+    });
   }
 
-  Widget _titleWidget() {
-    return Center(
-      child: Text(
-        title,
-        textAlign: TextAlign.center,
-        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+  void _cancelTimer() {
+    _timer?.cancel();
+  }
+
+  void _openMenu(BuildContext context) async {
+    final RenderBox button = context.findRenderObject() as RenderBox;
+
+    final RenderBox overlay =
+        Overlay.of(context).context.findRenderObject() as RenderBox;
+
+    final RelativeRect position = RelativeRect.fromRect(
+      Rect.fromPoints(
+        button.localToGlobal(Offset.zero, ancestor: overlay),
+        button.localToGlobal(
+          button.size.bottomRight(Offset.zero),
+          ancestor: overlay,
+        ),
+      ),
+      Offset.zero & overlay.size,
+    );
+
+    final selected = await showMenu<String>(
+      context: context,
+      position: position,
+      items: widget.items
+          .map((e) => PopupMenuItem<String>(value: e, child: Text(e)))
+          .toList(),
+    );
+
+    if (selected != null) {
+      widget.onSelected?.call(selected);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTapDown: (_) => _startAcceptTimer(context),
+      onTapUp: (_) => _cancelTimer(),
+      onTapCancel: _cancelTimer,
+
+      child: Container(
+        height: 50,
+        margin: const EdgeInsets.fromLTRB(4, 4, 4, 0),
+        decoration: BoxDecoration(
+          color: widget.color ?? Colors.green[400],
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(color: Colors.grey),
+        ),
+        child: KeyboardKeyContainer(
+          color: widget.color,
+          child: Center(child: Text(widget.title, textAlign: TextAlign.center)),
+        ),
       ),
     );
   }
