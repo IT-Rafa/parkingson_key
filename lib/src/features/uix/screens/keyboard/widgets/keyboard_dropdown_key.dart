@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/accept_on_hold.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_key_container.dart';
 
 class KeyboardDropdownKey extends StatefulWidget {
@@ -10,8 +11,6 @@ class KeyboardDropdownKey extends StatefulWidget {
     required this.items,
     required this.onSelected,
     this.color,
-    Color? darkColor,
-    Color? lightColor,
   });
 
   final String title;
@@ -24,41 +23,30 @@ class KeyboardDropdownKey extends StatefulWidget {
 }
 
 class _KeyboardDropdownKeyState extends State<KeyboardDropdownKey> {
-  Timer? _timer;
+  final _accept = AcceptOnHold();
+  final GlobalKey _key = GlobalKey();
 
-  void _startAcceptTimer(BuildContext context) {
-    _timer?.cancel();
-    _timer = Timer(const Duration(milliseconds: 500), () {
-      _openMenu(context);
-    });
+  @override
+  void dispose() {
+    _accept.dispose();
+    super.dispose();
   }
 
-  void _cancelTimer() {
-    _timer?.cancel();
-  }
-
-  void _openMenu(BuildContext context) async {
-    final RenderBox button = context.findRenderObject() as RenderBox;
-
-    final RenderBox overlay =
-        Overlay.of(context).context.findRenderObject() as RenderBox;
-
-    final RelativeRect position = RelativeRect.fromRect(
-      Rect.fromPoints(
-        button.localToGlobal(Offset.zero, ancestor: overlay),
-        button.localToGlobal(
-          button.size.bottomRight(Offset.zero),
-          ancestor: overlay,
-        ),
-      ),
-      Offset.zero & overlay.size,
-    );
+  Future<void> _openMenu() async {
+    final box = _key.currentContext!.findRenderObject() as RenderBox;
+    final offset = box.localToGlobal(Offset.zero);
+    final size = box.size;
 
     final selected = await showMenu<String>(
       context: context,
-      position: position,
+      position: RelativeRect.fromLTRB(
+        offset.dx,
+        offset.dy + size.height,
+        offset.dx + size.width,
+        offset.dy,
+      ),
       items: widget.items
-          .map((e) => PopupMenuItem<String>(value: e, child: Text(e)))
+          .map((e) => PopupMenuItem(value: e, child: Text(e)))
           .toList(),
     );
 
@@ -70,10 +58,11 @@ class _KeyboardDropdownKeyState extends State<KeyboardDropdownKey> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      key: _key,
       behavior: HitTestBehavior.opaque,
-      onTapDown: (_) => _startAcceptTimer(context),
-      onTapUp: (_) => _cancelTimer(),
-      onTapCancel: _cancelTimer,
+      onTapDown: (_) => _accept.start(onAccept: _openMenu),
+      onTapUp: (_) => _accept.cancel(),
+      onTapCancel: _accept.cancel,
 
       child: Container(
         height: 50,

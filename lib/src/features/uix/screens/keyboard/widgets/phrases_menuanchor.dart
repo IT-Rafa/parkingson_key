@@ -35,7 +35,7 @@ class _PhrasesMenuAnchorState extends State<PhrasesMenuAnchor> {
           child: Text(
             phrase,
             softWrap: true,
-            style: TextStyle(fontSize: 15, height: 1.2),
+            style: TextStyle(fontSize: 20, height: 1.2),
           ),
         );
       }).toList(),

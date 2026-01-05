@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/appbar_visibility_notifier.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/app_button.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_button_key.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/phrases_menuanchor.dart';
 
 List<Widget> buildButtons(
@@ -14,36 +14,55 @@ List<Widget> buildButtons(
 }) {
   final showAppBar = ref.watch(appBarVisibilityProvider);
 
+  Widget keyBox({required Widget child, required bool isPortrait}) {
+    return SizedBox(
+      width: isPortrait ? 90 : 120,
+      height: isPortrait ? 45 : 45,
+      child: child,
+    );
+  }
+
   return [
-    AppButton(
-      label: showAppBar
-          ? 'appbar_hide'.tr()
-          : 'appbar_show'.tr(),
-      onPressed: () {
-        ref.read(appBarVisibilityProvider.notifier).toggle();
-      },
+    keyBox(
+      isPortrait: isPortrait,
+      child: KeyboardButtonKey(
+        label: showAppBar ? 'appbar_hide'.tr() : 'appbar_show'.tr(),
+        onAccepted: () {
+          ref.read(appBarVisibilityProvider.notifier).toggle();
+        },
+      ),
     ),
 
-    AppButton(
-      label: "Guardar frase",
-      onPressed: () {
-        final newText = "${controller.text} [TEXTO GUARDADO]";
-        controller.text = newText;
-        controller.selection = TextSelection.collapsed(offset: newText.length);
-      },
+    keyBox(
+      isPortrait: isPortrait,
+      child: KeyboardButtonKey(
+        label: "Guardar frase",
+        onAccepted: () {
+          final newText = "${controller.text} [TEXTO GUARDADO]";
+          controller.text = newText;
+          controller.selection = TextSelection.collapsed(
+            offset: newText.length,
+          );
+        },
+      ),
     ),
-    AppButton(
-      label: "Enviar texto",
-      onPressed: () {
-        final newText = "${controller.text} [TEXTO ENVIADO]";
-        controller.text = newText;
-        controller.selection = TextSelection.collapsed(offset: newText.length);
-      },
+    keyBox(
+      isPortrait: isPortrait,
+      child: KeyboardButtonKey(
+        label: "Enviar texto",
+        onAccepted: () {
+          final newText = "${controller.text} [TEXTO ENVIADO]";
+          controller.text = newText;
+          controller.selection = TextSelection.collapsed(
+            offset: newText.length,
+          );
+        },
+      ),
     ),
 
     SizedBox(
-      width: isPortrait ? 85 : 112,
-      height: isPortrait ? 55 : 35,
+      width: isPortrait ? 85 : 120,
+      height: isPortrait ? 35 : 45,
       child: PhrasesMenuAnchor(
         phrases: const ["¿En qué puedo ayudarte?", "Voy hacia allí", "Gracias"],
         onSelected: (value) {

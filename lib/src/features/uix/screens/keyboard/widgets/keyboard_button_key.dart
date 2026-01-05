@@ -1,20 +1,18 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/accept_on_hold.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_key_container.dart';
 
 class KeyboardButtonKey extends StatefulWidget {
   final String label;
-  final VoidCallback onPressed;
+  final VoidCallback onAccepted;
   final Color? color;
 
   const KeyboardButtonKey({
     super.key,
     required this.label,
-    required this.onPressed,
+    required this.onAccepted,
     this.color,
-    Color? lightColor,
-    Color? darkColor,
   });
 
   @override
@@ -22,31 +20,23 @@ class KeyboardButtonKey extends StatefulWidget {
 }
 
 class _KeyboardButtonKeyState extends State<KeyboardButtonKey> {
-Timer? _timer;
+  final _accept = AcceptOnHold();
 
-  void _startPress() {
-    _timer = Timer(const Duration(milliseconds: 500), () {
-      widget.onPressed(); // ✅ aquí se acepta la tecla
-    });
-  }
 
-  void _cancelPress() {
-    _timer?.cancel();
-    _timer = null;
-  }
 
   @override
   void dispose() {
-    _timer?.cancel();
+    _accept.dispose();
     super.dispose();
   }
   
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTapDown: (_) => _startPress(),
-      onTapUp: (_) => _cancelPress(),
-      onTapCancel: _cancelPress,
+     behavior: HitTestBehavior.opaque,
+      onTapDown: (_) => _accept.start(onAccept: widget.onAccepted),
+      onTapUp: (_) => _accept.cancel(),
+      onTapCancel: _accept.cancel,
 
       child: KeyboardKeyContainer(
         color: widget.color,
