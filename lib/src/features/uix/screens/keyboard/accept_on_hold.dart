@@ -1,25 +1,15 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/services.dart';
-import 'package:vibration/vibration.dart';
 
 class AcceptOnHold {
   Timer? _timer;
 
   void start({
     required VoidCallback onAccept,
-    Duration duration = const Duration(milliseconds: 500),
-    bool haptic = true,
+    required Duration duration,
   }) {
     cancel();
-    _timer = Timer(duration, () async {
-      if (Platform.isAndroid || Platform.isIOS) {
-        if (await Vibration.hasVibrator()) {
-          Vibration.vibrate(duration: 50);
-        }
-      }
-      onAccept();
-    });
+    _timer = Timer(duration, onAccept);
   }
 
   void cancel() {
@@ -27,7 +17,5 @@ class AcceptOnHold {
     _timer = null;
   }
 
-  void dispose() {
-    cancel();
-  }
+  void dispose() => cancel();
 }

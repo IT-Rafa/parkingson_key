@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/accept_on_hold.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_accessibility_profiles.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_key_container.dart';
 
 class KeyboardDropdownKey extends StatefulWidget {
@@ -57,10 +58,15 @@ class _KeyboardDropdownKeyState extends State<KeyboardDropdownKey> {
 
   @override
   Widget build(BuildContext context) {
+    final profile = KeyboardAccessibilityProfiles.medium;
     return GestureDetector(
       key: _key,
       behavior: HitTestBehavior.opaque,
-      onTapDown: (_) => _accept.start(onAccept: _openMenu),
+      onTapDown: (_) => _accept.start(
+        onAccept: _openMenu,
+        duration: profile.acceptHoldDuration,
+      ),
+
       onTapUp: (_) => _accept.cancel(),
       onTapCancel: _accept.cancel,
 

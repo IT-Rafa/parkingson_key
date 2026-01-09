@@ -56,25 +56,47 @@ class KeyboardRow extends StatelessWidget {
     }
   }
 
-  Widget _buildItem(KeyboardItem item) {
-    switch (item.type) {
-      case KeyboardItemType.char:
-        return KeyboardButtonKey(
-          label: item.label!,
-          onAccepted: () {
-            insertFromKeyboardChar(controller, item.label!);
-          },
-        );
+Widget _buildItem(KeyboardItem item) {
+  switch (item.type) {
+    case KeyboardItemType.char:
+      return KeyboardButtonKey(
+        label: item.label!,
+        onAccepted: () {
+          // 1️⃣ bloquea repetición
+          if (!repeatController.canAccept(item, profile.repeatBlockDuration)) {
+            return;
+          }
 
-      case KeyboardItemType.dropdown:
-        return KeyboardDropdownKey(
-          title: item.title!,
-          items: item.items!,
-          onSelected: (value) {
-            if (value == null) return;
-            insertFromKeyboardDropdown(controller, value);
-          },
-        );
-    }
+          // 2️⃣ inserta el carácter
+          insertFromKeyboardChar(controller, item.label!);
+
+          // 3️⃣ feedback háptico si está activado
+          if (profile.hapticEnabled) {
+            HapticFeedbackService.tap();
+          }
+        },
+        acceptDuration: profile.acceptHoldDuration, // <-- pasamos duración
+      );
+
+    case KeyboardItemType.dropdown:
+      return KeyboardDropdownKey(
+        title: item.title!,
+        items: item.items!,
+        onSelected: (value) {
+          if (value == null) return;
+
+          if (!repeatController.canAccept(item, profile.repeatBlockDuration)) {
+            return;
+          }
+
+          insertFromKeyboardDropdown(controller, value);
+
+          if (profile.hapticEnabled) {
+            HapticFeedbackService.tap();
+          }
+        },
+      );
   }
+}
+
 }

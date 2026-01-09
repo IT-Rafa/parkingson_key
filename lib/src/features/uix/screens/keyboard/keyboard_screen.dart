@@ -10,6 +10,7 @@ import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/portrai
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/settings_menu.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row.dart';
 
+// Widget keyboard_screen
 class KeyboardScreen extends ConsumerStatefulWidget {
   const KeyboardScreen({super.key});
 
@@ -17,8 +18,12 @@ class KeyboardScreen extends ConsumerStatefulWidget {
   ConsumerState<KeyboardScreen> createState() => _KeyboardScreenState();
 }
 
+// State of the keyboard screen
 class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
+  // Controller of the text field on keyboard_screen
   late final TextEditingController _controller;
+
+  // Focus node for the text field
   late final FocusNode _focusNode;
 
   @override
@@ -41,8 +46,10 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Watch the app bar visibility provider
     final showAppBar = ref.watch(appBarVisibilityProvider);
 
+    // Listen for changes in the language provider to update TTS locale
     ref.listen(languageProvider, (prev, next) {
       final locale = ttsLocaleFromLanguage(next);
       ref.read(ttsServiceProvider).safeSetLocale(locale);
@@ -69,6 +76,7 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                     color: Colors.grey[300],
                     borderRadius: BorderRadius.circular(8),
                   ),
+                  
                   child: TextFieldRow(
                     controller: _controller,
                     focusNode: _focusNode,

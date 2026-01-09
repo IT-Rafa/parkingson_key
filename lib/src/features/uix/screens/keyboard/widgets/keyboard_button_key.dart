@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/accept_on_hold.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_accessibility_profiles.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_key_container.dart';
 
 class KeyboardButtonKey extends StatefulWidget {
@@ -22,21 +22,24 @@ class KeyboardButtonKey extends StatefulWidget {
 class _KeyboardButtonKeyState extends State<KeyboardButtonKey> {
   final _accept = AcceptOnHold();
 
-
-
   @override
   void dispose() {
     _accept.dispose();
     super.dispose();
   }
-  
+
   @override
   Widget build(BuildContext context) {
+        final profile = KeyboardAccessibilityProfiles.medium;
+
     return GestureDetector(
-     behavior: HitTestBehavior.opaque,
-      onTapDown: (_) => _accept.start(onAccept: widget.onAccepted),
+      behavior: HitTestBehavior.opaque,
+      onTapDown: (_) => _accept.start(
+        onAccept: widget.onAccepted,
+        duration: profile.acceptHoldDuration,
+      ),
       onTapUp: (_) => _accept.cancel(),
-      onTapCancel: _accept.cancel,
+      onTapCancel: () => _accept.cancel(),
 
       child: KeyboardKeyContainer(
         color: widget.color,
@@ -47,7 +50,7 @@ class _KeyboardButtonKeyState extends State<KeyboardButtonKey> {
               padding: const EdgeInsets.symmetric(horizontal: 6),
               child: FittedBox(
                 fit: BoxFit.scaleDown, // 👈 solo reduce
-      
+
                 child: Text(
                   widget.label.toUpperCase(),
                   style: TextStyle(
