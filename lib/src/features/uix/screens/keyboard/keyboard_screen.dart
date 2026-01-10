@@ -5,6 +5,8 @@ import 'package:parkingson_key/src/core/providers/appbar_visibility_notifier.dar
 import 'package:parkingson_key/src/core/providers/language_config.dart';
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/core/providers/tts_service_provider.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_accessibility_profile.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_repeat_controller.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/landscape_layout.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/portrait_layout.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/settings_menu.dart';
@@ -21,17 +23,26 @@ class KeyboardScreen extends ConsumerStatefulWidget {
 // State of the keyboard screen
 class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
   // Controller of the text field on keyboard_screen
-  late final TextEditingController _controller;
+  late final TextEditingController _textFieldController;
 
   // Focus node for the text field
   late final FocusNode _focusNode;
 
+  late final KeyboardRepeatController _repeatController;
+  late final KeyboardAccessibilityProfile _profile;
+
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
+    _textFieldController = TextEditingController();
     _focusNode = FocusNode();
-
+    _repeatController = KeyboardRepeatController();
+    _profile = const KeyboardAccessibilityProfile(
+      name: 'default',
+      acceptHoldDuration: Duration(milliseconds: 400),
+      repeatBlockDuration: Duration(milliseconds: 120),
+      hapticEnabled: true,
+    );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _focusNode.requestFocus();
     });
@@ -39,7 +50,7 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
 
   @override
   void dispose() {
-    _controller.dispose();
+    _textFieldController.dispose();
     _focusNode.dispose();
     super.dispose();
   }
@@ -76,16 +87,24 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                     color: Colors.grey[300],
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  
+
                   child: TextFieldRow(
-                    controller: _controller,
+                    controller: _textFieldController,
                     focusNode: _focusNode,
                   ),
                 ),
                 Expanded(
                   child: isPortrait
-                      ? PortraitLayout(controller: _controller)
-                      : LandscapeLayout(controller: _controller),
+                      ? PortraitLayout(
+                          controller: _textFieldController,
+                          repeatController: _repeatController,
+                          profile: _profile,
+                        )
+                      : LandscapeLayout(
+                          controller: _textFieldController,
+                          repeatController: _repeatController,
+                          profile: _profile,
+                        ),
                 ),
               ],
             );

@@ -2,14 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_type_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/build_buttons.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_accessibility_profile.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_body.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_layout_resolver.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_repeat_controller.dart';
 
 class LandscapeLayout extends ConsumerWidget {
-  const LandscapeLayout({super.key, required this.controller});
+  const LandscapeLayout({
+    super.key,
+    required this.controller,
+    required this.repeatController,
+    required this.profile,
+  });
 
   final TextEditingController controller;
-
+  final KeyboardRepeatController repeatController;
+  final KeyboardAccessibilityProfile profile;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final keyboardType = ref.watch(keyboardTypeProvider);
@@ -29,6 +37,8 @@ class LandscapeLayout extends ConsumerWidget {
           controller: controller,
           isPortrait: false,
           margin: const EdgeInsets.fromLTRB(8, 4, 0, 8),
+          repeatController: repeatController,
+          profile: profile,
         ),
 
         Container(

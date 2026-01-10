@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:parkingson_key/src/core/services/haptic_feedback_service.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/insert_from_keyboard_char.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/insert_from_keyboard_dropdown.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_accessibility_profile.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_button_key.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_dropdown_key.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_item.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_repeat_controller.dart';
 
 class KeyboardRow extends StatelessWidget {
   const KeyboardRow({
@@ -11,11 +14,15 @@ class KeyboardRow extends StatelessWidget {
     required this.items,
     required this.controller,
     required this.isPortrait,
+    required this.repeatController,
+    required this.profile,
   });
 
   final List<KeyboardItem> items;
   final TextEditingController controller;
   final bool isPortrait;
+  final KeyboardRepeatController repeatController;
+  final KeyboardAccessibilityProfile profile;
 
   @override
   Widget build(BuildContext context) {
@@ -56,47 +63,51 @@ class KeyboardRow extends StatelessWidget {
     }
   }
 
-Widget _buildItem(KeyboardItem item) {
-  switch (item.type) {
-    case KeyboardItemType.char:
-      return KeyboardButtonKey(
-        label: item.label!,
-        onAccepted: () {
-          // 1️⃣ bloquea repetición
-          if (!repeatController.canAccept(item, profile.repeatBlockDuration)) {
-            return;
-          }
+  Widget _buildItem(KeyboardItem item) {
+    switch (item.type) {
+      case KeyboardItemType.char:
+        return KeyboardButtonKey(
+          label: item.label!,
+          onAccepted: () {
+            // 1️⃣ bloquea repetición
+            if (!repeatController.canAccept(
+              item,
+              profile.repeatBlockDuration,
+            )) {
+              return;
+            }
 
-          // 2️⃣ inserta el carácter
-          insertFromKeyboardChar(controller, item.label!);
+            // 2️⃣ inserta el carácter
+            insertFromKeyboardChar(controller, item.label!);
 
-          // 3️⃣ feedback háptico si está activado
-          if (profile.hapticEnabled) {
-            HapticFeedbackService.tap();
-          }
-        },
-        acceptDuration: profile.acceptHoldDuration, // <-- pasamos duración
-      );
+            // 3️⃣ feedback háptico si está activado
+            if (profile.hapticEnabled) {
+              HapticFeedbackService.tap();
+            }
+          },
+        );
 
-    case KeyboardItemType.dropdown:
-      return KeyboardDropdownKey(
-        title: item.title!,
-        items: item.items!,
-        onSelected: (value) {
-          if (value == null) return;
+      case KeyboardItemType.dropdown:
+        return KeyboardDropdownKey(
+          title: item.title!,
+          items: item.items!,
+          onSelected: (value) {
+            if (value == null) return;
 
-          if (!repeatController.canAccept(item, profile.repeatBlockDuration)) {
-            return;
-          }
+            if (!repeatController.canAccept(
+              item,
+              profile.repeatBlockDuration,
+            )) {
+              return;
+            }
 
-          insertFromKeyboardDropdown(controller, value);
+            insertFromKeyboardDropdown(controller, value);
 
-          if (profile.hapticEnabled) {
-            HapticFeedbackService.tap();
-          }
-        },
-      );
+            if (profile.hapticEnabled) {
+              HapticFeedbackService.tap();
+            }
+          },
+        );
+    }
   }
-}
-
 }

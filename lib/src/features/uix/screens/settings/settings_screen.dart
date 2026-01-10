@@ -77,33 +77,7 @@ class SettingsScreen extends ConsumerWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 15),
-              Row(
-                children: [
-                  const Text("SETTINGS_theme").tr(),
-                  const SizedBox(width: 20),
-                  DropdownButton<String>(
-                    value: theme,
-                    items: [
-                      DropdownMenuItem(
-                        value: "light",
-                        child: Text("SETTINGS_light").tr(),
-                      ),
-                      DropdownMenuItem(
-                        value: "dark",
-                        child: Text("SETTINGS_dark").tr(),
-                      ),
-                      DropdownMenuItem(
-                        value: "system",
-                        child: Text("SETTINGS_system").tr(),
-                      ),
-                    ],
-                    onChanged: (value) {
-                      ref.read(themeProvider.notifier).setTheme(value!);
-                    },
-                  ),
-                ],
-              ),
+
 
               const SizedBox(height: 15),
             ],

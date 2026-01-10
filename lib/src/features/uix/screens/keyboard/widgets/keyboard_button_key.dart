@@ -12,7 +12,7 @@ class KeyboardButtonKey extends StatefulWidget {
     super.key,
     required this.label,
     required this.onAccepted,
-    this.color,
+    this.color, 
   });
 
   @override

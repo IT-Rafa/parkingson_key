@@ -26,5 +26,5 @@ class AppBarVisibilityNotifier extends Notifier<bool> {
 
 final appBarVisibilityProvider =
     NotifierProvider<AppBarVisibilityNotifier, bool>(
-  AppBarVisibilityNotifier.new,
-);
+      AppBarVisibilityNotifier.new,
+    );

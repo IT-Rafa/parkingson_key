@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_accessibility_profile.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_item.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_repeat_controller.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_row.dart';
 
 class KeyboardBody extends StatelessWidget {
@@ -9,7 +11,12 @@ class KeyboardBody extends StatelessWidget {
     required this.controller,
     required this.isPortrait,
     required this.margin,
+    required this.repeatController,
+    required this.profile,
   });
+
+  final KeyboardRepeatController repeatController;
+  final KeyboardAccessibilityProfile profile;
 
   final List<List<KeyboardItem>> rows;
   final TextEditingController controller;
@@ -34,6 +41,8 @@ class KeyboardBody extends StatelessWidget {
                     items: row,
                     controller: controller,
                     isPortrait: isPortrait,
+                    repeatController: repeatController,
+                    profile: profile,
                   ),
                 ),
               )
