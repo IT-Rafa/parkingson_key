@@ -18,6 +18,7 @@ class LandscapeLayout extends ConsumerWidget {
   final TextEditingController controller;
   final KeyboardRepeatController repeatController;
   final KeyboardAccessibilityProfile profile;
+  
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final keyboardType = ref.watch(keyboardTypeProvider);

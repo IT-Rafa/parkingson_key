@@ -2,10 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/appbar_visibility_notifier.dart';
+import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart';
 import 'package:parkingson_key/src/core/providers/language_config.dart';
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/core/providers/tts_service_provider.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_accessibility_profile.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_repeat_controller.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/landscape_layout.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/portrait_layout.dart';
@@ -29,7 +29,6 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
   late final FocusNode _focusNode;
 
   late final KeyboardRepeatController _repeatController;
-  late final KeyboardAccessibilityProfile _profile;
 
   @override
   void initState() {
@@ -37,12 +36,7 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
     _textFieldController = TextEditingController();
     _focusNode = FocusNode();
     _repeatController = KeyboardRepeatController();
-    _profile = const KeyboardAccessibilityProfile(
-      name: 'default',
-      acceptHoldDuration: Duration(milliseconds: 400),
-      repeatBlockDuration: Duration(milliseconds: 120),
-      hapticEnabled: true,
-    );
+    
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _focusNode.requestFocus();
     });
@@ -59,6 +53,7 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
   Widget build(BuildContext context) {
     // Watch the app bar visibility provider
     final showAppBar = ref.watch(appBarVisibilityProvider);
+final profile = ref.watch(keyboardProfileProvider);
 
     // Listen for changes in the language provider to update TTS locale
     ref.listen(languageProvider, (prev, next) {
@@ -98,12 +93,13 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
                       ? PortraitLayout(
                           controller: _textFieldController,
                           repeatController: _repeatController,
-                          profile: _profile,
+                          profile:    profile, 
+
                         )
                       : LandscapeLayout(
                           controller: _textFieldController,
                           repeatController: _repeatController,
-                          profile: _profile,
+                          profile:    profile, 
                         ),
                 ),
               ],

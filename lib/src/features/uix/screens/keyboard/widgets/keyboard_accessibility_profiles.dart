@@ -6,6 +6,7 @@ class KeyboardAccessibilityProfiles {
     acceptHoldDuration: Duration(milliseconds: 300),
     repeatBlockDuration: Duration(milliseconds: 200),
     hapticEnabled: true,
+    hapticLevel: HapticLevel.soft,
   );
 
   static const medium = KeyboardAccessibilityProfile(
@@ -13,6 +14,7 @@ class KeyboardAccessibilityProfiles {
     acceptHoldDuration: Duration(milliseconds: 500),
     repeatBlockDuration: Duration(milliseconds: 350),
     hapticEnabled: true,
+    hapticLevel: HapticLevel.strong,
   );
 
   static const strong = KeyboardAccessibilityProfile(
@@ -20,5 +22,6 @@ class KeyboardAccessibilityProfiles {
     acceptHoldDuration: Duration(milliseconds: 800),
     repeatBlockDuration: Duration(milliseconds: 600),
     hapticEnabled: true,
+    hapticLevel: HapticLevel.strong,
   );
 }

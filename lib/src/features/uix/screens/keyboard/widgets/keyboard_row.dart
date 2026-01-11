@@ -82,7 +82,7 @@ class KeyboardRow extends StatelessWidget {
 
             // 3️⃣ feedback háptico si está activado
             if (profile.hapticEnabled) {
-              HapticFeedbackService.tap();
+              HapticFeedbackService.tap(profile);
             }
           },
         );
@@ -104,7 +104,7 @@ class KeyboardRow extends StatelessWidget {
             insertFromKeyboardDropdown(controller, value);
 
             if (profile.hapticEnabled) {
-              HapticFeedbackService.tap();
+              HapticFeedbackService.tap(profile);
             }
           },
         );

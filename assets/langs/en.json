@@ -18,5 +18,7 @@
     "SETTINGS_theme": "Theme:",
     "SETTINGS_light": "Light",
     "SETTINGS_dark": "Dark",
-    "SETTINGS_system": "System"
+    "SETTINGS_system": "System",
+    "SETTINGS_key_delay": "Key Accept Delay",
+    "SETTINGS_haptic": "Vibration On"
 }

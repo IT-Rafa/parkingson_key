@@ -1,13 +1,17 @@
-import 'dart:io';
-
-import 'package:vibration/vibration.dart';
+import 'package:flutter/services.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_accessibility_profile.dart';
 
 class HapticFeedbackService {
-  static Future<void> tap() async {
-    if (Platform.isAndroid || Platform.isIOS) {
-      if (await Vibration.hasVibrator()) {
-        Vibration.vibrate(duration: 40);
-      }
+  static void tap(KeyboardAccessibilityProfile profile) {
+    if (!profile.hapticEnabled) return;
+
+    switch (profile.hapticLevel) {
+      case HapticLevel.soft:
+        HapticFeedback.lightImpact();
+        break;
+      case HapticLevel.strong:
+        HapticFeedback.heavyImpact();
+        break;
     }
   }
 }

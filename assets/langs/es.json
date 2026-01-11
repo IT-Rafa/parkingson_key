@@ -11,7 +11,6 @@
     "KEYBOARD_phrases": "Frases",
     "appbar_show": "Mostrar título",
     "appbar_hide": "Ocultar título",
-    
     "SETTINGS_settings": "Configuración",
     "SETTINGS_language": "Idioma:",
     "SETTINGS_english": "Inglés",
@@ -19,5 +18,7 @@
     "SETTINGS_theme": "Tema:",
     "SETTINGS_light": "Claro",
     "SETTINGS_dark": "Oscuro",
-    "SETTINGS_system": "Sistema"
+    "SETTINGS_system": "Sistema",
+    "SETTINGS_key_delay": "Retraso para aceptar tecla",
+    "SETTINGS_haptic": "Vibración activa"
 }
