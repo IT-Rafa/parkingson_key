@@ -26,6 +26,10 @@ Ahora mismo tengo, en la parte lib de flutter:
   |  |_ uix
   |     |_ screens
   |     |  |_ keyboard
+  |     |     |_ widgets
+  |     |     |  |_
+  |     |     |_ keyboard_screen.dart
+  
   |     |  |_ settings
   |     |  
   |     |_ themes
