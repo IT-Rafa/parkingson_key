@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class SettingsMenu extends StatelessWidget {
-  const SettingsMenu({
+class SettingsIconButton extends StatelessWidget {
+  const SettingsIconButton({
     super.key,
   });
 

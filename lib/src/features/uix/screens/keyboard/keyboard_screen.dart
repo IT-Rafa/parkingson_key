@@ -6,11 +6,11 @@ import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart
 import 'package:parkingson_key/src/core/providers/language_config.dart';
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/core/providers/tts_service_provider.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_repeat_controller.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/landscape_layout.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/portrait_layout.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/settings_menu.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/utils/keyboard_repeat_controller.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/landscape_layout.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/portrait_layout.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/app_bar/settings_icon_button.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/textfield_row.dart';
 
 // Widget keyboard_screen
 class KeyboardScreen extends ConsumerStatefulWidget {
@@ -66,7 +66,7 @@ final profile = ref.watch(keyboardProfileProvider);
         appBar: showAppBar
             ? AppBar(
                 title: const Text("KEYBOARD_title").tr(),
-                actions: const [SettingsMenu()],
+                actions: const [SettingsIconButton()],
               )
             : null,
         body: OrientationBuilder(

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_accessibility_profile.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/utils/keyboard_accessibility_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 

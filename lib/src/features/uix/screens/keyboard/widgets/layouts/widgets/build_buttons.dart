@@ -2,8 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/appbar_visibility_notifier.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_button_key.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/phrases_menuanchor.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_button_key.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/phrases_menuanchor.dart';
 
 List<Widget> buildButtons(
   BuildContext context, {

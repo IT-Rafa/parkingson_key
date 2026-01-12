@@ -1,0 +1,36 @@
+Ahora mismo tengo, en la parte lib de flutter:
+..\lib
+|_ main.dart
+|
+|_src
+  |_ core
+  |  |_ providers
+  |  |  |_ appbar_visibility_notifier.dart
+  |  |  |_ app_language_enum.dart
+  |  |  |_ app_settings_service_provider.dart
+  |  |  |_ keyboard_profile_provider.dart
+  |  |  |_ keyboard_type_provider.dart
+  |  |  |_ language_config.dart
+  |  |  |_ language_provider.dart
+  |  |  |_ logger_provider.dart
+  |  |  |_ shared_prefs_provider.dart
+  |  |  |_ theme_provider.dart
+  |  |  |_ tts_service_provider.dart
+  |  |
+  |  |_ services
+  |  |  |_ app_settings_service.dart
+  |  |  |_ haptic_feedback_service.dart
+  |  |  |_ tts_service.dart
+  | 
+  |_ features
+  |  |_ uix
+  |     |_ screens
+  |     |  |_ keyboard
+  |     |  |_ settings
+  |     |  
+  |     |_ themes
+  |        |_ app_colors.dart
+  |        |_ my_themes.dart
+  |
+  |_ models
+     |_

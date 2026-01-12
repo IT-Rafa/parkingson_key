@@ -5,8 +5,8 @@ import 'package:parkingson_key/src/core/providers/app_language_enum.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart';
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/core/providers/theme_provider.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/locale_from_language_code.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_accessibility_profile.dart';
+import 'package:parkingson_key/src/features/uix/screens/settings/utils/locale_from_language_code.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/utils/keyboard_accessibility_profile.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});

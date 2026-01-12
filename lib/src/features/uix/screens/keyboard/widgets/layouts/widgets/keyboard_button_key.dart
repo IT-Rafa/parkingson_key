@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/accept_on_hold.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_accessibility_profiles.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_key_container.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/utils/accept_on_hold.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/utils/keyboard_accessibility_profiles.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_key_container.dart';
 
 class KeyboardButtonKey extends StatefulWidget {
   final String label;

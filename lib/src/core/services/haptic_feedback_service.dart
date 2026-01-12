@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/keyboard_accessibility_profile.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/utils/keyboard_accessibility_profile.dart';
 
 class HapticFeedbackService {
   static void tap(KeyboardAccessibilityProfile profile) {
