@@ -2,11 +2,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/app_language_enum.dart';
+import 'package:parkingson_key/src/core/providers/keyboard_preset_provider.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart';
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/core/providers/theme_provider.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/utils/keyboard_accessibility_profiles.dart';
 import 'package:parkingson_key/src/features/uix/screens/settings/utils/locale_from_language_code.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/utils/keyboard_accessibility_profile.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_preset.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
@@ -16,6 +19,7 @@ class SettingsScreen extends ConsumerWidget {
     final AppLanguage lang = ref.watch(languageProvider);
     final String theme = ref.watch(themeProvider);
     final profile = ref.watch(keyboardProfileProvider);
+    final preset = ref.watch(keyboardPresetProvider);
 
     return SafeArea(
       child: Scaffold(
@@ -96,7 +100,7 @@ class SettingsScreen extends ConsumerWidget {
                       .setAcceptHold(Duration(milliseconds: v.round()));
                 },
               ),
-              
+
               const SizedBox(height: 20),
               Row(
                 children: [
@@ -133,6 +137,43 @@ class SettingsScreen extends ConsumerWidget {
                         ref
                             .read(keyboardProfileProvider.notifier)
                             .setHapticLevel(value);
+                      }
+                    },
+                  ),
+                ],
+              ),
+
+              Row(
+                children: [
+                  const Text("Perfil de accesibilidad"),
+                  const SizedBox(width: 20),
+                  DropdownButton<KeyboardAccessibilityPreset>(
+                    value: preset,
+                    items: const [
+                      DropdownMenuItem(
+                        value: KeyboardAccessibilityPreset.light,
+                        child: Text("Leve"),
+                      ),
+                      DropdownMenuItem(
+                        value: KeyboardAccessibilityPreset.medium,
+                        child: Text("Medio"),
+                      ),
+                      DropdownMenuItem(
+                        value: KeyboardAccessibilityPreset.strong,
+                        child: Text("Fuerte"),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      if (value != null) {
+                        ref
+                            .read(keyboardPresetProvider.notifier)
+                            .setPreset(value);
+
+                        final profile =
+                            KeyboardAccessibilityProfiles.presets[value]!;
+                        ref
+                            .read(keyboardProfileProvider.notifier)
+                            .setProfile(profile);
                       }
                     },
                   ),

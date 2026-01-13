@@ -6,7 +6,7 @@ import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart
 import 'package:parkingson_key/src/core/providers/language_config.dart';
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/core/providers/tts_service_provider.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/utils/keyboard_repeat_controller.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/controllers/keyboard_repeat_controller.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/landscape_layout.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/portrait_layout.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/app_bar/settings_icon_button.dart';

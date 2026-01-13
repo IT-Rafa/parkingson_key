@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/tts_service_provider.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/delete_all.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/delete_char.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/delete_word.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/utils/delete_all.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/utils/delete_char.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/utils/delete_word.dart';
 
 class TextFieldRow extends ConsumerStatefulWidget {
   final TextEditingController controller;

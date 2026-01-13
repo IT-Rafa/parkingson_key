@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parkingson_key/src/models/keyboard_type.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_type_enum.dart';
 
 final keyboardTypeProvider =
     NotifierProvider<KeyboardTypeController, KeyboardType>(

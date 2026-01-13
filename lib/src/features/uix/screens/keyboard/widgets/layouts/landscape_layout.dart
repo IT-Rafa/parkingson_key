@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_type_provider.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/build_buttons.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/utils/keyboard_accessibility_profile.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_layout_resolver.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/utils/keyboard_repeat_controller.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/build_action_buttons.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/keyboard_body.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_layout_resolver.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/controllers/keyboard_repeat_controller.dart';
 
 class LandscapeLayout extends ConsumerWidget {
   const LandscapeLayout({
@@ -18,18 +18,11 @@ class LandscapeLayout extends ConsumerWidget {
   final TextEditingController controller;
   final KeyboardRepeatController repeatController;
   final KeyboardAccessibilityProfile profile;
-  
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final keyboardType = ref.watch(keyboardTypeProvider);
-    final layout = resolveKeyboardLayout(keyboardType);
-
-    final buttons = buildButtons(
-      context,
-      ref: ref,
-      controller: controller,
-      isPortrait: false,
-    );
+    final layout = keyboardLayoutResolve(keyboardType);
 
     return Row(
       children: [
@@ -51,7 +44,12 @@ class LandscapeLayout extends ConsumerWidget {
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: buttons,
+            children: buildActionButtons(
+              context,
+              ref: ref,
+              controller: controller,
+              isPortrait: false,
+            ),
           ),
         ),
       ],

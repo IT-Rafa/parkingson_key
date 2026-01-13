@@ -1,8 +1,8 @@
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/utils/keyboard_item.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_layout.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_layout.dart';
 
-final esAbcdeKeyboardLayout = KeyboardLayout(
-  id: 'es_abcde',
+final esConsonantsVowelsKeyboardLayout = KeyboardLayout(
+  id: 'es_consonants_vowels',
   // ───────────────── PORTRAIT ─────────────────
   portrait: [
     [
