@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart';
+import 'package:parkingson_key/src/core/services/feedback_service.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/utils/accept_on_hold.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/keyboard_key_container.dart';
-import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
-import 'package:vibration/vibration.dart';
 
 class KeyboardButtonKey extends ConsumerStatefulWidget {
   final String label;
@@ -43,15 +42,12 @@ class _KeyboardButtonKeyState extends ConsumerState<KeyboardButtonKey> {
           onAccept: () {
             widget.onAccepted();
 
-            if (profile.hapticEnabled) {
-              Vibration.vibrate(
-                duration: 50,
-                amplitude: profile.hapticLevel == HapticLevel.strong
-                    ? 255
-                    : 100,
-              );
-            }
+            FeedbackService.accept(
+              messenger: ScaffoldMessenger.of(context),
+              profile: profile,
+            );
           },
+
           duration: profile.acceptHoldDuration,
         );
       },

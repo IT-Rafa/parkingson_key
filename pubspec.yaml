@@ -7,6 +7,7 @@ environment:
   sdk: ^3.9.2
 
 dependencies:
+  audioplayers: ^6.5.1
   auto_size_text: ^3.0.0
   easy_localization: ^3.0.8
   flutter:
@@ -26,6 +27,8 @@ flutter:
   uses-material-design: true
   assets:
     - assets/langs/
+    - assets/fonts/
+    - assets/sounds/mouse-click.mp3
 
   fonts:
     - family: RobotoMono

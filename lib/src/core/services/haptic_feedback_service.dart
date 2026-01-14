@@ -1,17 +1,20 @@
-import 'package:flutter/services.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
+import 'package:vibration/vibration.dart';
 
 class HapticFeedbackService {
-  static void tap(KeyboardAccessibilityProfile profile) {
+  static Future<void> tap(KeyboardAccessibilityProfile profile) async {
     if (!profile.hapticEnabled) return;
 
-    switch (profile.hapticLevel) {
-      case HapticLevel.soft:
-        HapticFeedback.lightImpact();
-        break;
-      case HapticLevel.strong:
-        HapticFeedback.heavyImpact();
-        break;
+    try {
+      final hasVibrator = await Vibration.hasVibrator();
+      if (hasVibrator != true) return;
+
+      await Vibration.vibrate(
+        duration: 40,
+        amplitude: profile.hapticLevel == HapticLevel.strong ? 255 : 80,
+      );
+    } catch (_) {
+      // Desktop / Web / sin motor háptico
     }
   }
 }
