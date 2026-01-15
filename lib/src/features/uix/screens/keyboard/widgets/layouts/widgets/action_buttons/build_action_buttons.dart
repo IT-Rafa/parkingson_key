@@ -34,16 +34,19 @@ List<Widget> buildActionButtons(
 
     keyBox(
       isPortrait: isPortrait,
-      child: KeyboardButtonKey(
-        label: "Guardar frase",
-        onAccepted: () {
-          final newText = "${controller.text} [TEXTO GUARDADO]";
-          controller.text = newText;
-          controller.selection = TextSelection.collapsed(
-            offset: newText.length,
-          );
-        },
-      ),
+      child:
+ElevatedButton(
+  onPressed: () {
+    final text = textController.text.trim();
+    if (text.isEmpty) return;
+
+    ref.read(phraseTreeProvider.notifier).addPhrase(
+      selectedCategoryId,
+      text,
+    );
+  },
+  child: const Text('Guardar frase'),
+);
     ),
     keyBox(
       isPortrait: isPortrait,

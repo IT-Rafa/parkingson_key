@@ -15,14 +15,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+
   // Inicializa Hive
   await Hive.initFlutter();
   Hive.registerAdapter(PhraseNodeAdapter());
 
+  // Idioma actual del sistema o del usuario
+  final AppLanguage lang = AppLanguage.es; // luego lo lees de tu provider real
+
   final box = await Hive.openBox<List>('phrase_tree_box');
 
-// Primer arranque
-  if (box.isEmpty) {
+  // Primer arranque
+  if (!box.containsKey('phrases')) {
     final defaultTree = DefaultPhraseFactory.create(lang);
     await box.put('phrases', defaultTree);
   }
