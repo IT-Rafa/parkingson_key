@@ -36,7 +36,7 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
     _textFieldController = TextEditingController();
     _focusNode = FocusNode();
     _repeatController = KeyboardRepeatController();
-    
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _focusNode.requestFocus();
     });
@@ -53,12 +53,12 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
   Widget build(BuildContext context) {
     // Watch the app bar visibility provider
     final showAppBar = ref.watch(appBarVisibilityProvider);
-final profile = ref.watch(keyboardProfileProvider);
+    final profile = ref.watch(keyboardProfileProvider);
 
     // Listen for changes in the language provider to update TTS locale
     ref.listen(languageProvider, (prev, next) {
       final locale = ttsLocaleFromLanguage(next);
-      ref.read(ttsServiceProvider).safeSetLocale(locale);
+      ref.read(ttsServiceProvider).setLocale(locale);
     });
 
     return SafeArea(
@@ -93,13 +93,12 @@ final profile = ref.watch(keyboardProfileProvider);
                       ? PortraitLayout(
                           controller: _textFieldController,
                           repeatController: _repeatController,
-                          profile:    profile, 
-
+                          profile: profile,
                         )
                       : LandscapeLayout(
                           controller: _textFieldController,
                           repeatController: _repeatController,
-                          profile:    profile, 
+                          profile: profile,
                         ),
                 ),
               ],
