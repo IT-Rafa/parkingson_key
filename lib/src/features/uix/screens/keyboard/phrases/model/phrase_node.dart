@@ -1,9 +1,10 @@
+
 import 'package:hive/hive.dart';
 
 part 'phrase_node.g.dart';
 
 @HiveType(typeId: 1)
-class PhraseNode {
+class PhraseNode extends HiveObject {
   @HiveField(0)
   final String id;
 
@@ -16,11 +17,15 @@ class PhraseNode {
   @HiveField(3)
   final List<PhraseNode> children;
 
-  const PhraseNode({
+  @HiveField(4)
+  final bool ttsEnabled;
+
+  PhraseNode({
     required this.id,
     required this.title,
-    required this.isCategory,
+    this.isCategory = false,
     this.children = const [],
+    this.ttsEnabled = false,
   });
 
   PhraseNode copyWith({
@@ -28,12 +33,14 @@ class PhraseNode {
     String? title,
     bool? isCategory,
     List<PhraseNode>? children,
+    bool? ttsEnabled,
   }) {
     return PhraseNode(
       id: id ?? this.id,
       title: title ?? this.title,
       isCategory: isCategory ?? this.isCategory,
       children: children ?? this.children,
+      ttsEnabled: ttsEnabled ?? this.ttsEnabled,
     );
   }
 }

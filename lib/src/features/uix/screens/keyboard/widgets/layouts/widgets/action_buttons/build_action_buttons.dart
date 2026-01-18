@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/appbar_visibility_notifier.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/phrases/phrase_tree_picker.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/phrases/providers/phrase_tree_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/keyboard_button_key.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/phrases_menuanchor.dart';
 
@@ -31,22 +33,18 @@ List<Widget> buildActionButtons(
         },
       ),
     ),
+    ElevatedButton(
+      onPressed: () {
+        final text = controller.text;
 
-    keyBox(
-      isPortrait: isPortrait,
-      child:
-ElevatedButton(
-  onPressed: () {
-    final text = textController.text.trim();
-    if (text.isEmpty) return;
+        if (text.isEmpty) return;
 
-    ref.read(phraseTreeProvider.notifier).addPhrase(
-      selectedCategoryId,
-      text,
-    );
-  },
-  child: const Text('Guardar frase'),
-);
+        showModalBottomSheet(
+          context: context,
+          builder: (_) => PhraseTreePicker(phrase: text),
+        );
+      },
+      child: const Text('Guardar Frase'),
     ),
     keyBox(
       isPortrait: isPortrait,
@@ -61,7 +59,6 @@ ElevatedButton(
         },
       ),
     ),
-
     SizedBox(
       width: isPortrait ? 85 : 120,
       height: isPortrait ? 35 : 45,

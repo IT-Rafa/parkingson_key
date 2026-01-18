@@ -1,47 +1,30 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/persistence/phrase_tree_storage.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/phrases/model/phrase_node.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/phrases/providers/phrase_tree_storage_provider.dart';
 
 class PhraseTreeNotifier extends Notifier<List<PhraseNode>> {
   late final PhraseTreeStorage _storage;
 
   @override
   List<PhraseNode> build() {
-    _storage = PhraseTreeStorage();
+    _storage = ref.read(phraseTreeStorageProvider);
     return _storage.load();
   }
 
   Future<void> addPhrase(String categoryId, String text) async {
-    state = _addPhraseRecursive(state, categoryId, text);
-    await _storage.save(state);
-  }
+    final newPhrase = PhraseNode(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      title: text,
+      isCategory: false,
+    );
 
-  List<PhraseNode> _addPhraseRecursive(
-    List<PhraseNode> nodes,
-    String categoryId,
-    String text,
-  ) {
-    return nodes.map((node) {
-      if (node.id == categoryId && node.isCategory) {
-        return node.copyWith(
-          children: [
-            ...node.children,
-            PhraseNode(
-              id: DateTime.now().millisecondsSinceEpoch.toString(),
-              title: text,
-              isCategory: false,
-            ),
-          ],
-        );
-      }
+    await _storage.addPhrase(
+      categoryId: categoryId,
+      phrase: newPhrase,
+    );
 
-      if (node.children.isNotEmpty) {
-        return node.copyWith(
-          children: _addPhraseRecursive(node.children, categoryId, text),
-        );
-      }
-
-      return node;
-    }).toList();
+    // Recargar desde Hive
+    state = _storage.load();
   }
 }

@@ -4,5 +4,6 @@ import 'package:parkingson_key/src/features/uix/screens/keyboard/phrases/model/p
 
 final phraseTreeProvider =
     NotifierProvider<PhraseTreeNotifier, List<PhraseNode>>(
-      PhraseTreeNotifier.new,
-    );
+  PhraseTreeNotifier.new,
+);
+
