@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/phrases/model/phrase_node.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/phrases/providers/phrase_tree_provider.dart';
+import 'package:parkingson_key/src/core/phrases/model/phrase_node.dart';
+import 'package:parkingson_key/src/core/phrases/providers/phrase_tree_provider.dart';
 
 class PhraseTreePicker extends ConsumerStatefulWidget {
-  final String phrase; // frase a guardar
+  final String? phrase; // solo para "Guardar Frase"
+  final ValueChanged<String>? onPhraseSelected; // callback para Frases
 
-  const PhraseTreePicker({super.key, required this.phrase});
+  const PhraseTreePicker({
+    super.key,
+    this.phrase,
+    this.onPhraseSelected,
+  });
 
   @override
   ConsumerState<PhraseTreePicker> createState() => _PhraseTreePickerState();
@@ -19,17 +24,22 @@ class _PhraseTreePickerState extends ConsumerState<PhraseTreePicker> {
   @override
   void initState() {
     super.initState();
-    // Nivel raíz
     currentLevel = ref.read(phraseTreeProvider);
   }
 
   void enterNode(PhraseNode node) {
     if (node.children.isEmpty) {
-      // Hoja final → guardar frase aquí
-      ref.read(phraseTreeProvider.notifier).addPhrase(node.id, widget.phrase);
-      Navigator.of(context).pop(); // cerrar modal
+      // Hoja final
+      if (widget.phrase != null) {
+        // Guardar nueva frase
+        ref.read(phraseTreeProvider.notifier).addPhrase(node.id, widget.phrase!);
+      } else {
+        // Seleccionar frase existente
+        widget.onPhraseSelected?.call(node.title);
+      }
+      Navigator.of(context).pop();
     } else {
-      // No hoja → navegar a subnivel
+      // Subtema → navegar
       setState(() {
         navigationStack.add(node);
         currentLevel = node.children;
@@ -40,18 +50,14 @@ class _PhraseTreePickerState extends ConsumerState<PhraseTreePicker> {
   void goBack() {
     setState(() {
       navigationStack.removeLast();
-      if (navigationStack.isEmpty) {
-        currentLevel = ref.read(phraseTreeProvider);
-      } else {
-        currentLevel = navigationStack.last.children;
-      }
+      currentLevel = navigationStack.isEmpty
+          ? ref.read(phraseTreeProvider)
+          : navigationStack.last.children;
     });
   }
 
-  String get currentPath {
-    if (navigationStack.isEmpty) return 'Temas';
-    return navigationStack.map((n) => n.title).join(' > ');
-  }
+  String get currentPath =>
+      navigationStack.isEmpty ? 'Temas' : navigationStack.map((n) => n.title).join(' > ');
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +65,6 @@ class _PhraseTreePickerState extends ConsumerState<PhraseTreePicker> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Breadcrumb / título
           ListTile(
             leading: navigationStack.isEmpty
                 ? null
@@ -70,7 +75,6 @@ class _PhraseTreePickerState extends ConsumerState<PhraseTreePicker> {
             title: Text(currentPath, style: const TextStyle(fontWeight: FontWeight.bold)),
           ),
           const Divider(height: 1),
-          // Lista de nodos actuales
           ...currentLevel.map(
             (node) => ListTile(
               title: Text(node.title),

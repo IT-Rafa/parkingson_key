@@ -2,9 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/appbar_visibility_notifier.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/phrases/phrase_tree_picker.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/contact_picker.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/phrase_tree_picker.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/keyboard_button_key.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/phrases_menuanchor.dart';
 
 List<Widget> buildActionButtons(
   BuildContext context, {
@@ -45,15 +45,19 @@ List<Widget> buildActionButtons(
       },
       child: const Text('Guardar Frase'),
     ),
-    keyBox(
-      isPortrait: isPortrait,
+    SizedBox(
+      width: isPortrait ? 85 : 120,
+      height: isPortrait ? 35 : 45,
       child: KeyboardButtonKey(
         label: "Enviar texto",
         onAccepted: () {
-          final newText = "${controller.text} [TEXTO ENVIADO]";
-          controller.text = newText;
-          controller.selection = TextSelection.collapsed(
-            offset: newText.length,
+          final text = controller.text.trim();
+          if (text.isEmpty) return;
+
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (_) => ContactPicker(message: text),
           );
         },
       ),
@@ -61,15 +65,24 @@ List<Widget> buildActionButtons(
     SizedBox(
       width: isPortrait ? 85 : 120,
       height: isPortrait ? 35 : 45,
-      child: PhrasesMenuAnchor(
-        phrases: const ["¿En qué puedo ayudarte?", "Voy hacia allí", "Gracias"],
-        onSelected: (value) {
-          final newText = controller.text + value;
-          controller.text = newText;
-          controller.selection = TextSelection.collapsed(
-            offset: newText.length,
+      child: ElevatedButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (_) => PhraseTreePicker(
+              // No frase nueva, solo selección
+              phrase: null,
+              onPhraseSelected: (selected) {
+                final newText = controller.text + selected;
+                controller.text = newText;
+                controller.selection = TextSelection.collapsed(
+                  offset: newText.length,
+                );
+              },
+            ),
           );
         },
+        child: const Text('Frases'),
       ),
     ),
   ];

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/phrases/model/phrase_node.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/phrases/providers/phrase_tree_provider.dart';
+import 'package:parkingson_key/src/core/phrases/model/phrase_node.dart';
+import 'package:parkingson_key/src/core/phrases/providers/phrase_tree_provider.dart';
 
 
 class PhraseBrowser extends ConsumerStatefulWidget {

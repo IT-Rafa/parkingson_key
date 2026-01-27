@@ -6,13 +6,17 @@ import 'package:parkingson_key/src/core/providers/app_language_enum.dart';
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/core/providers/shared_prefs_provider.dart';
 import 'package:parkingson_key/src/core/providers/theme_provider.dart';
+import 'package:parkingson_key/src/core/contacts/persistence/contact_storage.dart';
+import 'package:parkingson_key/src/core/contacts/persistence/default_contacts_factory.dart';
+import 'package:parkingson_key/src/core/contacts/providers/contact_storage_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/keyboard_screen.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/phrases/model/default_phrase_factory.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/phrases/model/phrase_node.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/phrases/providers/phrase_tree_storage_provider.dart';
+import 'package:parkingson_key/src/core/phrases/model/default_phrase_factory.dart';
+import 'package:parkingson_key/src/core/phrases/model/phrase_node.dart';
+import 'package:parkingson_key/src/core/phrases/providers/phrase_tree_storage_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/settings/settings_screen.dart';
 import 'package:parkingson_key/src/features/uix/themes/my_themes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parkingson_key/src/models/contacts/contact.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
@@ -23,6 +27,7 @@ Future<void> main() async {
   await Hive.initFlutter();
 
   Hive.registerAdapter(PhraseNodeAdapter());
+  Hive.registerAdapter(ContactAdapter());
 
   final phraseStorage = PhraseTreeStorage();
   await phraseStorage.init(); // 👈 ESTO ES CLAVE
@@ -39,11 +44,19 @@ Future<void> main() async {
   }
   final prefs = await SharedPreferences.getInstance();
 
+  final contactStorage = ContactStorage();
+  await contactStorage.init();
+
+  if (contactStorage.isEmpty) {
+    await contactStorage.save(DefaultContactsFactory.create());
+  }
+
   runApp(
     ProviderScope(
       overrides: [
         sharedPrefsProvider.overrideWithValue(prefs),
         phraseTreeStorageProvider.overrideWithValue(phraseStorage),
+        contactStorageProvider.overrideWithValue(contactStorage),
       ],
       child: EasyLocalization(
         supportedLocales: const [Locale('en'), Locale('es')],

@@ -6,7 +6,7 @@ import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profil
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/keyboard_button_key.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/keyboard_dropdown_key.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/controllers/keyboard_repeat_controller.dart';
+import 'package:parkingson_key/src/core/controllers/keyboard_repeat_controller.dart';
 
 class KeyboardRow extends StatelessWidget {
   const KeyboardRow({

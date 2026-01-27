@@ -5,7 +5,7 @@ import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts
 import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/keyboard_body.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_layout_resolver.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/controllers/keyboard_repeat_controller.dart';
+import 'package:parkingson_key/src/core/controllers/keyboard_repeat_controller.dart';
 
 class LandscapeLayout extends ConsumerWidget {
   const LandscapeLayout({
