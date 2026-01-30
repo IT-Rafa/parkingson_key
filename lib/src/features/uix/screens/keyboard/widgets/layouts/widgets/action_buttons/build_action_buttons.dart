@@ -17,7 +17,7 @@ List<Widget> buildActionButtons(
   Widget keyBox({required Widget child, required bool isPortrait}) {
     return SizedBox(
       width: isPortrait ? 90 : 120,
-      height: isPortrait ? 45 : 45,
+      height: isPortrait ? 45 : 40,
       child: child,
     );
   }
@@ -26,7 +26,7 @@ List<Widget> buildActionButtons(
     keyBox(
       isPortrait: isPortrait,
       child: KeyboardButtonKey(
-        label: showAppBar ? 'appbar_hide'.tr() : 'appbar_show'.tr(),
+        label: showAppBar ? 'KEYBOARD_hide_title'.tr() : 'KEYBOARD_show_title'.tr(),
         onAccepted: () {
           ref.read(appBarVisibilityProvider.notifier).toggle();
         },
@@ -35,7 +35,7 @@ List<Widget> buildActionButtons(
     keyBox(
       isPortrait: isPortrait,
       child: KeyboardButtonKey(
-        label: "Guardar Frase",
+        label: "KEYBOARD_savePhrase".tr(),
         onAccepted: () {
           final text = controller.text;
 
@@ -51,7 +51,7 @@ List<Widget> buildActionButtons(
     keyBox(
       isPortrait: isPortrait,
       child: KeyboardButtonKey(
-        label: "Enviar texto",
+        label: "KEYBOARD_contacs".tr(),
         onAccepted: () {
           final text = controller.text.trim();
           if (text.isEmpty) return;
@@ -67,7 +67,7 @@ List<Widget> buildActionButtons(
     keyBox(
       isPortrait: isPortrait,
       child: KeyboardButtonKey(
-        label: "Frases",
+        label: "KEYBOARD_phrases".tr(),
         onAccepted: () {
           showModalBottomSheet(
             context: context,

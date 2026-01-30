@@ -80,7 +80,7 @@ class MainApp extends ConsumerWidget {
     final themeMode = _parseTheme(themeCode);
 
     return MaterialApp(
-      title: 'My App',
+      title: 'Parkinson Keyboard',
       debugShowCheckedModeBanner: false,
 
       // locale dinámico

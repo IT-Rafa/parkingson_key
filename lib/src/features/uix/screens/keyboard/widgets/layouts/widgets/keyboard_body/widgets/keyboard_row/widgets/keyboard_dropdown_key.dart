@@ -7,14 +7,14 @@ import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts
 import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart';
 
 class KeyboardDropdownKey extends ConsumerStatefulWidget {
-  final String title;
+  final String label;
   final List<String> items;
   final ValueChanged<String?>? onSelected;
   final Color? color;
 
   const KeyboardDropdownKey({
     super.key,
-    required this.title,
+    required this.label,
     required this.items,
     required this.onSelected,
     this.color,
@@ -75,17 +75,16 @@ class _KeyboardDropdownKeyState extends ConsumerState<KeyboardDropdownKey> {
       },
       onTapUp: (_) => accept.cancel(),
       onTapCancel: () => accept.cancel(),
-      child: Container(
-        height: 50,
-        margin: const EdgeInsets.fromLTRB(4, 4, 4, 0),
-        decoration: BoxDecoration(
-          color: widget.color ?? Colors.green[400],
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: Colors.grey),
-        ),
-        child: KeyboardKeyContainer(
-          color: widget.color,
-          child: Center(child: Text(widget.title, textAlign: TextAlign.center)),
+      child: KeyboardKeyContainer(
+        color: widget.color,
+        child: Center(
+          child: Text(
+            widget.label,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
       ),
     );

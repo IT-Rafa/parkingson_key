@@ -89,7 +89,7 @@ class KeyboardRow extends StatelessWidget {
 
       case KeyboardItemType.dropdown:
         return KeyboardDropdownKey(
-          title: item.title!,
+          label: item.title!,
           items: item.items!,
           onSelected: (value) {
             if (value == null) return;

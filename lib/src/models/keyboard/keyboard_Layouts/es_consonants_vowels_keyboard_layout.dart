@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_layout.dart';
 
@@ -46,7 +47,7 @@ final esConsonantsVowelsKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('u'),
     ],
     [
-      KeyboardItem.char('Sí'),
+      KeyboardItem.char('Sí', lightColor: Colors.green),
       KeyboardItem.char('No'),
       KeyboardItem.char('  '),
     ],
