@@ -32,22 +32,24 @@ List<Widget> buildActionButtons(
         },
       ),
     ),
-    ElevatedButton(
-      onPressed: () {
-        final text = controller.text;
+    keyBox(
+      isPortrait: isPortrait,
+      child: KeyboardButtonKey(
+        label: "Guardar Frase",
+        onAccepted: () {
+          final text = controller.text;
 
-        if (text.isEmpty) return;
+          if (text.isEmpty) return;
 
-        showModalBottomSheet(
-          context: context,
-          builder: (_) => PhraseTreePicker(phrase: text),
-        );
-      },
-      child: const Text('Guardar Frase'),
+          showModalBottomSheet(
+            context: context,
+            builder: (_) => PhraseTreePicker(phrase: text),
+          );
+        },
+      ),
     ),
-    SizedBox(
-      width: isPortrait ? 85 : 120,
-      height: isPortrait ? 35 : 45,
+    keyBox(
+      isPortrait: isPortrait,
       child: KeyboardButtonKey(
         label: "Enviar texto",
         onAccepted: () {
@@ -62,11 +64,11 @@ List<Widget> buildActionButtons(
         },
       ),
     ),
-    SizedBox(
-      width: isPortrait ? 85 : 120,
-      height: isPortrait ? 35 : 45,
-      child: ElevatedButton(
-        onPressed: () {
+    keyBox(
+      isPortrait: isPortrait,
+      child: KeyboardButtonKey(
+        label: "Frases",
+        onAccepted: () {
           showModalBottomSheet(
             context: context,
             builder: (_) => PhraseTreePicker(
@@ -82,7 +84,6 @@ List<Widget> buildActionButtons(
             ),
           );
         },
-        child: const Text('Frases'),
       ),
     ),
   ];
