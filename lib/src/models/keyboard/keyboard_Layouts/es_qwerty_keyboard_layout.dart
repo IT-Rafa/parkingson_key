@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_layout.dart';
 
@@ -46,7 +47,7 @@ final esQwertyKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('u'),
     ],
     [
-      KeyboardItem.char('Sí'),
+      KeyboardItem.char('Sí', lightColor: Colors.green),
       KeyboardItem.char('No'),
       KeyboardItem.char('  '),
     ],
@@ -97,7 +98,6 @@ final esQwertyKeyboardLayout = KeyboardLayout(
     [
       KeyboardItem.char('Sí'),
       KeyboardItem.char('No'),
-
       KeyboardItem.char('a'),
       KeyboardItem.char('e'),
       KeyboardItem.char('i'),
@@ -110,7 +110,6 @@ final esQwertyKeyboardLayout = KeyboardLayout(
         title: 'Symbols',
         items: ['!', '@', '#', '\$', '%', '^', '&', '*'],
       ),
-
       KeyboardItem.dropdown(
         title: 'Numbers',
         items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],

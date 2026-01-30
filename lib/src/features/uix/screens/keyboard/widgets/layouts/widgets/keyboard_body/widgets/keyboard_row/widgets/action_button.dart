@@ -4,23 +4,24 @@ import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart
 import 'package:parkingson_key/src/core/services/feedback_service.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/utils/accept_on_hold.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/keyboard_key_container.dart';
-import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
 
-class KeyboardButtonKey extends ConsumerStatefulWidget {
-  final KeyboardItem keyData;
+class ActionButton extends ConsumerStatefulWidget {
+  final String title;
   final VoidCallback onAccepted;
+  final Color? color;
 
-  const KeyboardButtonKey({
+  const ActionButton({
     super.key,
-    required this.keyData,
+    required this.title,
     required this.onAccepted,
+    this.color,
   });
 
   @override
-  ConsumerState<KeyboardButtonKey> createState() => _KeyboardButtonKeyState();
+  ConsumerState<ActionButton> createState() => _ActionButtonState();
 }
 
-class _KeyboardButtonKeyState extends ConsumerState<KeyboardButtonKey> {
+class _ActionButtonState extends ConsumerState<ActionButton> {
   final accept = AcceptOnHold();
 
   @override
@@ -53,7 +54,6 @@ class _KeyboardButtonKeyState extends ConsumerState<KeyboardButtonKey> {
       onTapUp: (_) => accept.cancel(),
       onTapCancel: () => accept.cancel(),
       child: KeyboardKeyContainer(
-        color: widget.keyData.lightColor ?? Colors.amber,
         child: LayoutBuilder(
           builder: (context, constraints) {
             final baseFontSize = constraints.maxHeight * 0.80;
@@ -62,7 +62,7 @@ class _KeyboardButtonKeyState extends ConsumerState<KeyboardButtonKey> {
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  widget.keyData.label.toUpperCase(),
+                  widget.title.toUpperCase(),
                   style: TextStyle(
                     fontFamily: 'RobotoMono',
                     fontSize: baseFontSize,

@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/appbar_visibility_notifier.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/contact_picker.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/phrase_tree_picker.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/keyboard_button_key.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/action_button.dart';
 
 List<Widget> buildActionButtons(
   BuildContext context, {
@@ -25,8 +25,8 @@ List<Widget> buildActionButtons(
   return [
     keyBox(
       isPortrait: isPortrait,
-      child: KeyboardButtonKey(
-        label: showAppBar ? 'KEYBOARD_hide_title'.tr() : 'KEYBOARD_show_title'.tr(),
+      child: ActionButton(
+        title: showAppBar ? 'KEYBOARD_hide_title'.tr() : 'KEYBOARD_show_title'.tr(),
         onAccepted: () {
           ref.read(appBarVisibilityProvider.notifier).toggle();
         },
@@ -34,8 +34,8 @@ List<Widget> buildActionButtons(
     ),
     keyBox(
       isPortrait: isPortrait,
-      child: KeyboardButtonKey(
-        label: "KEYBOARD_savePhrase".tr(),
+      child: ActionButton(
+        title: "KEYBOARD_savePhrase".tr(),
         onAccepted: () {
           final text = controller.text;
 
@@ -50,8 +50,8 @@ List<Widget> buildActionButtons(
     ),
     keyBox(
       isPortrait: isPortrait,
-      child: KeyboardButtonKey(
-        label: "KEYBOARD_contacs".tr(),
+      child: ActionButton(
+        title: "KEYBOARD_contacs".tr(),
         onAccepted: () {
           final text = controller.text.trim();
           if (text.isEmpty) return;
@@ -66,8 +66,8 @@ List<Widget> buildActionButtons(
     ),
     keyBox(
       isPortrait: isPortrait,
-      child: KeyboardButtonKey(
-        label: "KEYBOARD_phrases".tr(),
+      child: ActionButton(
+        title: "KEYBOARD_phrases".tr(),
         onAccepted: () {
           showModalBottomSheet(
             context: context,

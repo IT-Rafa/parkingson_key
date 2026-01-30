@@ -4,7 +4,7 @@ enum KeyboardItemType { char, dropdown }
 
 class KeyboardItem {
   final KeyboardItemType type;
-  final String? label;
+  final String label;
   final String? title; // para dropdown
   final List<String>? items;
   final String? initialValue;
@@ -14,7 +14,7 @@ class KeyboardItem {
 
   const KeyboardItem._({
     required this.type,
-    this.label,
+    required this.label,
     this.title,
     this.items,
     this.initialValue,
@@ -44,6 +44,7 @@ class KeyboardItem {
     final Color? lightColor,
     final Color? darkColor,
   }) => KeyboardItem._(
+    label: "",
     type: KeyboardItemType.dropdown,
     title: title,
     items: items,

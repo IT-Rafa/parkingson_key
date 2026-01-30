@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:parkingson_key/src/core/services/haptic_feedback_service.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/utils/insert_from_keyboard_char.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/utils/insert_from_keyboard_dropdown.dart';
-import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/keyboard_button_key.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/keyboard_dropdown_key.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
 import 'package:parkingson_key/src/core/controllers/keyboard_repeat_controller.dart';
@@ -53,7 +53,7 @@ class KeyboardRow extends StatelessWidget {
     switch (item.type) {
       case KeyboardItemType.char:
         // Letras simples vs dobles
-        if ((item.label?.length ?? 0) > 1) {
+        if (item.label.length > 1) {
           return isPortrait ? 1.25 : 1.6;
         }
         return 1;
@@ -67,7 +67,7 @@ class KeyboardRow extends StatelessWidget {
     switch (item.type) {
       case KeyboardItemType.char:
         return KeyboardButtonKey(
-          label: item.label!,
+          keyData: item,
           onAccepted: () {
             // 1️⃣ bloquea repetición
             if (!repeatController.canAccept(
@@ -78,7 +78,7 @@ class KeyboardRow extends StatelessWidget {
             }
 
             // 2️⃣ inserta el carácter
-            insertFromKeyboardChar(controller, item.label!);
+            insertFromKeyboardChar(controller, item.label);
 
             // 3️⃣ feedback háptico si está activado
             if (profile.hapticEnabled) {
