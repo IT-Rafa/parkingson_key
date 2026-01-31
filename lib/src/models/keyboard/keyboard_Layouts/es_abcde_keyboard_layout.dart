@@ -7,14 +7,17 @@ final esAbcdeKeyboardLayout = KeyboardLayout(
   // ───────────────── PORTRAIT ─────────────────
   portrait: [
     [
+            KeyboardItem.char('a'),
       KeyboardItem.char('b'),
       KeyboardItem.char('c'),
       KeyboardItem.char('d'),
+      KeyboardItem.char('e'),
       KeyboardItem.char('f'),
       KeyboardItem.char('g'),
       KeyboardItem.char('h'),
     ],
     [
+            KeyboardItem.char('i'),
       KeyboardItem.char('j'),
       KeyboardItem.char('k'),
       KeyboardItem.char('l'),
@@ -24,6 +27,7 @@ final esAbcdeKeyboardLayout = KeyboardLayout(
     ],
     [
       KeyboardItem.char('ñ'),
+            KeyboardItem.char('o'),
       KeyboardItem.char('p'),
       KeyboardItem.char('q'),
       KeyboardItem.char('qu'),
@@ -33,22 +37,17 @@ final esAbcdeKeyboardLayout = KeyboardLayout(
     [
       KeyboardItem.char('s'),
       KeyboardItem.char('t'),
+            KeyboardItem.char('u'),
       KeyboardItem.char('v'),
       KeyboardItem.char('w'),
       KeyboardItem.char('x'),
       KeyboardItem.char('y'),
       KeyboardItem.char('z'),
     ],
-    [
-      KeyboardItem.char('a'),
-      KeyboardItem.char('e'),
-      KeyboardItem.char('i'),
-      KeyboardItem.char('o'),
-      KeyboardItem.char('u'),
-    ],
+
     [
       KeyboardItem.char('Sí', lightColor: Colors.green),
-      KeyboardItem.char('No'),
+      KeyboardItem.char('No', lightColor: Colors.green),
       KeyboardItem.char('  '),
     ],
     [
@@ -96,8 +95,8 @@ final esAbcdeKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('z'),
     ],
     [
-      KeyboardItem.char('Sí'),
-      KeyboardItem.char('No'),
+      KeyboardItem.char('Sí', lightColor: Colors.green),
+      KeyboardItem.char('No', lightColor: Colors.green),
 
       KeyboardItem.char('a'),
       KeyboardItem.char('e'),

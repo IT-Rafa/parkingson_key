@@ -9,6 +9,7 @@ import 'package:parkingson_key/src/core/providers/theme_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/utils/keyboard_accessibility_profiles.dart';
 import 'package:parkingson_key/src/features/uix/screens/settings/utils/locale_from_language_code.dart';
 import 'package:parkingson_key/src/features/uix/screens/settings/widgets/contacts_settings_screen.dart';
+import 'package:parkingson_key/src/features/uix/screens/settings/widgets/keyboard_design_section.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_preset.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
 
@@ -188,7 +189,9 @@ class SettingsScreen extends ConsumerWidget {
                 const SizedBox(height: 30),
 
                 // --- Sección de contactos ---
-                const Text("Contactos", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                const Text("Contactos",
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 10),
                 ElevatedButton.icon(
                   icon: const Icon(Icons.contacts),
@@ -202,6 +205,8 @@ class SettingsScreen extends ConsumerWidget {
                     );
                   },
                 ),
+                const SizedBox(height: 20),
+                const KeyboardDesignSection(),
               ],
             ),
           ),

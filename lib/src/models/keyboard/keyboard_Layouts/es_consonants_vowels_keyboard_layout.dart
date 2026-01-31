@@ -96,8 +96,8 @@ final esConsonantsVowelsKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('z'),
     ],
     [
-      KeyboardItem.char('Sí'),
-      KeyboardItem.char('No'),
+      KeyboardItem.char('Sí', lightColor: Colors.green),
+      KeyboardItem.char('No', lightColor: Colors.green),
 
       KeyboardItem.char('a'),
       KeyboardItem.char('e'),
