@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parkingson_key/src/core/contacts/persistence/contact_storage.dart';
+import 'package:parkingson_key/src/core/persistence/contacts/contact_storage.dart';
 import 'package:parkingson_key/src/models/contacts/contact.dart';
 import 'contact_storage_provider.dart';
 

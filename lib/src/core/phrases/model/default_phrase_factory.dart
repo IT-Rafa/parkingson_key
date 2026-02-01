@@ -1,5 +1,5 @@
 import 'package:parkingson_key/src/core/providers/app_language_enum.dart';
-import 'package:parkingson_key/src/core/phrases/model/phrase_node.dart';
+import 'package:parkingson_key/src/models/phrase/phrase_node.dart';
 
 class DefaultPhraseFactory {
   static List<PhraseNode> create(AppLanguage lang) {

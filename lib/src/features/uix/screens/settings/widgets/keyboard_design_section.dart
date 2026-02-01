@@ -72,9 +72,9 @@ class KeyboardDesignSection extends ConsumerWidget {
       case KeyboardType.qwerty:
         return 'QWERTY';
       case KeyboardType.abc:
-        return 'ABC';
+        return 'Abecedario';
       case KeyboardType.consonantsVowels:
-        return 'Consonantes / Vocales';
+        return 'Abecedario vocales separadas';
     }
   }
 }

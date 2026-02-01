@@ -1,5 +1,5 @@
 import 'package:hive/hive.dart';
-import 'package:parkingson_key/src/core/phrases/model/phrase_node.dart';
+import 'package:parkingson_key/src/models/phrase/phrase_node.dart';
 
 class PhraseTreeStorage {
   static const _boxName = 'phrase_tree_box';

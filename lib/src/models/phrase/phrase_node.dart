@@ -1,4 +1,3 @@
-
 import 'package:hive/hive.dart';
 
 part 'phrase_node.g.dart';
