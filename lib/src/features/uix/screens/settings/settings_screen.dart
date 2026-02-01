@@ -69,15 +69,15 @@ class SettingsScreen extends ConsumerWidget {
                       items: [
                         DropdownMenuItem(
                           value: "light",
-                          child: Text("SETTINGS_light").tr(),
+                          child: Text("SETTINGS_light_mode").tr(),
                         ),
                         DropdownMenuItem(
                           value: "dark",
-                          child: Text("SETTINGS_dark").tr(),
+                          child: Text("SETTINGS_dark_mode").tr(),
                         ),
                         DropdownMenuItem(
                           value: "system",
-                          child: Text("SETTINGS_system").tr(),
+                          child: Text("SETTINGS_system_mode").tr(),
                         ),
                       ],
                       onChanged: (value) {
@@ -109,7 +109,7 @@ class SettingsScreen extends ConsumerWidget {
                 // --- Vibración ---
                 Row(
                   children: [
-                    const Text("Vibración activada"),
+                    const Text("SETTINGS_haptic").tr(),
                     Switch(
                       value: profile.hapticEnabled,
                       onChanged: (value) {
@@ -123,18 +123,18 @@ class SettingsScreen extends ConsumerWidget {
 
                 Row(
                   children: [
-                    const Text("Vibración"),
+                    const Text("SETTINGS_vibration_level").tr(),
                     const SizedBox(width: 20),
                     DropdownButton<HapticLevel>(
                       value: profile.hapticLevel,
-                      items: const [
+                      items: [
                         DropdownMenuItem(
                           value: HapticLevel.soft,
-                          child: Text("Suave"),
+                          child: Text("SETTINGS_soft").tr(),
                         ),
                         DropdownMenuItem(
                           value: HapticLevel.strong,
-                          child: Text("Fuerte"),
+                          child: Text("SETTINGS_strong").tr(),
                         ),
                       ],
                       onChanged: (value) {
@@ -151,22 +151,22 @@ class SettingsScreen extends ConsumerWidget {
                 // --- Perfil de accesibilidad ---
                 Row(
                   children: [
-                    const Text("Perfil de accesibilidad"),
+                    const Text("SETTINGS_accessibility_profile").tr(),
                     const SizedBox(width: 20),
                     DropdownButton<KeyboardAccessibilityPreset>(
                       value: preset,
-                      items: const [
+                      items: [
                         DropdownMenuItem(
                           value: KeyboardAccessibilityPreset.light,
-                          child: Text("Leve"),
+                          child: Text("SETTINGS_light").tr(),
                         ),
                         DropdownMenuItem(
                           value: KeyboardAccessibilityPreset.medium,
-                          child: Text("Medio"),
+                          child: Text("SETTINGS_medium").tr(),
                         ),
                         DropdownMenuItem(
                           value: KeyboardAccessibilityPreset.strong,
-                          child: Text("Fuerte"),
+                          child: Text("SETTINGS_strong").tr(),
                         ),
                       ],
                       onChanged: (value) {
@@ -189,13 +189,15 @@ class SettingsScreen extends ConsumerWidget {
                 const SizedBox(height: 30),
 
                 // --- Sección de contactos ---
-                const Text("Contactos",
-                    style:
-                        TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                const Text("SETTINGS_contacts",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    )).tr(),
                 const SizedBox(height: 10),
                 ElevatedButton.icon(
                   icon: const Icon(Icons.contacts),
-                  label: const Text("Administrar contactos"),
+                  label: const Text("SETTINGS_manage_contacts").tr(),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -206,6 +208,7 @@ class SettingsScreen extends ConsumerWidget {
                   },
                 ),
                 const SizedBox(height: 20),
+                // --- keyboard type ---
                 const KeyboardDesignSection(),
               ],
             ),

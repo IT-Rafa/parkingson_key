@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_type_provider.dart';
@@ -15,9 +16,12 @@ class KeyboardDesignSection extends ConsumerWidget {
       children: [
         const SizedBox(height: 20),
         const Text(
-          "Diseño del teclado",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        ),
+          "SETTINGS_keyboard_type",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ).tr(),
         const SizedBox(height: 10),
         RadioGroup<KeyboardType>(
           groupValue: keyboardType,
@@ -41,7 +45,6 @@ class KeyboardDesignSection extends ConsumerWidget {
                     children: [
                       Radio<KeyboardType>(
                         value: type,
-                        // ❌ No groupValue ni onChanged aquí
                       ),
                       Text(
                         _labelForKeyboardType(type),

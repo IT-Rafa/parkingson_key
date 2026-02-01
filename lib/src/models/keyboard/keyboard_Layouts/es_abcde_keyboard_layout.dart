@@ -7,7 +7,7 @@ final esAbcdeKeyboardLayout = KeyboardLayout(
   // ───────────────── PORTRAIT ─────────────────
   portrait: [
     [
-            KeyboardItem.char('a'),
+      KeyboardItem.char('a'),
       KeyboardItem.char('b'),
       KeyboardItem.char('c'),
       KeyboardItem.char('d'),
@@ -17,7 +17,7 @@ final esAbcdeKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('h'),
     ],
     [
-            KeyboardItem.char('i'),
+      KeyboardItem.char('i'),
       KeyboardItem.char('j'),
       KeyboardItem.char('k'),
       KeyboardItem.char('l'),
@@ -27,7 +27,7 @@ final esAbcdeKeyboardLayout = KeyboardLayout(
     ],
     [
       KeyboardItem.char('ñ'),
-            KeyboardItem.char('o'),
+      KeyboardItem.char('o'),
       KeyboardItem.char('p'),
       KeyboardItem.char('q'),
       KeyboardItem.char('qu'),
@@ -37,14 +37,13 @@ final esAbcdeKeyboardLayout = KeyboardLayout(
     [
       KeyboardItem.char('s'),
       KeyboardItem.char('t'),
-            KeyboardItem.char('u'),
+      KeyboardItem.char('u'),
       KeyboardItem.char('v'),
       KeyboardItem.char('w'),
       KeyboardItem.char('x'),
       KeyboardItem.char('y'),
       KeyboardItem.char('z'),
     ],
-
     [
       KeyboardItem.char('Sí', lightColor: Colors.green),
       KeyboardItem.char('No', lightColor: Colors.green),
@@ -97,7 +96,6 @@ final esAbcdeKeyboardLayout = KeyboardLayout(
     [
       KeyboardItem.char('Sí', lightColor: Colors.green),
       KeyboardItem.char('No', lightColor: Colors.green),
-
       KeyboardItem.char('a'),
       KeyboardItem.char('e'),
       KeyboardItem.char('i'),
@@ -110,7 +108,6 @@ final esAbcdeKeyboardLayout = KeyboardLayout(
         title: 'Symbols',
         items: ['!', '@', '#', '\$', '%', '^', '&', '*'],
       ),
-
       KeyboardItem.dropdown(
         title: 'Numbers',
         items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
