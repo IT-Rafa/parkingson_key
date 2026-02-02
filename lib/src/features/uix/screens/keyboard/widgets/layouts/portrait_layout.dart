@@ -46,7 +46,7 @@ class PortraitLayout extends ConsumerWidget {
           ),
         ),
         KeyboardBody(
-          rows: layout.landscape,
+          rows: layout.portrait,
           controller: controller,
           isPortrait: true,
           margin: const EdgeInsets.fromLTRB(8, 4, 8, 8),

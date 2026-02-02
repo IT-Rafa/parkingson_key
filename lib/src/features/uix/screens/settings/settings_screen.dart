@@ -130,7 +130,7 @@ class SettingsScreen extends ConsumerWidget {
                       items: [
                         DropdownMenuItem(
                           value: HapticLevel.soft,
-                          child: Text("SETTINGS_soft").tr(),
+                          child: Text("SETTINGS_light").tr(),
                         ),
                         DropdownMenuItem(
                           value: HapticLevel.strong,

@@ -1,17 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:parkingson_key/src/core/persistence/phrase_tree_storage.dart';
+import 'package:parkingson_key/src/core/phrases/phrase_tree/phrase_tree_storage.dart';
 import 'package:parkingson_key/src/core/providers/app_language_enum.dart';
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/core/providers/shared_prefs_provider.dart';
 import 'package:parkingson_key/src/core/providers/theme_provider.dart';
-import 'package:parkingson_key/src/core/contacts/persistence/contact_storage.dart';
-import 'package:parkingson_key/src/core/contacts/persistence/default_contacts_factory.dart';
+import 'package:parkingson_key/src/core/persistence/contacts/contact_storage.dart';
+import 'package:parkingson_key/src/core/persistence/contacts/default_contacts_factory.dart';
 import 'package:parkingson_key/src/core/contacts/providers/contact_storage_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/keyboard_screen.dart';
 import 'package:parkingson_key/src/core/phrases/model/default_phrase_factory.dart';
-import 'package:parkingson_key/src/core/phrases/model/phrase_node.dart';
+import 'package:parkingson_key/src/models/phrase/phrase_node.dart';
 import 'package:parkingson_key/src/core/phrases/providers/phrase_tree_storage_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/settings/settings_screen.dart';
 import 'package:parkingson_key/src/features/uix/themes/my_themes.dart';
@@ -30,7 +30,7 @@ Future<void> main() async {
   Hive.registerAdapter(ContactAdapter());
 
   final phraseStorage = PhraseTreeStorage();
-  await phraseStorage.init(); // 👈 ESTO ES CLAVE
+  await phraseStorage.init(); 
 
   // Idioma actual del sistema o del usuario
   final AppLanguage lang = AppLanguage.es; // luego lo lees de tu provider real
