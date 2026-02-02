@@ -51,7 +51,7 @@ List<Widget> buildActionButtons(
     keyBox(
       isPortrait: isPortrait,
       child: ActionButton(
-        title: "KEYBOARD_contacs".tr(),
+        title: "KEYBOARD_contacts".tr(),
         onAccepted: () {
           final text = controller.text.trim();
           if (text.isEmpty) return;
