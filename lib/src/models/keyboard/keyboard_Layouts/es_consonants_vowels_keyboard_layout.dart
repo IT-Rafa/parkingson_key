@@ -48,7 +48,7 @@ final esConsonantsVowelsKeyboardLayout = KeyboardLayout(
     ],
     [
       KeyboardItem.char('Sí', lightColor: Colors.green),
-      KeyboardItem.char('No'),
+      KeyboardItem.char('No', lightColor: Colors.green),
       KeyboardItem.char('  '),
     ],
     [
