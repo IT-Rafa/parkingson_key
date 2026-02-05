@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'haptic_feedback_service.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
 
-import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform, TargetPlatform;
+import 'package:flutter/foundation.dart'
+    show kIsWeb, defaultTargetPlatform, TargetPlatform;
 
 // Import normal de AudioPlayer
 import 'package:audioplayers/audioplayers.dart';
@@ -38,16 +39,16 @@ class FeedbackService {
     // 1️⃣ Vibración
     await HapticFeedbackService.tap(profile);
 
-    if (kIsWeb) return; // Web ignora sonido
+    if (kIsWeb) return;
 
-    // 2️⃣ Sonido seguro
     try {
+      await _player.stop();
+
       await _player.play(
         AssetSource('sounds/mouse-click.mp3'),
         volume: 0.4,
       );
     } catch (_) {
-      // fallo runtime (Linux/Windows/macOS)
       messenger.removeCurrentSnackBar();
       messenger.showSnackBar(
         const SnackBar(

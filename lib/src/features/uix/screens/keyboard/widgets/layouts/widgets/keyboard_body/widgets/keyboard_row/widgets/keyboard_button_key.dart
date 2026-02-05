@@ -31,7 +31,6 @@ class _KeyboardButtonKeyState extends ConsumerState<KeyboardButtonKey> {
 
   @override
   Widget build(BuildContext context) {
-    // Lee el perfil activo del usuario
     final profile = ref.watch(keyboardProfileProvider);
 
     return GestureDetector(
@@ -40,13 +39,11 @@ class _KeyboardButtonKeyState extends ConsumerState<KeyboardButtonKey> {
         accept.start(
           onAccept: () {
             widget.onAccepted();
-
             FeedbackService.accept(
               messenger: ScaffoldMessenger.of(context),
               profile: profile,
             );
           },
-
           duration: profile.acceptHoldDuration,
         );
       },
@@ -56,13 +53,13 @@ class _KeyboardButtonKeyState extends ConsumerState<KeyboardButtonKey> {
         color: widget.keyData.lightColor ?? Colors.amber,
         child: LayoutBuilder(
           builder: (context, constraints) {
-            final baseFontSize = constraints.maxHeight * 0.80;
+            final baseFontSize = constraints.maxHeight * 0.8;
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 6),
               child: FittedBox(
                 fit: BoxFit.scaleDown,
                 child: Text(
-                  widget.keyData.label.toUpperCase(),
+                  widget.keyData.displayText.toUpperCase(),
                   style: TextStyle(
                     fontFamily: 'RobotoMono',
                     fontSize: baseFontSize,

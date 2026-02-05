@@ -1,23 +1,21 @@
 import 'dart:async';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/services/haptic_feedback_service.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/keyboard_key_container.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/utils/accept_on_hold.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
 
 class KeyboardDropdownKey extends ConsumerStatefulWidget {
-  final String label;
-  final List<String> items;
+  final KeyboardItem keyData;
   final ValueChanged<String?>? onSelected;
-  final Color? color;
 
   const KeyboardDropdownKey({
     super.key,
-    required this.label,
-    required this.items,
+    required this.keyData,
     required this.onSelected,
-    this.color,
   });
 
   @override
@@ -26,7 +24,7 @@ class KeyboardDropdownKey extends ConsumerStatefulWidget {
 }
 
 class _KeyboardDropdownKeyState extends ConsumerState<KeyboardDropdownKey> {
-  final accept = AcceptOnHold(); // controla la pulsación prolongada
+  final accept = AcceptOnHold();
   final GlobalKey _key = GlobalKey();
 
   @override
@@ -48,15 +46,13 @@ class _KeyboardDropdownKeyState extends ConsumerState<KeyboardDropdownKey> {
         offset.dx + size.width,
         offset.dy,
       ),
-      items: widget.items
-          .map((e) => PopupMenuItem(value: e, child: Text(e)))
+      items: widget.keyData.items!
+          .map((e) => PopupMenuItem(value: e, child: Text(e.tr())))
           .toList(),
     );
 
     if (selected != null) {
       widget.onSelected?.call(selected);
-
-      // vibración al aceptar
       final profile = ref.read(keyboardProfileProvider);
       HapticFeedbackService.tap(profile);
     }
@@ -70,16 +66,18 @@ class _KeyboardDropdownKeyState extends ConsumerState<KeyboardDropdownKey> {
       key: _key,
       behavior: HitTestBehavior.opaque,
       onTapDown: (_) {
-        // inicia temporizador de pulsación
-        accept.start(onAccept: _openMenu, duration: profile.acceptHoldDuration);
+        accept.start(
+          onAccept: _openMenu,
+          duration: profile.acceptHoldDuration,
+        );
       },
       onTapUp: (_) => accept.cancel(),
       onTapCancel: () => accept.cancel(),
       child: KeyboardKeyContainer(
-        color: widget.color,
+        color: Colors.amber, // color base de la tecla
         child: Center(
           child: Text(
-            widget.label,
+            widget.keyData.displayText,
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontWeight: FontWeight.bold,

@@ -47,13 +47,14 @@ class _ActionButtonState extends ConsumerState<ActionButton> {
               profile: profile,
             );
           },
-
           duration: profile.acceptHoldDuration,
         );
       },
       onTapUp: (_) => accept.cancel(),
       onTapCancel: () => accept.cancel(),
       child: KeyboardKeyContainer(
+        color: widget.color ?? Colors.amber, // color base de la tecla
+
         child: LayoutBuilder(
           builder: (context, constraints) {
             final baseFontSize = constraints.maxHeight * 0.80;

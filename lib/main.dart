@@ -80,7 +80,7 @@ class MainApp extends ConsumerWidget {
     final themeMode = _parseTheme(themeCode);
 
     return MaterialApp(
-      title: "KEYBOARD_title".tr(),
+      title: "KEYBOARD_title",
       debugShowCheckedModeBanner: false,
 
       // locale dinámico

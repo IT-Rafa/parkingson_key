@@ -28,19 +28,14 @@ class KeyboardRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final weights = items.map((item) {
-          return _effectiveWeight(item, context);
-        }).toList();
-
+        final weights =
+            items.map((item) => _effectiveWeight(item, context)).toList();
         final totalWeight = weights.fold<double>(0, (sum, w) => sum + w);
 
         return Row(
           children: List.generate(items.length, (index) {
             final item = items[index];
-            final weight = weights[index];
-
-            final width = constraints.maxWidth * (weight / totalWeight);
-
+            final width = constraints.maxWidth * (weights[index] / totalWeight);
             return SizedBox(width: width, child: _buildItem(item));
           }),
         );
@@ -48,16 +43,13 @@ class KeyboardRow extends StatelessWidget {
     );
   }
 
-  /// 🔑 AQUÍ está toda la lógica de anchura
   double _effectiveWeight(KeyboardItem item, BuildContext context) {
     switch (item.type) {
       case KeyboardItemType.char:
-        // Letras simples vs dobles
         if (item.label.length > 1) {
           return isPortrait ? 1.25 : 1.6;
         }
         return 1;
-
       case KeyboardItemType.dropdown:
         return isPortrait ? 1.35 : 1.8;
     }
@@ -69,43 +61,24 @@ class KeyboardRow extends StatelessWidget {
         return KeyboardButtonKey(
           keyData: item,
           onAccepted: () {
-            // 1️⃣ bloquea repetición
-            if (!repeatController.canAccept(
-              item,
-              profile.repeatBlockDuration,
-            )) {
+            if (!repeatController.canAccept(item, profile.repeatBlockDuration)) {
               return;
             }
-
-            // 2️⃣ inserta el carácter
             insertFromKeyboardChar(controller, item.label);
-
-            // 3️⃣ feedback háptico si está activado
-            if (profile.hapticEnabled) {
-              HapticFeedbackService.tap(profile);
-            }
+            if (profile.hapticEnabled) HapticFeedbackService.tap(profile);
           },
         );
 
       case KeyboardItemType.dropdown:
         return KeyboardDropdownKey(
-          label: item.title!,
-          items: item.items!,
+          keyData: item, // <-- ahora se pasa el item completo
           onSelected: (value) {
             if (value == null) return;
-
-            if (!repeatController.canAccept(
-              item,
-              profile.repeatBlockDuration,
-            )) {
+            if (!repeatController.canAccept(item, profile.repeatBlockDuration)) {
               return;
             }
-
             insertFromKeyboardDropdown(controller, value);
-
-            if (profile.hapticEnabled) {
-              HapticFeedbackService.tap(profile);
-            }
+            if (profile.hapticEnabled) HapticFeedbackService.tap(profile);
           },
         );
     }
