@@ -25,35 +25,38 @@ Future<void> main() async {
 
   // Inicializa Hive
   await Hive.initFlutter();
-
   Hive.registerAdapter(PhraseNodeAdapter());
   Hive.registerAdapter(ContactAdapter());
 
+  // Inicializa almacenamiento de frases
   final phraseStorage = PhraseTreeStorage();
-  await phraseStorage.init(); 
+  await phraseStorage.init();
 
-  // Idioma actual del sistema o del usuario
-  final AppLanguage lang = AppLanguage.es; // luego lo lees de tu provider real
-
-  final box = await Hive.openBox<List>('phrase_tree_box');
-
-  // Primer arranque
-  if (!box.containsKey('phrases')) {
-    final defaultTree = DefaultPhraseFactory.create(lang);
-    await box.put('phrases', defaultTree);
-  }
+  // Carga SharedPreferences
   final prefs = await SharedPreferences.getInstance();
 
+  // Carga idioma guardado
+  final savedLang = await LanguageController.loadSavedLanguage();
+
+  // Inicializa Hive de frases
+  final box = await Hive.openBox<List>('phrase_tree_box');
+  if (!box.containsKey('phrases')) {
+    final defaultTree = DefaultPhraseFactory.create(savedLang);
+    await box.put('phrases', defaultTree);
+  }
+
+  // Contactos
   final contactStorage = ContactStorage();
   await contactStorage.init();
-
   if (contactStorage.isEmpty) {
     await contactStorage.save(DefaultContactsFactory.create());
   }
 
+  // Ahora sí, runApp con ProviderScope
   runApp(
     ProviderScope(
       overrides: [
+        languageProvider.overrideWith(() => LanguageController(savedLang)),
         sharedPrefsProvider.overrideWithValue(prefs),
         phraseTreeStorageProvider.overrideWithValue(phraseStorage),
         contactStorageProvider.overrideWithValue(contactStorage),
@@ -62,6 +65,9 @@ Future<void> main() async {
         supportedLocales: const [Locale('en'), Locale('es')],
         path: 'assets/langs',
         fallbackLocale: const Locale('en'),
+        startLocale: savedLang == AppLanguage.es
+            ? const Locale('es')
+            : const Locale('en'),
         useOnlyLangCode: true,
         child: const MainApp(),
       ),
@@ -74,28 +80,22 @@ class MainApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appLanguage = ref.watch(languageProvider);
     final themeCode = ref.watch(themeProvider);
-
     final themeMode = _parseTheme(themeCode);
 
     return MaterialApp(
-      title: "KEYBOARD_title",
+      title: "KEYBOARD_title".tr(),
       debugShowCheckedModeBanner: false,
-
-      // locale dinámico
-      locale: appLanguage.locale,
+      // Locale dinámico
+      locale: context.locale,
       supportedLocales: context.supportedLocales,
       localizationsDelegates: context.localizationDelegates,
-
-      // tema dinámico
+      // Tema dinámico
       theme: MyThemes.lightTheme,
       darkTheme: MyThemes.darkTheme,
       themeMode: themeMode,
-
-      // RUTA PRINCIPAL,
+      // RUTA PRINCIPAL
       home: const KeyboardScreen(),
-
       // Navegación dinámica
       onGenerateRoute: (settings) {
         switch (settings.name) {

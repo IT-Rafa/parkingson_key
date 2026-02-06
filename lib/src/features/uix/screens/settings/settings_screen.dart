@@ -7,7 +7,6 @@ import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/core/providers/theme_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/utils/keyboard_accessibility_profiles.dart';
-import 'package:parkingson_key/src/features/uix/screens/settings/utils/locale_from_language_code.dart';
 import 'package:parkingson_key/src/features/uix/screens/settings/widgets/contacts_settings_screen.dart';
 import 'package:parkingson_key/src/features/uix/screens/settings/widgets/keyboard_design_section.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_preset.dart';
@@ -18,7 +17,6 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AppLanguage lang = ref.watch(languageProvider);
     final String theme = ref.watch(themeProvider);
     final profile = ref.watch(keyboardProfileProvider);
     final preset = ref.watch(keyboardPresetProvider);
@@ -38,22 +36,28 @@ class SettingsScreen extends ConsumerWidget {
                     const Text("SETTINGS_language").tr(),
                     const SizedBox(width: 20),
                     DropdownButton<AppLanguage>(
-                      value: lang,
-                      items: [
-                        DropdownMenuItem(
-                          value: AppLanguage.en,
-                          child: Text("SETTINGS_english").tr(),
-                        ),
-                        DropdownMenuItem(
-                          value: AppLanguage.es,
-                          child: Text("SETTINGS_spanish").tr(),
-                        ),
-                      ],
-                      onChanged: (value) {
-                        ref.read(languageProvider.notifier).setLanguage(value!);
-                        context.setLocale(localeFromLanguageCode(value));
+                      value: ref.watch(languageProvider),
+                      items: AppLanguage.values.map((lang) {
+                        return DropdownMenuItem(
+                          value: lang,
+                          child: Text(
+                              lang == AppLanguage.en ? 'English' : 'Español'),
+                        );
+                      }).toList(),
+                      onChanged: (lang) async {
+                        if (lang == null) return;
+
+                        // Cambia EasyLocalization
+                        await context.setLocale(lang == AppLanguage.en
+                            ? const Locale('en')
+                            : const Locale('es'));
+
+                        // Cambia Riverpod + SharedPreferences
+                        await ref
+                            .read(languageProvider.notifier)
+                            .setLanguage(lang);
                       },
-                    ),
+                    )
                   ],
                 ),
 

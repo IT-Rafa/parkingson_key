@@ -1,10 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parkingson_key/src/core/providers/app_language_enum.dart';
 import 'package:parkingson_key/src/core/providers/appbar_visibility_notifier.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_type_provider.dart';
-import 'package:parkingson_key/src/core/providers/language_config.dart';
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/core/providers/tts_service_provider.dart';
 import 'package:parkingson_key/src/core/controllers/keyboard_repeat_controller.dart';
@@ -60,12 +60,18 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
     final keyboardType = ref.watch(keyboardTypeProvider);
     final keyboardLayout = keyboardLayoutByType[keyboardType]!;
 
-    // Listen for changes in the language provider to update TTS locale
-    ref.listen(languageProvider, (prev, next) {
-      final locale = ttsLocaleFromLanguage(next);
-      ref.read(ttsServiceProvider).setLocale(locale);
-    });
+    // Update TTS locale
+ref.listen<AppLanguage>(languageProvider, (prev, next) {
+  // EasyLocalization locale
+  final locale = next == AppLanguage.en ? const Locale('en') : const Locale('es');
+  if (context.locale != locale) {
+    context.setLocale(locale);
+  }
 
+  // TTS locale (usa String)
+  final ttsLocale = next == AppLanguage.en ? 'en' : 'es';
+  ref.read(ttsServiceProvider).setLocale(ttsLocale);
+});
     return SafeArea(
       child: Scaffold(
         appBar: showAppBar

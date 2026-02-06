@@ -23,6 +23,7 @@ class ActionButton extends ConsumerStatefulWidget {
 
 class _ActionButtonState extends ConsumerState<ActionButton> {
   final accept = AcceptOnHold();
+  bool _pressed = false;
 
   @override
   void dispose() {
@@ -35,9 +36,16 @@ class _ActionButtonState extends ConsumerState<ActionButton> {
     // Lee el perfil activo del usuario
     final profile = ref.watch(keyboardProfileProvider);
 
+    final baseColor = widget.color ?? Colors.amber;
+    final pressedColor = Color.alphaBlend(
+      Colors.black.withValues(alpha: 0.25),
+      baseColor,
+    );
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTapDown: (_) {
+        setState(() => _pressed = true);
+
         accept.start(
           onAccept: () {
             widget.onAccepted();
@@ -50,11 +58,16 @@ class _ActionButtonState extends ConsumerState<ActionButton> {
           duration: profile.acceptHoldDuration,
         );
       },
-      onTapUp: (_) => accept.cancel(),
-      onTapCancel: () => accept.cancel(),
+      onTapUp: (_) {
+        setState(() => _pressed = false);
+        accept.cancel();
+      },
+      onTapCancel: () {
+        setState(() => _pressed = false);
+        accept.cancel();
+      },
       child: KeyboardKeyContainer(
-        color: widget.color ?? Colors.amber, // color base de la tecla
-
+        color: _pressed ? pressedColor : baseColor,
         child: LayoutBuilder(
           builder: (context, constraints) {
             final baseFontSize = constraints.maxHeight * 0.80;

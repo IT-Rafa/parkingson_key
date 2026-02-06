@@ -24,8 +24,10 @@ class KeyboardDropdownKey extends ConsumerStatefulWidget {
 }
 
 class _KeyboardDropdownKeyState extends ConsumerState<KeyboardDropdownKey> {
-  final accept = AcceptOnHold();
   final GlobalKey _key = GlobalKey();
+
+  final accept = AcceptOnHold();
+  bool _pressed = false;
 
   @override
   void dispose() {
@@ -61,20 +63,34 @@ class _KeyboardDropdownKeyState extends ConsumerState<KeyboardDropdownKey> {
   @override
   Widget build(BuildContext context) {
     final profile = ref.watch(keyboardProfileProvider);
+    final baseColor = widget.keyData.lightColor ?? Colors.amber;
+
+    final pressedColor = Color.alphaBlend(
+      Colors.black.withValues(alpha: 0.25),
+      baseColor,
+    );
 
     return GestureDetector(
       key: _key,
       behavior: HitTestBehavior.opaque,
       onTapDown: (_) {
+        setState(() => _pressed = true);
+
         accept.start(
           onAccept: _openMenu,
           duration: profile.acceptHoldDuration,
         );
       },
-      onTapUp: (_) => accept.cancel(),
-      onTapCancel: () => accept.cancel(),
+      onTapUp: (_) {
+        setState(() => _pressed = false);
+        accept.cancel();
+      },
+      onTapCancel: () {
+        setState(() => _pressed = false);
+        accept.cancel();
+      },
       child: KeyboardKeyContainer(
-        color: Colors.amber, // color base de la tecla
+        color: _pressed ? pressedColor : baseColor,
         child: Center(
           child: Text(
             widget.keyData.displayText,
