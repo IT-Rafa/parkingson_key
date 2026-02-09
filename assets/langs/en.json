@@ -28,5 +28,8 @@
     "SETTINGS_accessibility_profile": "Accessibility profile",
     "SETTINGS_contacts": "Contacts",
     "SETTINGS_manage_contacts": "Manage Contacts",
-    "SETTINGS_keyboard_type": "Keyboard Type"
+    "SETTINGS_keyboard_type": "Keyboard Type",
+    "SETTINGS_qwerty": "QWERTY",
+    "SETTINGS_alpha": "Alphabet",
+    "SETTINGS_alpha_vowels": "Alphabet + vowels"
 }

@@ -55,7 +55,7 @@ class KeyboardDesignSection extends ConsumerWidget {
                               ? Theme.of(context).colorScheme.primary
                               : null,
                         ),
-                      ),
+                      ).tr(),
                     ],
                   ),
                 ),
@@ -70,11 +70,11 @@ class KeyboardDesignSection extends ConsumerWidget {
   String _labelForKeyboardType(KeyboardType type) {
     switch (type) {
       case KeyboardType.qwerty:
-        return 'QWERTY';
+        return 'SETTINGS_qwerty';
       case KeyboardType.abc:
-        return 'Abecedario';
+        return 'SETTINGS_alpha';
       case KeyboardType.consonantsVowels:
-        return 'Abecedario vocales separadas';
+        return 'SETTINGS_alpha_vowels';
     }
   }
 }
