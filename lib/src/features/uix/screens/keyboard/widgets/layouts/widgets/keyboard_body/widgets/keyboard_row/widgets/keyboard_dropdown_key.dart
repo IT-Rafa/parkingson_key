@@ -89,14 +89,17 @@ class _KeyboardDropdownKeyState extends ConsumerState<KeyboardDropdownKey> {
         setState(() => _pressed = false);
         accept.cancel();
       },
-      child: KeyboardKeyContainer(
-        color: _pressed ? pressedColor : baseColor,
-        child: Center(
-          child: Text(
-            widget.keyData.displayText,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
+      child: SizedBox(
+        height: 80,
+        child: KeyboardKeyContainer(
+          color: _pressed ? pressedColor : baseColor,
+          child: Center(
+            child: Text(
+              widget.keyData.displayText,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),
