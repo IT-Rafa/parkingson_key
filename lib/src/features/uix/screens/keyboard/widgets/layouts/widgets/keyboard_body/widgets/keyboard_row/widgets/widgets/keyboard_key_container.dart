@@ -21,7 +21,9 @@ class KeyboardKeyContainer extends StatelessWidget {
         color: backgroundColor,
         borderRadius: BorderRadius.circular(12),
         elevation: 2,
-        child: Center(child: child),
+        child: Center(
+          child: child,
+        ),
       ),
     );
   }
