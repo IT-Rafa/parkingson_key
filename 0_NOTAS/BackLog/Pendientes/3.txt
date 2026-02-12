@@ -1,5 +1,0 @@
-En SettingsScreen:
-
-    - Duplicado Cambio modo light/dark del tema
-    - Falta Selección del teclado abc, qwerty, etc 
-    

@@ -1,0 +1,53 @@
+
+Diseño general
+
+Diseño:
+	- Pantallas
+		- Principal (teclado)
+				Menú -Ir Config
+
+				Texto escrito
+				Botón hablar
+				Botones borrar (3 (caracter, frase, todo) )
+				Botón Guardar frase
+
+				botones frases (8)
+				Botón WhatsApp
+				
+		- Configuración
+			- Usuario
+				??
+			- General
+				Tema
+				Idioma
+			- Aplicación
+				Teclado elegido
+				Botones frases
+				Contactos WhatsApp
+
+			
+idiomas
+	- Todas pantallas usarán este idioma cuando se elija
+	- La aplicación guardará el idioma: 1: Usuario 2: localmente
+	- El idioma se elige en la pantalla de configuración.
+	- Usaremos es o en. No versiones locales tipo es_es (Español de españa)
+	
+Temas
+	- Todas pantallas usarán este diseño cuando se elija
+	- La aplicación guardará el diseño: 1: Usuario 2: localmente
+	- El tema se elige en la pantalla de configuración.
+	
+Teclado a elegir
+	- La pantalla del teclado usará esta opción cuando se elija
+	- La aplicación guardará el diseño: 1: Usuario 2: localmente
+	- El teclado se elige en la pantalla de configuración.
+	- Crear otro teclado
+	
+Selección de servidor
+	- Serverpod
+	- Dart frog
+	- Supabase
+	- node/next/nest/express, django
+	- Firebase
+	Go Golang
+

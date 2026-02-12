@@ -1,0 +1,43 @@
+
+PROYECTO
+
+Nombre: 
+	parkingson_key
+	
+	
+Código:
+	2025_parkingson_keyboard
+	
+	
+Descripción:
+	Aplicación, para mobil, escritorio y web, que permita a una persona, con 
+	problemas al hablar, la capacidad de escribir lo que quiere decir a los 
+	demás, incluyendo la opción de que lo escrito pueda sonar en voz alta.
+	
+	Lo escrito se mostrará en la pantalla y, para poder escribir, usaremos un 
+	teclado en esa misma pantalla, que podrá ser opcional (alfabético normal, 
+	alfabético con las vocales independientes, qwerty, etc) y el acceso al 
+	teclado funcionará de la forma más optima para los problemas que tenga la 
+	persona.
+	
+	Al margen de las letras, también existirán botones que incluyan frases que 
+	irá eligiendo la persona.
+	
+	Estas frases se guardarán localmente y en internet.
+	
+	
+Objetivo:
+
+	Pantalla con teclado que permite escribir palabras y seleccionar frases 
+	para que gente con problemas al hablar y que pueda manejar una tablet, 
+	aunque sea con cierta dificultad, pueda escribir sus mensajes para 
+	comunicarse con otras personas.
+	
+	
+Análisis de requisitos:
+
+Diseño:
+
+Implementación:
+
+Mantenimiento:
