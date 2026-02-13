@@ -1,0 +1,108 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parkingson_key/src/core/providers/tts_service_provider.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/utils/delete_all.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/utils/delete_char.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/utils/delete_word.dart';
+
+class TextFieldRow extends ConsumerStatefulWidget {
+  final TextEditingController controller;
+  final FocusNode focusNode;
+
+  const TextFieldRow({
+    super.key,
+    required this.controller,
+    required this.focusNode,
+  });
+
+  @override
+  ConsumerState<TextFieldRow> createState() => _TextFieldRowState();
+}
+
+class _TextFieldRowState extends ConsumerState<TextFieldRow> {
+  Widget _icon({required IconData icon, required VoidCallback onTap}) {
+    return SizedBox(
+      width: 40,
+      height: 40,
+      child: IconButton(
+        padding: EdgeInsets.zero,
+        iconSize: 30,
+        onPressed: onTap,
+        icon: Icon(icon),
+        color: Colors.black54,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final ttsService = ref.read(ttsServiceProvider);
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // TextField + botón hablar
+              SizedBox(
+                height: 35,
+                child: TextField(
+                  controller: widget.controller,
+                  readOnly: true,
+                  showCursor: true,
+                  style: const TextStyle(color: Colors.black87),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    hoverColor: const Color.fromRGBO(255, 255, 255, 1),
+
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.black87,
+                        width: 1.5,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        color: Colors.black87,
+                        width: 1.5,
+                      ),
+                    ),
+                    suffixIcon: IconButton(
+                      icon: const Icon(Icons.volume_up),
+                      onPressed: () {
+                        ttsService.speak(widget.controller.text);
+                      },
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                  ),
+                ),
+              ),
+
+              // Botones borrar
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  _icon(
+                    icon: Icons.backspace_outlined,
+                    onTap: () => deleteChar(widget.controller),
+                  ),
+                  _icon(
+                    icon: Icons.undo,
+                    onTap: () => deleteWord(widget.controller),
+                  ),
+                  _icon(
+                    icon: Icons.delete_forever_outlined,
+                    onTap: () => deleteAll(widget.controller),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
