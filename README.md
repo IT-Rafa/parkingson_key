@@ -1,6 +1,9 @@
 <p align="center">
 <img src="https://github.com/IT-Rafa/parkingson_key/blob/main/docs/mano_mobile.png" width="30%" />
 </p>
+<p align="center">
+<img src="docs/mano_mobile.png" width="30%" />
+</p>
 
 
 [![Make Test](https://github.com/gnuradio/gnuradio/actions/workflows/make-test.yml/badge.svg?branch=main)](https://github.com/gnuradio/gnuradio/actions/workflows/make-test.yml)
