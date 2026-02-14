@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://github.com/gnuradio/gnuradio/blob/main/docs/gnuradio.png" width="75%" />
+<img src="https://github.com/IT-Rafa/parkingson_key/main/docs/mano_mobile.svg" width="75%" />
 </p>
 
 [![Make Test](https://github.com/gnuradio/gnuradio/actions/workflows/make-test.yml/badge.svg?branch=main)](https://github.com/gnuradio/gnuradio/actions/workflows/make-test.yml)
