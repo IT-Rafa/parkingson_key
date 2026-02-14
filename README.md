@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://github.com/IT-Rafa/parkingson_key/blob/main/docs/mano_mobile.png" width="75%" />
+<img src="https://github.com/IT-Rafa/parkingson_key/blob/main/docs/mano_mobile.png" width="30%" />
 </p>
 
 
