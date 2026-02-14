@@ -1,0 +1,69 @@
+# =========================================================
+# MONOREPO: Flutter (client) + Dart (server) + shared
+# =========================================================
+
+# ---------------------------
+# Miscellaneous
+# ---------------------------
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# ---------------------------
+# IntelliJ / IDEs
+# ---------------------------
+*.iml
+*.ipr
+*.iws
+**/.idea/
+# **/.vscode/   ← descomenta si NO quieres subir configuración VSCode
+
+# ---------------------------
+# Dart / Flutter generated
+# ---------------------------
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.pub-cache/
+**/.pub/
+**/build/
+**/coverage/
+**/doc/api/
+
+# ---------------------------
+# Keep pubspec.lock ONLY in client (Flutter app)
+# ---------------------------
+shared/pubspec.lock
+server/pubspec.lock
+
+# ---------------------------
+# iOS
+# ---------------------------
+**/ios/Flutter/.last_build_id
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+
+# ---------------------------
+# Android
+# ---------------------------
+**/android/.gradle/
+**/android/app/debug/
+**/android/app/profile/
+**/android/app/release/
+
+# ---------------------------
+# Symbolication
+# ---------------------------
+app.*.symbols
+app.*.map.json
