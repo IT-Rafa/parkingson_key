@@ -1,6 +1,4 @@
-
-
-import 'package:shared/models/sync_entity.dart';
+import 'sync_entity.dart';
 
 class UserConfig extends SyncEntity {
   final Map<String, dynamic> data;
@@ -14,12 +12,12 @@ class UserConfig extends SyncEntity {
   });
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'version': version,
-        'updatedAt': updatedAt.toIso8601String(),
-        'updatedByDeviceId': updatedByDeviceId,
-        'data': data,
-      };
+    'id': id,
+    'version': version,
+    'updatedAt': updatedAt.toIso8601String(),
+    'updatedByDeviceId': updatedByDeviceId,
+    'data': data,
+  };
 
   factory UserConfig.fromJson(Map<String, dynamic> json) {
     return UserConfig(

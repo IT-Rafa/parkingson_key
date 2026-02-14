@@ -1,4 +1,4 @@
-import 'package:shared/models/sync_entity.dart';
+import 'sync_entity.dart';
 
 class KeyboardLayoutDto extends SyncEntity {
   final String name;

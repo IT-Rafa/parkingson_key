@@ -1,4 +1,3 @@
-library shared;
 
 // API pública del paquete
 export 'models/user.dart';
