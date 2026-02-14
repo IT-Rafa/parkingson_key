@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/services/haptic_feedback_service.dart';
@@ -49,7 +48,7 @@ class _KeyboardDropdownKeyState extends ConsumerState<KeyboardDropdownKey> {
         offset.dy,
       ),
       items: widget.keyData.items!
-          .map((e) => PopupMenuItem(value: e, child: Text(e.tr())))
+          .map((e) => PopupMenuItem(value: e, child: Text(e)))
           .toList(),
     );
 
