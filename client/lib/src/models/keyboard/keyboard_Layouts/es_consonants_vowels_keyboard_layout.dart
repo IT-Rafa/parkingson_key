@@ -40,11 +40,11 @@ final esConsonantsVowelsKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('z'),
     ],
     [
-      KeyboardItem.char('a'),
-      KeyboardItem.char('e'),
-      KeyboardItem.char('i'),
-      KeyboardItem.char('o'),
-      KeyboardItem.char('u'),
+      KeyboardItem.char('a', lightColor: Colors.cyan),
+      KeyboardItem.char('e', lightColor: Colors.cyan),
+      KeyboardItem.char('i', lightColor: Colors.cyan),
+      KeyboardItem.char('o', lightColor: Colors.cyan),
+      KeyboardItem.char('u', lightColor: Colors.cyan),
     ],
     [
       KeyboardItem.char('Sí', lightColor: Colors.green),
