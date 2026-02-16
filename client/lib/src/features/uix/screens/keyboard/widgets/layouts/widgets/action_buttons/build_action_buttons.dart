@@ -16,8 +16,8 @@ List<Widget> buildActionButtons(
 
   Widget keyBox({required Widget child, required bool isPortrait}) {
     return SizedBox(
-      width: isPortrait ? 90 : 120,
-      height: isPortrait ? 45 : 40,
+      width: isPortrait ? 85 : 120,
+      height: isPortrait ? 60 : 40,
       child: child,
     );
   }
@@ -26,7 +26,9 @@ List<Widget> buildActionButtons(
     keyBox(
       isPortrait: isPortrait,
       child: ActionButton(
-        title: showAppBar ? 'KEYBOARD_hide_title'.tr() : 'KEYBOARD_show_title'.tr(),
+        title: showAppBar
+            ? 'KEYBOARD_hide_title'.tr()
+            : 'KEYBOARD_show_title'.tr(),
         onAccepted: () {
           ref.read(appBarVisibilityProvider.notifier).toggle();
         },

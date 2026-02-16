@@ -46,10 +46,8 @@ class KeyboardRow extends StatelessWidget {
   double _effectiveWeight(KeyboardItem item, BuildContext context) {
     switch (item.type) {
       case KeyboardItemType.char:
-        if (item.label.length > 1) {
           return isPortrait ? 1.25 : 1.6;
-        }
-        return 1;
+        
       case KeyboardItemType.dropdown:
         return isPortrait ? 1.35 : 1.8;
     }

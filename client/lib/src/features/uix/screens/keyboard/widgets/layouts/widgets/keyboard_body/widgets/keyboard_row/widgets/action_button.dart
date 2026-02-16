@@ -70,21 +70,16 @@ class _ActionButtonState extends ConsumerState<ActionButton> {
         color: _pressed ? pressedColor : baseColor,
         child: LayoutBuilder(
           builder: (context, constraints) {
-            final baseFontSize = constraints.maxHeight * 0.80;
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  widget.title.toUpperCase(),
-                  style: TextStyle(
-                    fontFamily: 'RobotoMono',
-                    fontSize: baseFontSize,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  maxLines: 1,
-                  textAlign: TextAlign.center,
+              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+              child: Text(
+                widget.title,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
                 ),
+                maxLines: 2,
+                textAlign: TextAlign.center,
               ),
             );
           },
