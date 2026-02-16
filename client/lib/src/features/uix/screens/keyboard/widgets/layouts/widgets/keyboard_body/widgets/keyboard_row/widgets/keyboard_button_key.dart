@@ -33,7 +33,7 @@ class _KeyboardButtonKeyState extends ConsumerState<KeyboardButtonKey> {
   @override
   Widget build(BuildContext context) {
     final profile = ref.watch(keyboardProfileProvider);
-    
+
     final baseColor = widget.keyData.lightColor ?? Colors.amber;
 
     final pressedColor = Color.alphaBlend(
@@ -65,28 +65,35 @@ class _KeyboardButtonKeyState extends ConsumerState<KeyboardButtonKey> {
         setState(() => _pressed = false);
         accept.cancel();
       },
-      child: KeyboardKeyContainer(
-        color: _pressed ? pressedColor : baseColor,
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            final baseFontSize = constraints.maxHeight * 0.8;
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  widget.keyData.displayText.toUpperCase(),
-                  style: TextStyle(
-                    fontFamily: 'RobotoMono',
-                    fontSize: baseFontSize,
-                    fontWeight: FontWeight.bold,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxHeight: 80, // 🔴 altura REAL del botón
+          ),
+          child: KeyboardKeyContainer(
+            color: _pressed ? pressedColor : baseColor,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final baseFontSize = constraints.maxHeight * 0.8;
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      widget.keyData.displayText.toUpperCase(),
+                      style: TextStyle(
+                        fontFamily: 'RobotoMono',
+                        fontSize: baseFontSize,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                  maxLines: 1,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            );
-          },
+                );
+              },
+            ),
+          ),
         ),
       ),
     );

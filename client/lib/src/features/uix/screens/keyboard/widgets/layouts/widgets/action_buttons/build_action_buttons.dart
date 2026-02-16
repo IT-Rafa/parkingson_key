@@ -16,7 +16,7 @@ List<Widget> buildActionButtons(
 
   Widget keyBox({required Widget child, required bool isPortrait}) {
     return SizedBox(
-      width: isPortrait ? 85 : 120,
+      width: isPortrait ? 88 : 120,
       height: isPortrait ? 60 : 40,
       child: child,
     );
