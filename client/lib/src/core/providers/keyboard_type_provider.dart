@@ -9,7 +9,7 @@ final keyboardTypeProvider =
 class KeyboardTypeController extends Notifier<KeyboardType> {
   @override
   KeyboardType build() {
-    return KeyboardType.qwerty; // default
+    return KeyboardType.consonantsVowels; // default
   }
 
   void setType(KeyboardType type) {
