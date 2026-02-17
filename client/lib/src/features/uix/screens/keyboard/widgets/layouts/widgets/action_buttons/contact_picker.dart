@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart';
 import 'package:parkingson_key/src/core/services/feedback_service.dart';
-import 'package:parkingson_key/src/core/services/whatsapp_service.dart';
 import 'package:parkingson_key/src/core/contacts/providers/contact_provider.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/contact_action_sheet.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/utils/accept_on_hold.dart';
 
 class ContactPicker extends ConsumerWidget {
@@ -13,8 +13,7 @@ class ContactPicker extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final contacts =
-        ref.watch(contactProvider).where((c) => c.whatsappEnabled).toList();
+    final contacts = ref.watch(contactProvider);
     final profile = ref.watch(keyboardProfileProvider);
 
     return SafeArea(
@@ -34,12 +33,17 @@ class ContactPicker extends ConsumerWidget {
                     profile: profile,
                   );
 
-                  final ok = await WhatsAppService.sendMessage(
-                    contact.phone,
-                    message,
+                  Navigator.pop(context);
+
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (_) => ContactActionSheet(
+                      contact: contact,
+                      message: message,
+                    ),
                   );
 
-                  if (!ok && context.mounted) {
+                  if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text(
@@ -65,3 +69,4 @@ class ContactPicker extends ConsumerWidget {
     );
   }
 }
+

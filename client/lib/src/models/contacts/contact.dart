@@ -23,6 +23,10 @@ class Contact extends HiveObject {
   @HiveField(5)
   final bool callEnabled;
 
+  // NUEVO CAMPO (no reutilizar índices)
+  @HiveField(6)
+  final String? email;
+
   Contact({
     required this.id,
     required this.name,
@@ -30,6 +34,7 @@ class Contact extends HiveObject {
     this.whatsappEnabled = true,
     this.smsEnabled = false,
     this.callEnabled = false,
+    this.email,
   });
 
   Contact copyWith({
@@ -38,6 +43,7 @@ class Contact extends HiveObject {
     bool? whatsappEnabled,
     bool? smsEnabled,
     bool? callEnabled,
+    String? email,
   }) {
     return Contact(
       id: id,
@@ -46,6 +52,7 @@ class Contact extends HiveObject {
       whatsappEnabled: whatsappEnabled ?? this.whatsappEnabled,
       smsEnabled: smsEnabled ?? this.smsEnabled,
       callEnabled: callEnabled ?? this.callEnabled,
+      email: email ?? this.email,
     );
   }
 }
