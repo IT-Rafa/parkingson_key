@@ -20,13 +20,16 @@ class TextFieldRow extends ConsumerStatefulWidget {
 }
 
 class _TextFieldRowState extends ConsumerState<TextFieldRow> {
-  Widget _icon({required IconData icon, required VoidCallback onTap}) {
+  Widget _icon(
+      {required IconData icon,
+      required VoidCallback onTap,
+      double iconSize = 30,}) {
     return SizedBox(
       width: 40,
       height: 40,
       child: IconButton(
         padding: EdgeInsets.zero,
-        iconSize: 30,
+        iconSize: iconSize,
         onPressed: onTap,
         icon: Icon(icon),
         color: Colors.black54,
@@ -45,7 +48,7 @@ class _TextFieldRowState extends ConsumerState<TextFieldRow> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // TextField + botón hablar
+              // TextField + speak icon
               SizedBox(
                 height: 35,
                 child: TextField(
@@ -57,7 +60,6 @@ class _TextFieldRowState extends ConsumerState<TextFieldRow> {
                     filled: true,
                     fillColor: Colors.white,
                     hoverColor: const Color.fromRGBO(255, 255, 255, 1),
-
                     focusedBorder: OutlineInputBorder(
                       borderSide: const BorderSide(
                         color: Colors.black87,
@@ -88,6 +90,7 @@ class _TextFieldRowState extends ConsumerState<TextFieldRow> {
                   _icon(
                     icon: Icons.backspace_outlined,
                     onTap: () => deleteChar(widget.controller),
+                    iconSize: 25,
                   ),
                   _icon(
                     icon: Icons.undo,
