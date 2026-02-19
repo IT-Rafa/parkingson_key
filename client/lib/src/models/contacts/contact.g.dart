@@ -23,13 +23,14 @@ class ContactAdapter extends TypeAdapter<Contact> {
       whatsappEnabled: fields[3] as bool,
       smsEnabled: fields[4] as bool,
       callEnabled: fields[5] as bool,
+      email: fields[6] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, Contact obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(7)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -41,7 +42,9 @@ class ContactAdapter extends TypeAdapter<Contact> {
       ..writeByte(4)
       ..write(obj.smsEnabled)
       ..writeByte(5)
-      ..write(obj.callEnabled);
+      ..write(obj.callEnabled)
+      ..writeByte(6)
+      ..write(obj.email);
   }
 
   @override

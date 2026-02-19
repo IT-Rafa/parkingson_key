@@ -56,7 +56,6 @@ List<Widget> buildActionButtons(
         title: "KEYBOARD_contacts".tr(),
         onAccepted: () {
           final text = controller.text.trim();
-          if (text.isEmpty) return;
 
           showModalBottomSheet(
             context: context,
@@ -74,7 +73,6 @@ List<Widget> buildActionButtons(
           showModalBottomSheet(
             context: context,
             builder: (_) => PhraseTreePicker(
-              // No frase nueva, solo selección
               phrase: null,
               onPhraseSelected: (selected) {
                 final newText = controller.text + selected;

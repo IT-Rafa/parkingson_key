@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart';
-import 'package:parkingson_key/src/core/services/feedback_service.dart';
 import 'package:parkingson_key/src/core/contacts/providers/contact_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/contact_action_sheet.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/utils/accept_on_hold.dart';
 
 class ContactPicker extends ConsumerWidget {
   final String message;
@@ -14,59 +11,44 @@ class ContactPicker extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final contacts = ref.watch(contactProvider);
-    final profile = ref.watch(keyboardProfileProvider);
 
     return SafeArea(
-      child: ListView.builder(
-        itemCount: contacts.length,
-        itemBuilder: (context, index) {
-          final contact = contacts[index];
-          final accept = AcceptOnHold();
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const ListTile(
+            title: Text(
+              "Contactos",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          const Divider(height: 1),
+          Flexible(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: contacts.length,
+              itemBuilder: (context, index) {
+                final contact = contacts[index];
 
-          return GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTapDown: (_) {
-              accept.start(
-                onAccept: () async {
-                  FeedbackService.accept(
-                    messenger: ScaffoldMessenger.of(context),
-                    profile: profile,
-                  );
+                return ListTile(
+                  title: Text(contact.name),
+                  onTap: () {
+                    Navigator.pop(context);
 
-                  Navigator.pop(context);
-
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (_) => ContactActionSheet(
-                      contact: contact,
-                      message: message,
-                    ),
-                  );
-
-                  if (context.mounted) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'WhatsApp no está disponible en este dispositivo',
-                        ),
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (_) => ContactActionSheet(
+                        contact: contact,
+                        message: message,
                       ),
                     );
-                  }
-
-                  if (context.mounted) Navigator.pop(context);
-                },
-                duration: profile.acceptHoldDuration,
-              );
-            },
-            onTapUp: (_) => accept.cancel(),
-            onTapCancel: () => accept.cancel(),
-            child: ListTile(
-              title: Text(contact.name),
+                  },
+                );
+              },
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }
 }
-
