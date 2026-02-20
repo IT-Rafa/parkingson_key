@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart';
@@ -14,46 +15,48 @@ class ContactsSettingsScreen extends ConsumerWidget {
     final contacts = ref.watch(contactProvider);
     final profile = ref.watch(keyboardProfileProvider);
 
-    return Scaffold(
-      appBar: AppBar(title: const Text("Contactos")),
-      body: ListView.builder(
-        itemCount: contacts.length,
-        itemBuilder: (context, index) {
-          final contact = contacts[index];
-
-          return ListTile(
-            title: Text(contact.name),
-            subtitle: Text(contact.phone),
-            onTap: () async {
-              // Vibración + TTS al tocar
-              FeedbackService.accept(
-                messenger: ScaffoldMessenger.of(context),
-                profile: profile,
-              );
-            },
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.edit),
-                  onPressed: () {
-                    _showEditContactDialog(context, ref, contact);
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.delete),
-                  onPressed: () {
-                    ref.read(contactProvider.notifier).delete(contact.id);
-                  },
-                ),
-              ],
-            ),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () => _showAddContactDialog(context, ref),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(title: const Text("SETTINGS_contacts").tr()),
+        body: ListView.builder(
+          itemCount: contacts.length,
+          itemBuilder: (context, index) {
+            final contact = contacts[index];
+      
+            return ListTile(
+              title: Text(contact.name),
+              subtitle: Text(contact.phone),
+              onTap: () async {
+                // Vibración + TTS al tocar
+                FeedbackService.accept(
+                  messenger: ScaffoldMessenger.of(context),
+                  profile: profile,
+                );
+              },
+              trailing: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.edit),
+                    onPressed: () {
+                      _showEditContactDialog(context, ref, contact);
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.delete),
+                    onPressed: () {
+                      ref.read(contactProvider.notifier).delete(contact.id);
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+        floatingActionButton: FloatingActionButton(
+          child: const Icon(Icons.add),
+          onPressed: () => _showAddContactDialog(context, ref),
+        ),
       ),
     );
   }
@@ -61,33 +64,39 @@ class ContactsSettingsScreen extends ConsumerWidget {
   void _showAddContactDialog(BuildContext context, WidgetRef ref) {
     final nameController = TextEditingController();
     final phoneController = TextEditingController();
+    final emailController = TextEditingController();
     final profile = ref.read(keyboardProfileProvider);
 
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text("Añadir contacto"),
+        title: const Text("SET_CONTACTS_add").tr(),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(labelText: "Nombre"),
+              decoration: InputDecoration(labelText: "SET_CONTACTS_name".tr()),
             ),
             TextField(
               controller: phoneController,
-              decoration: const InputDecoration(labelText: "Teléfono"),
+              decoration: InputDecoration(labelText: "SET_CONTACTS_phone".tr()),
               keyboardType: TextInputType.phone,
+            ),
+                        TextField(
+              controller: emailController,
+              decoration: InputDecoration(labelText: "SET_CONTACTS_email".tr()),
+              keyboardType: TextInputType.emailAddress,
             ),
           ],
         ),
         actions: [
           TextButton(
-            child: const Text("Cancelar"),
+            child: const Text("SET_CONTACTS_cancel").tr(),
             onPressed: () => Navigator.pop(context),
           ),
           TextButton(
-            child: const Text("Guardar"),
+            child: const Text("SET_CONTACTS_save").tr(),
             onPressed: () {
               final name = nameController.text.trim();
               final phone = phoneController.text.trim();
@@ -115,42 +124,54 @@ class ContactsSettingsScreen extends ConsumerWidget {
     );
   }
 
-  void _showEditContactDialog(BuildContext context, WidgetRef ref, Contact contact) {
+  void _showEditContactDialog(
+      BuildContext context, WidgetRef ref, Contact contact) {
     final nameController = TextEditingController(text: contact.name);
     final phoneController = TextEditingController(text: contact.phone);
+    final emailController = TextEditingController(text: contact.email);
     final profile = ref.read(keyboardProfileProvider);
 
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text("Editar contacto"),
+        title: const Text("SET_CONTACTS_edit").tr(),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: nameController,
-              decoration: const InputDecoration(labelText: "Nombre"),
+              decoration: InputDecoration(labelText: "SET_CONTACTS_name".tr()),
             ),
             TextField(
               controller: phoneController,
-              decoration: const InputDecoration(labelText: "Teléfono"),
+              decoration: InputDecoration(labelText: "SET_CONTACTS_phone".tr()),
               keyboardType: TextInputType.phone,
+            ),
+            TextField(
+              controller: emailController,
+              decoration: InputDecoration(labelText: "SET_CONTACTS_email".tr()),
+              keyboardType: TextInputType.emailAddress,
             ),
           ],
         ),
         actions: [
           TextButton(
-            child: const Text("Cancelar"),
+            child: const Text("SET_CONTACTS_cancel").tr(),
             onPressed: () => Navigator.pop(context),
           ),
           TextButton(
-            child: const Text("Guardar"),
+            child: const Text("SET_CONTACTS_save").tr(),
             onPressed: () {
               final name = nameController.text.trim();
               final phone = phoneController.text.trim();
+              final email = emailController.text.trim();
               if (name.isEmpty || phone.isEmpty) return;
 
-              final updated = contact.copyWith(name: name, phone: phone);
+              final updated = contact.copyWith(
+                name: name,
+                phone: phone,
+                email: email,
+              );
               ref.read(contactProvider.notifier).update(updated);
 
               // Feedback háptico

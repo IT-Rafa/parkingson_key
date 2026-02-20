@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/message_options_sheet.dart';
 import 'package:parkingson_key/src/models/contacts/contact.dart';
@@ -15,10 +16,9 @@ class ContactActionSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final canCall = contact.callEnabled && contact.phone.isNotEmpty;
-
+    final phone = normalizePhone(contact.phone);
+    final canCall = phone.isNotEmpty;
     final canWhatsapp = contact.whatsappEnabled;
-
     final canEmail = contact.email != null && contact.email!.isNotEmpty;
 
     return SafeArea(
@@ -26,7 +26,7 @@ class ContactActionSheet extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
-            title: const Text("Llamar"),
+            title: const Text("KEYBOARD_call").tr(),
             enabled: canCall,
             onTap: canCall
                 ? () async {
@@ -39,7 +39,7 @@ class ContactActionSheet extends StatelessWidget {
                 : null,
           ),
           ListTile(
-            title: const Text("Enviar mensaje"),
+            title: const Text("KEYBOARD_send_message").tr(),
             enabled: canWhatsapp || canEmail,
             onTap: (canWhatsapp || canEmail)
                 ? () {
@@ -58,4 +58,8 @@ class ContactActionSheet extends StatelessWidget {
       ),
     );
   }
+}
+
+String normalizePhone(String phone) {
+  return phone.replaceAll(RegExp(r'[^0-9+]'), '');
 }

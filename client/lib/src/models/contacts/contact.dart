@@ -31,28 +31,28 @@ class Contact extends HiveObject {
     required this.id,
     required this.name,
     required this.phone,
+    this.email,
     this.whatsappEnabled = true,
     this.smsEnabled = false,
     this.callEnabled = false,
-    this.email,
   });
 
   Contact copyWith({
     String? name,
     String? phone,
+    String? email,
     bool? whatsappEnabled,
     bool? smsEnabled,
     bool? callEnabled,
-    String? email,
   }) {
     return Contact(
       id: id,
       name: name ?? this.name,
       phone: phone ?? this.phone,
+      email: email ?? this.email,
       whatsappEnabled: whatsappEnabled ?? this.whatsappEnabled,
       smsEnabled: smsEnabled ?? this.smsEnabled,
       callEnabled: callEnabled ?? this.callEnabled,
-      email: email ?? this.email,
     );
   }
 }

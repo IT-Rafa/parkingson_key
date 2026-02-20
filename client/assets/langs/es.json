@@ -11,6 +11,9 @@
     "KEYBOARD_numbers": "Números",
     "KEYBOARD_symbols": "Símbolos",
     "KEYBOARD_phrases": "Frases",
+    "KEYBOARD_call": "Llamar",
+    "KEYBOARD_phone": "Tel",
+    "KEYBOARD_send_message": "Enviar Mensaje",
     "SETTINGS_settings": "Configuración",
     "SETTINGS_language": "Idioma:",
     "SETTINGS_english": "Inglés",
@@ -31,5 +34,14 @@
     "SETTINGS_keyboard_type": "Tipo de teclado",
     "SETTINGS_qwerty": "QWERTY",
     "SETTINGS_alpha": "Alfabeto",
-    "SETTINGS_alpha_vowels": "Alfabeto + vocales"
+    "SETTINGS_alpha_vowels": "Alfabeto + vocales",
+    "SET_CONTACTS_contacts": "Contactos",
+    "SET_CONTACTS_add": "Agregar Contacto",
+    "SET_CONTACTS_edit": "Editar Contacto",
+    "SET_CONTACTS_name": "Nombre",
+    "SET_CONTACTS_phone": "Teléfono",
+    "SET_CONTACTS_email": "Correo Electrónico",
+    "SET_CONTACTS_cancel": "Cancelar",
+    "SET_CONTACTS_save": "Guardar",
+    "SET_CONTACTS_delete": "Eliminar"
 }
