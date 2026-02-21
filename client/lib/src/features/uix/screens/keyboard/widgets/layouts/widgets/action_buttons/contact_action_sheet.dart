@@ -1,61 +1,84 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/message_options_sheet.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parkingson_key/src/core/providers/contact_action_available_provider.dart';
 import 'package:parkingson_key/src/models/contacts/contact.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ContactActionSheet extends StatelessWidget {
-  final Contact contact;
-  final String message;
-
+class ContactActionSheet extends ConsumerWidget {
   const ContactActionSheet({
     super.key,
-    required this.contact,
-    required this.message,
+    required this.contact, required String message,
   });
 
-  @override
-  Widget build(BuildContext context) {
-    final phone = normalizePhone(contact.phone);
-    final canCall = phone.isNotEmpty;
-    final canWhatsapp = contact.whatsappEnabled;
-    final canEmail = contact.email != null && contact.email!.isNotEmpty;
+  final Contact contact;
 
-    return SafeArea(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            title: const Text("KEYBOARD_call").tr(),
-            enabled: canCall,
-            onTap: canCall
-                ? () async {
-                    final uri = Uri.parse("tel:${contact.phone}");
-                    await launchUrl(uri);
-                    if (context.mounted) {
-                      Navigator.of(context).pop();
-                    }
-                  }
-                : null,
-          ),
-          ListTile(
-            title: const Text("KEYBOARD_send_message").tr(),
-            enabled: canWhatsapp || canEmail,
-            onTap: (canWhatsapp || canEmail)
-                ? () {
-                    Navigator.pop(context);
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (_) => MessageOptionsSheet(
-                        contact: contact,
-                        message: message,
-                      ),
-                    );
-                  }
-                : null,
-          ),
-        ],
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final phone = contact.phone;
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _actionTile(
+          context: context,
+          ref: ref,
+          titleKey: 'KEYBOARD_call'.tr(),
+          action: ContactAction.call,
+          phone: phone,
+          onLaunch: (normalized) =>
+              launchUrl(Uri(scheme: 'tel', path: normalized)),
+        ),
+        _actionTile(
+          context: context,
+          ref: ref,
+          titleKey: 'SMS',
+          action: ContactAction.sms,
+          phone: phone,
+          onLaunch: (normalized) =>
+              launchUrl(Uri(scheme: 'sms', path: normalized)),
+        ),
+        _actionTile(
+          context: context,
+          ref: ref,
+          titleKey: 'WhatsApp',
+          action: ContactAction.whatsapp,
+          phone: phone,
+          onLaunch: (normalized) =>
+              launchUrl(Uri.parse('https://wa.me/$normalized')),
+        ),
+      ],
+    );
+  }
+
+  Widget _actionTile({
+    required BuildContext context,
+    required WidgetRef ref,
+    required String titleKey,
+    required ContactAction action,
+    required String phone,
+    required Future<void> Function(String normalized) onLaunch,
+  }) {
+    final asyncCanDo = ref.watch(
+      contactActionAvailableProvider(
+        (action: action, phone: phone),
       ),
+    );
+
+    final canDo = asyncCanDo.value ?? false;
+    final normalized = normalizePhone(phone);
+
+    return ListTile(
+      title: Text(titleKey).tr(),
+      enabled: canDo,
+      onTap: canDo
+          ? () async {
+              await onLaunch(normalized);
+              if (context.mounted) {
+                Navigator.of(context).pop();
+              }
+            }
+          : null,
     );
   }
 }
