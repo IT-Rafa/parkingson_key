@@ -52,7 +52,6 @@ Future<void> main() async {
     await contactStorage.save(DefaultContactsFactory.create());
   }
 
-  // Ahora sí, runApp con ProviderScope
   runApp(
     ProviderScope(
       overrides: [

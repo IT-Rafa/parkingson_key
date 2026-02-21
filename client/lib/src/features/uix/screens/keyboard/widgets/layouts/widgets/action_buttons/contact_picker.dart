@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/contacts/providers/contact_provider.dart';
@@ -16,11 +17,11 @@ class ContactPicker extends ConsumerWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const ListTile(
+           ListTile(
             title: Text(
-              "Contactos",
+              "KEYBOARD_contacts",
               style: TextStyle(fontWeight: FontWeight.bold),
-            ),
+            ).tr(),
           ),
           const Divider(height: 1),
           Flexible(
