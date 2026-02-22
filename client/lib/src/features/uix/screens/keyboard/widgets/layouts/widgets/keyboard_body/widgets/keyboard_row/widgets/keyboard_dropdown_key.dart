@@ -91,7 +91,7 @@ class _KeyboardDropdownKeyState extends ConsumerState<KeyboardDropdownKey> {
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(
-            maxHeight: 80, // 🔴 altura REAL del botón
+            maxHeight: 90, // 🔴 altura REAL del botón
           ),
           child: KeyboardKeyContainer(
             color: _pressed ? pressedColor : baseColor,
