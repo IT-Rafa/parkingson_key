@@ -1,5 +1,4 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/contact_action_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 enum ContactAction {
@@ -11,20 +10,20 @@ enum ContactAction {
 final contactActionAvailableProvider =
     FutureProvider.family<bool, ({ContactAction action, String phone})>(
   (ref, params) async {
-    final phone = normalizePhone(params.phone);
-    if (phone.isEmpty) return false;
+    print("param.phone: ${params.phone}, action: ${params.action}");
+    if (params.phone.isEmpty) return false;
 
     late final Uri uri;
 
     switch (params.action) {
       case ContactAction.call:
-        uri = Uri(scheme: 'tel', path: phone);
+        uri = Uri(scheme: 'tel', path: params.phone);
         break;
       case ContactAction.sms:
-        uri = Uri(scheme: 'sms', path: phone);
+        uri = Uri(scheme: 'sms', path: params.phone);
         break;
       case ContactAction.whatsapp:
-        uri = Uri.parse('https://wa.me/$phone');
+        uri = Uri.parse('https://wa.me/${params.phone}');
         break;
     }
 

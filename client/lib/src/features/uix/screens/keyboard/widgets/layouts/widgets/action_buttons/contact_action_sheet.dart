@@ -8,7 +8,8 @@ import 'package:url_launcher/url_launcher.dart';
 class ContactActionSheet extends ConsumerWidget {
   const ContactActionSheet({
     super.key,
-    required this.contact, required String message,
+    required this.contact,
+    required String message,
   });
 
   final Contact contact;
@@ -23,7 +24,7 @@ class ContactActionSheet extends ConsumerWidget {
         _actionTile(
           context: context,
           ref: ref,
-          titleKey: 'KEYBOARD_call'.tr(),
+          titleKey: 'KEYBOARD_call',
           action: ContactAction.call,
           phone: phone,
           onLaunch: (normalized) =>
@@ -32,7 +33,7 @@ class ContactActionSheet extends ConsumerWidget {
         _actionTile(
           context: context,
           ref: ref,
-          titleKey: 'SMS',
+          titleKey: 'KEYBOARD_SMS',
           action: ContactAction.sms,
           phone: phone,
           onLaunch: (normalized) =>
@@ -41,7 +42,7 @@ class ContactActionSheet extends ConsumerWidget {
         _actionTile(
           context: context,
           ref: ref,
-          titleKey: 'WhatsApp',
+          titleKey: 'KEYBOARD_WhatsApp',
           action: ContactAction.whatsapp,
           phone: phone,
           onLaunch: (normalized) =>
@@ -59,15 +60,15 @@ class ContactActionSheet extends ConsumerWidget {
     required String phone,
     required Future<void> Function(String normalized) onLaunch,
   }) {
+    final normalized = normalizePhone(phone);
     final asyncCanDo = ref.watch(
       contactActionAvailableProvider(
-        (action: action, phone: phone),
+        (action: action, phone: normalized),
       ),
     );
 
     final canDo = asyncCanDo.value ?? false;
-    final normalized = normalizePhone(phone);
-
+    print(canDo);
     return ListTile(
       title: Text(titleKey).tr(),
       enabled: canDo,
