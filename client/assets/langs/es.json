@@ -14,6 +14,7 @@
     "KEYBOARD_call": "Llamar",
     "KEYBOARD_SMS": "Enviar SMS",
     "KEYBOARD_WhatsApp": "Enviar WhatsApp",
+    "KEYBOARD_email": "Enviar Correo Electrónico",
     "KEYBOARD_send_message": "Enviar Mensaje",
     "SETTINGS_settings": "Configuración",
     "SETTINGS_language": "Idioma:",

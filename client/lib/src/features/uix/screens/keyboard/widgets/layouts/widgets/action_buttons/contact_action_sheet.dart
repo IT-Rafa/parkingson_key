@@ -16,7 +16,6 @@ class ContactActionSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final phone = contact.phone;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -26,27 +25,38 @@ class ContactActionSheet extends ConsumerWidget {
           ref: ref,
           titleKey: 'KEYBOARD_call',
           action: ContactAction.call,
-          phone: phone,
+          contact: contact,
           onLaunch: (normalized) =>
-              launchUrl(Uri(scheme: 'tel', path: normalized)),
+              launchUrl(Uri(scheme: 'tel', path: contact.phone)),
         ),
         _actionTile(
           context: context,
           ref: ref,
           titleKey: 'KEYBOARD_SMS',
           action: ContactAction.sms,
-          phone: phone,
+          contact: contact,
           onLaunch: (normalized) =>
-              launchUrl(Uri(scheme: 'sms', path: normalized)),
+              launchUrl(Uri(scheme: 'sms', path: contact.phone)),
         ),
         _actionTile(
           context: context,
           ref: ref,
           titleKey: 'KEYBOARD_WhatsApp',
           action: ContactAction.whatsapp,
-          phone: phone,
+          contact: contact,
           onLaunch: (normalized) =>
-              launchUrl(Uri.parse('https://wa.me/$normalized')),
+              launchUrl(Uri.parse('https://wa.me/${contact.phone}')),
+        ),
+        _actionTile(
+          context: context,
+          ref: ref,
+          titleKey: 'KEYBOARD_email',
+          action: ContactAction.email,
+          contact: contact,
+          onLaunch: (normalized) => launchUrl(Uri(
+              scheme: 'mailto',
+              path: contact.email,
+              queryParameters: {'subject': 'Example'})),
         ),
       ],
     );
@@ -57,18 +67,17 @@ class ContactActionSheet extends ConsumerWidget {
     required WidgetRef ref,
     required String titleKey,
     required ContactAction action,
-    required String phone,
+    required Contact contact,
     required Future<void> Function(String normalized) onLaunch,
   }) {
-    final normalized = normalizePhone(phone);
+    final normalized = normalizePhone(contact.phone);
     final asyncCanDo = ref.watch(
       contactActionAvailableProvider(
-        (action: action, phone: normalized),
+        (action: action, contact: contact),
       ),
     );
 
     final canDo = asyncCanDo.value ?? false;
-    print(canDo);
     return ListTile(
       title: Text(titleKey).tr(),
       enabled: canDo,
