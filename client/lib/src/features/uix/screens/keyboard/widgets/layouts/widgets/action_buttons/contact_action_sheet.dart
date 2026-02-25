@@ -16,49 +16,51 @@ class ContactActionSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    return SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _actionTile(
-          context: context,
-          ref: ref,
-          titleKey: 'KEYBOARD_call',
-          action: ContactAction.call,
-          contact: contact,
-          onLaunch: (normalized) =>
-              launchUrl(Uri(scheme: 'tel', path: contact.phone)),
-        ),
-        _actionTile(
-          context: context,
-          ref: ref,
-          titleKey: 'KEYBOARD_SMS',
-          action: ContactAction.sms,
-          contact: contact,
-          onLaunch: (normalized) =>
-              launchUrl(Uri(scheme: 'sms', path: contact.phone)),
-        ),
-        _actionTile(
-          context: context,
-          ref: ref,
-          titleKey: 'KEYBOARD_WhatsApp',
-          action: ContactAction.whatsapp,
-          contact: contact,
-          onLaunch: (normalized) =>
-              launchUrl(Uri.parse('https://wa.me/${contact.phone}')),
-        ),
-        _actionTile(
-          context: context,
-          ref: ref,
-          titleKey: 'KEYBOARD_email',
-          action: ContactAction.email,
-          contact: contact,
-          onLaunch: (normalized) => launchUrl(Uri(
-              scheme: 'mailto',
-              path: contact.email,
-              queryParameters: {'subject': 'Example'})),
-        ),
-      ],
+          _actionTile(
+            context: context,
+            ref: ref,
+            titleKey: 'KEYBOARD_call',
+            action: ContactAction.call,
+            contact: contact,
+            onLaunch: (normalized) =>
+                launchUrl(Uri(scheme: 'tel', path: contact.phone)),
+          ),
+          _actionTile(
+            context: context,
+            ref: ref,
+            titleKey: 'KEYBOARD_SMS',
+            action: ContactAction.sms,
+            contact: contact,
+            onLaunch: (normalized) =>
+                launchUrl(Uri(scheme: 'sms', path: contact.phone)),
+          ),
+          _actionTile(
+            context: context,
+            ref: ref,
+            titleKey: 'KEYBOARD_WhatsApp',
+            action: ContactAction.whatsapp,
+            contact: contact,
+            onLaunch: (normalized) =>
+                launchUrl(Uri.parse('https://wa.me/${contact.phone}')),
+          ),
+          _actionTile(
+            context: context,
+            ref: ref,
+            titleKey: 'KEYBOARD_email',
+            action: ContactAction.email,
+            contact: contact,
+            onLaunch: (normalized) => launchUrl(Uri(
+                scheme: 'mailto',
+                path: contact.email,
+                queryParameters: {'subject': 'Example'})),
+          ),
+        ],
+      ),
     );
   }
 
@@ -78,17 +80,21 @@ class ContactActionSheet extends ConsumerWidget {
     );
 
     final canDo = asyncCanDo.value ?? false;
-    return ListTile(
-      title: Text(titleKey).tr(),
-      enabled: canDo,
-      onTap: canDo
-          ? () async {
-              await onLaunch(normalized);
-              if (context.mounted) {
-                Navigator.of(context).pop();
+
+    return Expanded(
+      child: ListTile(
+        title: Text(titleKey).tr(),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        enabled: canDo,
+        onTap: canDo
+            ? () async {
+                await onLaunch(normalized);
+                if (context.mounted) {
+                  Navigator.of(context).pop();
+                }
               }
-            }
-          : null,
+            : null,
+      ),
     );
   }
 }

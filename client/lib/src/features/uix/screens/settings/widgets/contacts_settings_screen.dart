@@ -135,10 +135,12 @@ class ContactsSettingsScreen extends ConsumerWidget {
       context: context,
       builder: (_) => AlertDialog(
         title: const Text("SET_CONTACTS_edit").tr(),
+        insetPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
+              
               controller: nameController,
               decoration: InputDecoration(labelText: "SET_CONTACTS_name".tr()),
             ),

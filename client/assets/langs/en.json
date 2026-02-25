@@ -10,7 +10,9 @@
     "KEYBOARD_contacts": "Contacts",
     "KEYBOARD_numbers": "Numbers",
     "KEYBOARD_symbols": "Symbols",
+
     "KEYBOARD_phrases": "Phrases",
+    
     "KEYBOARD_call": "Call",
     "KEYBOARD_SMS": "Send SMS Message",
     "KEYBOARD_WhatsApp": "Send WhatsApp Message",
