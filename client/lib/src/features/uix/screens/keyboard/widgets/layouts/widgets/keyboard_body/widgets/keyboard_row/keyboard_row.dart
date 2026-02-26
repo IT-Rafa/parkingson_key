@@ -69,7 +69,7 @@ class KeyboardRow extends StatelessWidget {
 
       case KeyboardItemType.dropdown:
         return KeyboardDropdownKey(
-          keyData: item, // <-- ahora se pasa el item completo
+          keyData: item,
           onSelected: (value) {
             if (value == null) return;
             if (!repeatController.canAccept(item, profile.repeatBlockDuration)) {
