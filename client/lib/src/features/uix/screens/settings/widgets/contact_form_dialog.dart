@@ -7,27 +7,59 @@ import 'package:parkingson_key/src/core/services/feedback_service.dart';
 import 'package:parkingson_key/src/models/contacts/contact.dart';
 import 'package:uuid/uuid.dart';
 
-class ContactFormDialog extends ConsumerWidget {
-  final Contact? contact; // null = add, != null = edit
+class ContactFormDialog extends ConsumerStatefulWidget {
+  final Contact? contact;
 
   const ContactFormDialog({super.key, this.contact});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final nameController = TextEditingController(text: contact?.name ?? '');
-    final phoneController = TextEditingController(text: contact?.phone ?? '');
-    final emailController = TextEditingController(text: contact?.email ?? '');
-    final profile = ref.read(keyboardProfileProvider);
+  ConsumerState<ContactFormDialog> createState() =>
+      _ContactFormDialogState();
+}
 
-    final isEdit = contact != null;
+class _ContactFormDialogState
+    extends ConsumerState<ContactFormDialog> {
+
+  late final TextEditingController nameController;
+  late final TextEditingController phoneController;
+  late final TextEditingController emailController;
+  late final ScrollController scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    nameController =
+        TextEditingController(text: widget.contact?.name ?? '');
+    phoneController =
+        TextEditingController(text: widget.contact?.phone ?? '');
+    emailController =
+        TextEditingController(text: widget.contact?.email ?? '');
+    scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    phoneController.dispose();
+    emailController.dispose();
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isEdit = widget.contact != null;
+    final profile = ref.read(keyboardProfileProvider);
 
     return AlertDialog(
       title: Text(
         isEdit ? "SET_CONTACTS_edit" : "SET_CONTACTS_add",
       ).tr(),
       content: Scrollbar(
+        controller: scrollController,
         thumbVisibility: true,
         child: SingleChildScrollView(
+          controller: scrollController,
           padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
@@ -36,19 +68,22 @@ class ContactFormDialog extends ConsumerWidget {
             children: [
               TextField(
                 controller: nameController,
-                decoration:
-                    InputDecoration(labelText: "SET_CONTACTS_name".tr()),
+                decoration: InputDecoration(
+                  labelText: "SET_CONTACTS_name".tr(),
+                ),
               ),
               TextField(
                 controller: phoneController,
-                decoration:
-                    InputDecoration(labelText: "SET_CONTACTS_phone".tr()),
+                decoration: InputDecoration(
+                  labelText: "SET_CONTACTS_phone".tr(),
+                ),
                 keyboardType: TextInputType.phone,
               ),
               TextField(
                 controller: emailController,
-                decoration:
-                    InputDecoration(labelText: "SET_CONTACTS_email".tr()),
+                decoration: InputDecoration(
+                  labelText: "SET_CONTACTS_email".tr(),
+                ),
                 keyboardType: TextInputType.emailAddress,
               ),
             ],
@@ -57,11 +92,10 @@ class ContactFormDialog extends ConsumerWidget {
       ),
       actions: [
         TextButton(
-          child: const Text("SET_CONTACTS_cancel").tr(),
           onPressed: () => Navigator.pop(context),
+          child: const Text("SET_CONTACTS_cancel").tr(),
         ),
         TextButton(
-          child: const Text("SET_CONTACTS_save").tr(),
           onPressed: () {
             final name = nameController.text.trim();
             final phone = phoneController.text.trim();
@@ -73,7 +107,7 @@ class ContactFormDialog extends ConsumerWidget {
 
             if (isEdit) {
               notifier.update(
-                contact!.copyWith(
+                widget.contact!.copyWith(
                   name: name,
                   phone: phone,
                   email: email,
@@ -97,6 +131,7 @@ class ContactFormDialog extends ConsumerWidget {
 
             Navigator.pop(context);
           },
+          child: const Text("SET_CONTACTS_save").tr(),
         ),
       ],
     );
