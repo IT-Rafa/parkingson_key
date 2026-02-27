@@ -1,9 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart';
 import 'package:parkingson_key/src/core/providers/tts_service_provider.dart';
+import 'package:parkingson_key/src/core/services/feedback_service.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/utils/delete_all.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/utils/delete_char.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/utils/delete_word.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
 
 class TextFieldRow extends ConsumerStatefulWidget {
   final TextEditingController controller;
@@ -20,22 +24,7 @@ class TextFieldRow extends ConsumerStatefulWidget {
 }
 
 class _TextFieldRowState extends ConsumerState<TextFieldRow> {
-  Widget _icon(
-      {required IconData icon,
-      required VoidCallback onTap,
-      double iconSize = 30,}) {
-    return SizedBox(
-      width: 40,
-      height: 40,
-      child: IconButton(
-        padding: EdgeInsets.zero,
-        iconSize: iconSize,
-        onPressed: onTap,
-        icon: Icon(icon),
-        color: Colors.black54,
-      ),
-    );
-  }
+  KeyboardAccessibilityProfile get profile => ref.read(keyboardProfileProvider);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +39,7 @@ class _TextFieldRowState extends ConsumerState<TextFieldRow> {
             children: [
               // TextField + speak icon
               SizedBox(
-                height: 35,
+                height: 40,
                 child: TextField(
                   controller: widget.controller,
                   readOnly: true,
@@ -87,19 +76,86 @@ class _TextFieldRowState extends ConsumerState<TextFieldRow> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  _icon(
-                    icon: Icons.backspace_outlined,
-                    onTap: () => deleteChar(widget.controller),
-                    iconSize: 25,
-                  ),
-                  _icon(
-                    icon: Icons.undo,
-                    onTap: () => deleteWord(widget.controller),
-                  ),
-                  _icon(
-                    icon: Icons.delete_forever_outlined,
-                    onTap: () => deleteAll(widget.controller),
-                  ),
+                  PopupMenuButton<String>(
+                    icon: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.amber,
+                        borderRadius: BorderRadius.circular(6),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "KEYBOARD_delete".tr().toUpperCase(),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(width: 4),
+                          const Icon(
+                            Icons.expand_more,
+                            size: 18,
+                          ),
+                        ],
+                      ),
+                    ),
+                    tooltip: "KEYBOARD_delete".tr(),
+                    constraints: const BoxConstraints(
+                      minWidth: 48,
+                      minHeight: 48,
+                    ),
+                    onSelected: (value) {
+                      switch (value) {
+                        case 'delete_char':
+                          deleteChar(widget.controller);
+
+                        case 'delete_word':
+                          deleteWord(widget.controller);
+                          break;
+
+                        case 'delete_all':
+                          deleteAll(widget.controller);
+                          break;
+                      }
+
+                      FeedbackService.accept(
+                        messenger: ScaffoldMessenger.of(context),
+                        profile: profile,
+                      );
+                    },
+                    itemBuilder: (context) => [
+                      PopupMenuItem(
+                        value: 'delete_char',
+                        child: Row(
+                          children: [
+                            const SizedBox(width: 8),
+                            Text("KEYBOARD_delete_char".tr()),
+                          ],
+                        ),
+                      ),
+                      PopupMenuItem(
+                        value: 'delete_word',
+                        child: Row(
+                          children: [
+                            const SizedBox(width: 8),
+                            Text("KEYBOARD_delete_word".tr()),
+                          ],
+                        ),
+                      ),
+                      PopupMenuItem(
+                        value: 'delete_all',
+                        child: Row(
+                          children: [
+                            const SizedBox(width: 8),
+                            Text("KEYBOARD_delete_all".tr()),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ],

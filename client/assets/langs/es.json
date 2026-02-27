@@ -1,9 +1,10 @@
 {
     "KEYBOARD_title": "Teclado Parkinson",
     "KEYBOARD_read": "Leer",
-    "KEYBOARD_letter": "Letra",
-    "KEYBOARD_word": "Palabra",
-    "KEYBOARD_all": "Todo",
+    "KEYBOARD_delete": "Borrar",
+    "KEYBOARD_delete_char": "Borrar carácter",
+    "KEYBOARD_delete_word": "Borrar palabra",
+    "KEYBOARD_delete_all": "Borrar todo",
     "KEYBOARD_show_title": "Mostrar título",
     "KEYBOARD_hide_title": "Ocultar Título",
     "KEYBOARD_savePhrase": "Guardar Frase",

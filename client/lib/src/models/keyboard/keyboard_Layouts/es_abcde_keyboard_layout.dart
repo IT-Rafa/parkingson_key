@@ -51,7 +51,7 @@ final esAbcdeKeyboardLayout = KeyboardLayout(
     [
       KeyboardItem.char('Sí', lightColor: Colors.green),
       KeyboardItem.char('No', lightColor: Colors.green),
-      KeyboardItem.char('  ', lightColor: Colors.grey),
+      KeyboardItem.char('  ', lightColor: Colors.grey.shade400),
     ],
     [
       KeyboardItem.dropdown(
@@ -107,7 +107,7 @@ final esAbcdeKeyboardLayout = KeyboardLayout(
     [
       KeyboardItem.char('Sí', lightColor: Colors.green),
       KeyboardItem.char('No', lightColor: Colors.green),
-      KeyboardItem.char('  ', lightColor: Colors.grey),
+      KeyboardItem.char('  ', lightColor: Colors.grey.shade400),
     ],
     [
       KeyboardItem.dropdown(

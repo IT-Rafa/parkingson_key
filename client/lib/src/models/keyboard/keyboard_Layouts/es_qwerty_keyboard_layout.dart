@@ -40,7 +40,7 @@ final esQwertyKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('m'),
       KeyboardItem.char('Sí', lightColor: Colors.green),
       KeyboardItem.char('No', lightColor: Colors.green),
-      KeyboardItem.char('  ', lightColor: Colors.grey),
+      KeyboardItem.char('  ', lightColor: Colors.grey.shade400),
     ],
     [
       KeyboardItem.dropdown(
@@ -89,7 +89,7 @@ final esQwertyKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('m'),
       KeyboardItem.char('Sí', lightColor: Colors.green),
       KeyboardItem.char('No', lightColor: Colors.green),
-      KeyboardItem.char('  ', lightColor: Colors.grey),
+      KeyboardItem.char('  ', lightColor: Colors.grey.shade400),
     ],
     [
       KeyboardItem.dropdown(

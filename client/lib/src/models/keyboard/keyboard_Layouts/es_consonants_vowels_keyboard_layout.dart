@@ -136,7 +136,7 @@ final esConsonantsVowelsKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('i', lightColor: Colors.cyan),
       KeyboardItem.char('o', lightColor: Colors.cyan),
       KeyboardItem.char('u', lightColor: Colors.cyan),
-      KeyboardItem.char('  ', lightColor: Colors.grey),
+      KeyboardItem.char('  ', lightColor: Colors.grey.shade400),
     ],
     [
       KeyboardItem.dropdown(

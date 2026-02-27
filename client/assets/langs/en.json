@@ -1,18 +1,17 @@
 {
     "KEYBOARD_title": "Parkinson Keyboard",
     "KEYBOARD_read": "Read",
-    "KEYBOARD_letter": "Letter",
-    "KEYBOARD_word": "Word",
-    "KEYBOARD_all": "All",
+    "KEYBOARD_delete": "Borrar",
+    "KEYBOARD_delete_char": "Delete char",
+    "KEYBOARD_delete_word": "Delete word",
+    "KEYBOARD_delete_all": "Delete all",
     "KEYBOARD_show_title": "Show title",
     "KEYBOARD_hide_title": "Hide title",
     "KEYBOARD_savePhrase": "Save Phrase",
     "KEYBOARD_contacts": "Contacts",
     "KEYBOARD_numbers": "Numbers",
     "KEYBOARD_symbols": "Symbols",
-
     "KEYBOARD_phrases": "Phrases",
-    
     "KEYBOARD_call": "Call",
     "KEYBOARD_SMS": "Send SMS Message",
     "KEYBOARD_WhatsApp": "Send WhatsApp Message",
