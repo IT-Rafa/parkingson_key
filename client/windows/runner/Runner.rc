@@ -93,7 +93,7 @@ BEGIN
             VALUE "FileDescription", "parkingson_key" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "parkingson_key" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2025 es.itra. All rights reserved." "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2026 es.itra. All rights reserved." "\0"
             VALUE "OriginalFilename", "parkingson_key.exe" "\0"
             VALUE "ProductName", "parkingson_key" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
