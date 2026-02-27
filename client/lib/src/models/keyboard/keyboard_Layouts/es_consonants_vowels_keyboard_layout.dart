@@ -89,6 +89,10 @@ final esConsonantsVowelsKeyboardLayout = KeyboardLayout(
         title: 'KEYBOARD_numbers',
         items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
       ),
+            KeyboardItem.dropdown(
+        title: 'KEYBOARD_numbers',
+        items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+      ),
     ],
   ],
   // ───────────────── LANDSCAPE ─────────────────
@@ -169,6 +173,10 @@ final esConsonantsVowelsKeyboardLayout = KeyboardLayout(
         ],
       ),
       KeyboardItem.dropdown(
+        title: 'KEYBOARD_numbers',
+        items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
+      ),
+            KeyboardItem.dropdown(
         title: 'KEYBOARD_numbers',
         items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
       ),
