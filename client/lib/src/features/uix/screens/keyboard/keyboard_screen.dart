@@ -12,7 +12,7 @@ import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/portrait_layout.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/app_bar/settings_icon_button.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/utils/keyboard_layout_registry.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/textfield_row.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/textfield_container.dart';
 
 // Widget keyboard_screen
 class KeyboardScreen extends ConsumerStatefulWidget {
@@ -86,17 +86,9 @@ ref.listen<AppLanguage>(languageProvider, (prev, next) {
 
             return Column(
               children: [
-                Container(
-                  margin: const EdgeInsets.fromLTRB(8, 8, 8, 4),
-                  padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[300],
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: TextFieldRow(
-                    controller: _textFieldController,
-                    focusNode: _focusNode,
-                  ),
+                TextFieldContainer(
+                  controller: _textFieldController,
+                  focusNode: _focusNode,
                 ),
                 Expanded(
                   child: isPortrait

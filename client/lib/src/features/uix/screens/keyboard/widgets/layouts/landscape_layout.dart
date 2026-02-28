@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_type_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/build_action_buttons.dart';
+import 'package:parkingson_key/src/features/uix/themes/app_colors.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/keyboard_body.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_layout.dart';
@@ -40,7 +41,7 @@ class LandscapeLayout extends ConsumerWidget {
           margin: const EdgeInsets.fromLTRB(8, 4, 8, 8),
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: Colors.grey[300],
+          color: AppColors.containerBackground(context),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
