@@ -7,7 +7,6 @@ import 'package:parkingson_key/src/core/services/feedback_service.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/utils/delete_all.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/utils/delete_char.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/utils/delete_word.dart';
-import 'package:parkingson_key/src/features/uix/themes/app_colors.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
 
 class TextFieldContainer extends ConsumerStatefulWidget {
@@ -35,7 +34,6 @@ class _TextFieldContainerState extends ConsumerState<TextFieldContainer> {
       margin: const EdgeInsets.fromLTRB(8, 8, 8, 4),
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
       decoration: BoxDecoration(
-        color: AppColors.containerBackground(context),
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(

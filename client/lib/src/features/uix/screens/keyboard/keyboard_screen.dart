@@ -13,7 +13,6 @@ import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/app_bar/settings_icon_button.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/utils/keyboard_layout_registry.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/textfield_container.dart';
-import 'package:parkingson_key/src/features/uix/themes/app_colors.dart';
 
 // Widget keyboard_screen
 class KeyboardScreen extends ConsumerStatefulWidget {
@@ -79,7 +78,7 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
         appBar: showAppBar
             ? AppBar(
                 title: const Text("KEYBOARD_title").tr(),
-                backgroundColor: AppColors.primary(context),
+
                 actions: const [SettingsIconButton()],
               )
             : null,

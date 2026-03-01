@@ -1,0 +1,54 @@
+import 'package:flutter/material.dart';
+import 'package:parkingson_key/src/features/uix/themes/app_color.dart';
+
+class AppColorSchemes {
+  static final light = ColorScheme(
+    brightness: Brightness.light,
+    primary: AppColors.primary.light,
+    onPrimary: AppColors.onPrimary.light,
+    secondary: AppColors.primary.light,
+    onSecondary: AppColors.onPrimary.light,
+    error: AppColors.error.light,
+    onError: AppColors.onError.light,
+    surface: AppColors.surface.light,
+    onSurface: AppColors.onSurface.light,
+    primaryContainer: AppColors.primary.light,
+    onPrimaryContainer: AppColors.onPrimary.light,
+    secondaryContainer: AppColors.primary.light,
+    onSecondaryContainer: AppColors.onPrimary.light,
+    errorContainer: AppColors.error.light,
+    onErrorContainer: AppColors.onError.light,
+    outline: Colors.grey,
+    shadow: Colors.black,
+    inverseSurface: AppColors.surface.dark,
+    onInverseSurface: AppColors.onSurface.dark,
+    inversePrimary: AppColors.primary.dark,
+    surfaceTint: AppColors.primary.light,
+  );
+
+  static final dark = ColorScheme(
+    brightness: Brightness.dark,
+    primary: AppColors.primary.dark,
+    onPrimary: AppColors.onPrimary.dark,
+    secondary: AppColors.primary.dark,
+    onSecondary: AppColors.onPrimary.dark,
+    error: AppColors.error.dark,
+    onError: AppColors.onError.dark,
+    surface: AppColors.surface.dark,
+    onSurface: AppColors.onSurface.dark,
+    primaryContainer: AppColors.primary.dark,
+    onPrimaryContainer: AppColors.onPrimary.dark,
+    secondaryContainer: AppColors.primary.dark,
+    onSecondaryContainer: AppColors.onPrimary.dark,
+    errorContainer: AppColors.error.dark,
+    onErrorContainer: AppColors.onError.dark,
+    surfaceContainerHighest: AppColors.surface.dark,
+    onSurfaceVariant: AppColors.onSurface.dark,
+    outline: Colors.grey,
+    shadow: Colors.black,
+    inverseSurface: AppColors.surface.light,
+    onInverseSurface: AppColors.onSurface.light,
+    inversePrimary: AppColors.primary.light,
+    surfaceTint: AppColors.primary.dark,
+  );
+}

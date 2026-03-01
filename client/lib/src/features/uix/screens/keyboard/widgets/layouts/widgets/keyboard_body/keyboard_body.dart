@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:parkingson_key/src/features/uix/themes/app_colors.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
 import 'package:parkingson_key/src/core/controllers/keyboard_repeat_controller.dart';
@@ -31,7 +30,6 @@ class KeyboardBody extends StatelessWidget {
         margin: margin,
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: AppColors.containerBackground(context),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
