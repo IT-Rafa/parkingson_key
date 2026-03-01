@@ -1,50 +1,20 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // primary
-  static const Color primaryLight = Color.fromARGB(255, 165, 70, 46);
-  static const Color primaryDark = Color.fromARGB(255, 20, 11, 116);
-  // onPrimary
-  static const Color onPrimaryLight = Colors.green;
-  static const Color onPrimaryDark = Colors.white;
-  // error
-  static const Color errorLight = Colors.red;
-  static const Color errorDark = Colors.red;
-  // onError
-  static const Color onErrorLight = Colors.red;
-  static const Color onErrorDark = Colors.red;
-
-  // backgroundAppBar
-  static const Color backgroundAppBarLight = primaryLight;
-  static const Color backgroundAppBarDark = Colors.black;
-  // foregroundAppBar
-  static const Color foregroundAppBarLight = Colors.white;
-  static const Color foregroundAppBarDark = Colors.white;
-
-
-  static Color containerBackground(BuildContext context) =>
-      Theme.of(context).brightness == Brightness.light
-          ?  Colors.grey[300]!
-          :  Colors.grey[600]!;
-
-  // key vowels color
-  static const Color keyVowelColorLight = Color.fromARGB(96, 0, 0, 0);
-  static const Color keyVowelColorDark = Colors.black38;
-
-  // key affirmative/negative color
-  static const Color keyYesNOColorLight = Colors.red;
-  static const Color keyYesNOColorDark = Colors.red;
-
-  // Getters upon brightness
   static Color primary(BuildContext context) =>
       Theme.of(context).brightness == Brightness.light
-          ? primaryLight
-          : primaryDark;
+          ? Color.fromARGB(255, 165, 70, 46)
+          : Color.fromARGB(255, 20, 11, 116);
 
   static Color onPrimary(BuildContext context) =>
       Theme.of(context).brightness == Brightness.light
-          ? onPrimaryLight
-          : onPrimaryDark;
+          ? Colors.green
+          : Colors.white;
+
+  static Color containerBackground(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.light
+          ? Colors.grey[300]!
+          : Colors.grey[600]!;
 
   static Color key(BuildContext context) =>
       Theme.of(context).brightness == Brightness.light
@@ -57,25 +27,27 @@ class AppColors {
           : Colors.white;
 
   static Color error(BuildContext context) =>
-      Theme.of(context).brightness == Brightness.light ? errorLight : errorDark;
+      Theme.of(context).brightness == Brightness.light
+          ? Colors.red
+          : Colors.red;
 
   static Color onError(BuildContext context) =>
       Theme.of(context).brightness == Brightness.light
-          ? onErrorLight
-          : onErrorDark;
+          ? Colors.red
+          : Colors.red;
 
   static Color backgroundAppBar(BuildContext context) =>
       Theme.of(context).brightness == Brightness.light
-          ? backgroundAppBarLight
-          : backgroundAppBarDark;
+          ? Colors.red
+          : Colors.red;
 
   static Color foregroundAppBar(BuildContext context) =>
       Theme.of(context).brightness == Brightness.light
-          ? foregroundAppBarLight
-          : foregroundAppBarDark;
+          ? Colors.red
+          : Colors.red;
 
   static Color vowels(BuildContext context) =>
       Theme.of(context).brightness == Brightness.light
-          ? keyVowelColorLight
-          : keyVowelColorDark;
+          ? Colors.red
+          : Colors.red;
 }

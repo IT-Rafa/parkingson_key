@@ -13,6 +13,7 @@ import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/app_bar/settings_icon_button.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/utils/keyboard_layout_registry.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/textfield_container.dart';
+import 'package:parkingson_key/src/features/uix/themes/app_colors.dart';
 
 // Widget keyboard_screen
 class KeyboardScreen extends ConsumerStatefulWidget {
@@ -61,22 +62,24 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
     final keyboardLayout = keyboardLayoutByType[keyboardType]!;
 
     // Update TTS locale
-ref.listen<AppLanguage>(languageProvider, (prev, next) {
-  // EasyLocalization locale
-  final locale = next == AppLanguage.en ? const Locale('en') : const Locale('es');
-  if (context.locale != locale) {
-    context.setLocale(locale);
-  }
+    ref.listen<AppLanguage>(languageProvider, (prev, next) {
+      // EasyLocalization locale
+      final locale =
+          next == AppLanguage.en ? const Locale('en') : const Locale('es');
+      if (context.locale != locale) {
+        context.setLocale(locale);
+      }
 
-  // TTS locale (usa String)
-  final ttsLocale = next == AppLanguage.en ? 'en' : 'es';
-  ref.read(ttsServiceProvider).setLocale(ttsLocale);
-});
+      // TTS locale (usa String)
+      final ttsLocale = next == AppLanguage.en ? 'en' : 'es';
+      ref.read(ttsServiceProvider).setLocale(ttsLocale);
+    });
     return SafeArea(
       child: Scaffold(
         appBar: showAppBar
             ? AppBar(
                 title: const Text("KEYBOARD_title").tr(),
+                backgroundColor: AppColors.primary(context),
                 actions: const [SettingsIconButton()],
               )
             : null,
