@@ -8,10 +8,30 @@ class AppColorPair {
 }
 
 class AppColors {
-//
+  // Background App
+  static const surface = AppColorPair(
+    Colors.white,
+    Colors.black,
+  );
+
+  static const onSurface = AppColorPair(
+    Colors.black,
+    Colors.white,
+  );
+
+  static const surfaceVariant = AppColorPair(
+    Colors.black,
+    Color(0xFF2C2C2C),
+  );
+
+  static const onSurfaceVariant = AppColorPair(
+    Colors.black87,
+    Colors.white70,
+  );
+
   static const primary = AppColorPair(
-    Color.fromARGB(255, 165, 70, 46),
-    Color.fromARGB(255, 20, 11, 116),
+    Color.fromARGB(255, 202, 80, 49),
+    Color.fromARGB(255, 56, 21, 13),
   );
 
   static const onPrimary = AppColorPair(
@@ -66,27 +86,6 @@ class AppColors {
   static const onErrorContainer = AppColorPair(
     Colors.black,
     Colors.white,
-  );
-
-  // Background App
-  static const surface = AppColorPair(
-    Colors.white,
-    Colors.black,
-  );
-
-  static const onSurface = AppColorPair(
-    Colors.black,
-    Colors.white,
-  );
-
-  static const surfaceVariant = AppColorPair(
-     Colors.black,
-    Color(0xFF2C2C2C),
-  );
-
-  static const onSurfaceVariant = AppColorPair(
-    Colors.black87,
-    Colors.white70,
   );
 
   static const outline = AppColorPair(

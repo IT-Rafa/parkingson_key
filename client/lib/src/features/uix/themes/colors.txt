@@ -1,7 +1,54 @@
 
+1. Accent Colors. Colores de Acento (Jerarquía)
+    Colores que dan personalidad a la marca.
+    Accent color roles used to emphasize or de-emphasize foreground elements.
 
-Surface
- – A role used for backgrounds and large, low-emphasis areas of the screen.
+    Primary (Primario):
+        El color más utilizado, aplicado a componentes 
+        principales como botones prominentes y estados 
+        activos.
+
+
+    Secondary (Secundario):
+        Componentes de menor importancia o para 
+        Añadir matices a la interfaz.
+
+    Tertiary (Terciario):
+        Equilibrar la paleta
+        Destacar elementos específicos con contraste
+        con los colores primario y secundario.
+
+    Error: 
+        Utilizado específicamente para comunicar 
+        estados de error, como mensajes de validación 
+        o iconos de alerta. 
+
+Surface Colors
+    Definen las áreas neutras de la aplicación donde se 
+    "apoyan" los componentes:
+
+
+    Surface
+    contenedores como tarjetas (cards), hojas (sheets) y menús.
+
+    Surface Variant:
+    Una alternativa a la superficie básica 
+    para crear jerarquía visual y 
+    separar secciones sin usar bordes
+
+
+Inverse Colors
+Se utilizan para elementos que deben destacar 
+radicalmente sobre un fondo específico, como los Snackbars. 
+
+    Inverse Surface: 
+        Un color de superficie oscuro en un tema claro (o viceversa).
+    Inverse On Surface: 
+        El color del texto/iconos que va sobre la superficie inversa.
+    Inverse Primary: 
+        El color primario adaptado para resaltar sobre fondos inversos.
+
+
 
 Primary, Secondary, Tertiary
  – Accent color roles used to emphasize or de-emphasize foreground elements.

@@ -78,7 +78,8 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
         appBar: showAppBar
             ? AppBar(
                 title: const Text("KEYBOARD_title").tr(),
-
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                foregroundColor: Theme.of(context).colorScheme.onPrimary,
                 actions: const [SettingsIconButton()],
               )
             : null,
