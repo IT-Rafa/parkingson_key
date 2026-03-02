@@ -1,0 +1,42 @@
+
+
+Surface
+ – A role used for backgrounds and large, low-emphasis areas of the screen.
+
+Primary, Secondary, Tertiary
+ – Accent color roles used to emphasize or de-emphasize foreground elements.
+
+Container
+ – Roles used as a fill color for foreground elements like buttons. They should not be used for text or icons.
+
+On
+ – Roles starting with this term indicate a color for text or icons on top of its paired parent color. For example, on primary is used for text and icons against the primary fill color.
+
+Variant – Roles ending with this term offer a lower emphasis alternative to its non-variant pair. For example, outline variant is a less emphasized version of the outline color.
+
+
+
+1. Colores de Acento (Jerarquía)
+Estos grupos se usan para destacar elementos según su importancia: 
+ 
+Primary (Primario): El color más prominente. Se usa para componentes clave como el Floating Action Button (FAB), botones principales y estados activos.
+Secondary (Secundario): Un tono menos llamativo para elementos de apoyo como chips de filtro o botones secundarios.
+Tertiary (Terciario): Para acentos de contraste que equilibran la paleta o resaltan elementos específicos como campos de entrada (input fields). 
+ 
+2. Superficies y Contenedores (Estructura)
+Definen el fondo y la profundidad de la aplicación: 
+ 
+Surface: El color base para los fondos de las pantallas.
+Surface Container (y variantes): Roles que reemplazan al antiguo surfaceVariant para definir diferentes niveles de elevación y jerarquía en tarjetas o diálogos.
+Neutral / Neutral Variant: Se usan para superficies, fondos y elementos de baja importancia como bordes. 
+ 
+3. Roles de Estado y Utilidad
+Error: Un tono (generalmente rojo) reservado exclusivamente para indicar errores, advertencias o acciones destructivas como "eliminar".
+Outline: Se utiliza para bordes y divisores, ayudando a delimitar áreas sin añadir peso visual excesivo. 
+ 
+4. La regla del "On" (Contraste)
+Cada rol tiene un compañero "On" (ej. onPrimary, onSurface) que es el color que debe usarse para el texto o iconos sobre ese fondo, garantizando un contraste accesible de al menos 3:1. 
+ 
+Resumen de Roles Fijos (Material 3.22+)
+Recientemente se añadieron roles Fixed (como primaryFixed), que mantienen el mismo tono tanto en modo claro como en modo oscuro, ideales para contenedores que no deben cambiar drásticamente al alternar el tema. 
+ 
