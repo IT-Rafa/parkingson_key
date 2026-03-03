@@ -19,12 +19,12 @@ class AppColors {
     Colors.white,
   );
 
-  static const surfaceVariant = AppColorPair(
-    Colors.black,
+  static const surfaceContainer = AppColorPair(
+    Colors.grey,
     Color(0xFF2C2C2C),
   );
 
-  static const onSurfaceVariant = AppColorPair(
+  static const onSurfaceContainer = AppColorPair(
     Colors.black87,
     Colors.white70,
   );

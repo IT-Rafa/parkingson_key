@@ -30,6 +30,7 @@ class KeyboardBody extends StatelessWidget {
         margin: margin,
         padding: const EdgeInsets.all(8),
         decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(

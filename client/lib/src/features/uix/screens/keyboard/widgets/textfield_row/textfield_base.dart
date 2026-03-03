@@ -9,21 +9,21 @@ import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfie
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/utils/delete_word.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
 
-class TextFieldContainer extends ConsumerStatefulWidget {
+class TextFieldBase extends ConsumerStatefulWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
 
-  const TextFieldContainer({
+  const TextFieldBase({
     super.key,
     required this.controller,
     required this.focusNode,
   });
 
   @override
-  ConsumerState<TextFieldContainer> createState() => _TextFieldContainerState();
+  ConsumerState<TextFieldBase> createState() => _TextFieldBaseState();
 }
 
-class _TextFieldContainerState extends ConsumerState<TextFieldContainer> {
+class _TextFieldBaseState extends ConsumerState<TextFieldBase> {
   KeyboardAccessibilityProfile get profile => ref.read(keyboardProfileProvider);
 
   @override
@@ -34,7 +34,7 @@ class _TextFieldContainerState extends ConsumerState<TextFieldContainer> {
       margin: const EdgeInsets.fromLTRB(8, 8, 8, 4),
       padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
+        color: Theme.of(context).colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(

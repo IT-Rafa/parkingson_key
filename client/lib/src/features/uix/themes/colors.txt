@@ -55,70 +55,111 @@ Primary, Secondary, Tertiary
  – Accent color roles used to emphasize or de-emphasize foreground elements.
 
 Container
- – Roles used as a fill color for foreground elements like buttons. They should not be used for text or icons.
+ – Roles used as a fill color for foreground elements like buttons. 
+ They should not be used for text or icons.
 
 On
  – Roles starting with this term indicate a color for text or icons on top of its paired parent color. For example, on primary is used for text and icons against the primary fill color.
 
-Variant – Roles ending with this term offer a lower emphasis alternative to its non-variant pair. For example, outline variant is a less emphasized version of the outline color.
+Variant 
+ – Roles ending with this term offer a lower emphasis alternative to its non-variant pair. For example, outline variant is a less emphasized version of the outline color.
 
 
 
 1. Colores de Acento (Jerarquía)
 Estos grupos se usan para destacar elementos según su importancia: 
  
-Primary (Primario): El color más prominente. Se usa para componentes clave como el Floating Action Button (FAB), botones principales y estados activos.
-Secondary (Secundario): Un tono menos llamativo para elementos de apoyo como chips de filtro o botones secundarios.
+Primary (Primario): El color más prominente. 
+Se usa para componentes clave como el 
+Floating Action Button (FAB),
+ botones principales y estados activos.
+
+Secondary (Secundario): Un tono menos llamativo para 
+elementos de apoyo como chips de filtro o botones secundarios.
 Tertiary (Terciario): Para acentos de contraste que equilibran la paleta o resaltan elementos específicos como campos de entrada (input fields). 
  
 2. Superficies y Contenedores (Estructura)
 Definen el fondo y la profundidad de la aplicación: 
  
 Surface: El color base para los fondos de las pantallas.
-Surface Container (y variantes): Roles que reemplazan al antiguo surfaceVariant para definir diferentes niveles de elevación y jerarquía en tarjetas o diálogos.
-Neutral / Neutral Variant: Se usan para superficies, fondos y elementos de baja importancia como bordes. 
+
+Surface Container (y variantes): Roles que reemplazan al 
+antiguo surfaceVariant para definir diferentes niveles de 
+elevación y jerarquía en tarjetas o diálogos.
+
+Neutral / Neutral Variant: Se usan para superficies, fondos 
+y elementos de baja importancia como bordes. 
  
 3. Roles de Estado y Utilidad
-Error: Un tono (generalmente rojo) reservado exclusivamente para indicar errores, advertencias o acciones destructivas como "eliminar".
-Outline: Se utiliza para bordes y divisores, ayudando a delimitar áreas sin añadir peso visual excesivo. 
+Error: Un tono (generalmente rojo) reservado exclusivamente 
+para indicar errores, advertencias o acciones destructivas como "eliminar".
+
+Outline: Se utiliza para bordes y divisores, ayudando a 
+delimitar áreas sin añadir peso visual excesivo. 
  
 4. La regla del "On" (Contraste)
-Cada rol tiene un compañero "On" (ej. onPrimary, onSurface) que es el color que debe usarse para el texto o iconos sobre ese fondo, garantizando un contraste accesible de al menos 3:1. 
+Cada rol tiene un compañero "On" (ej. onPrimary, onSurface) 
+que es el color que debe usarse para el texto o iconos sobr
+e ese fondo, garantizando un contraste accesible de al menos 3:1. 
  
 Resumen de Roles Fijos (Material 3.22+)
-Recientemente se añadieron roles Fixed (como primaryFixed), que mantienen el mismo tono tanto en modo claro como en modo oscuro, ideales para contenedores que no deben cambiar drásticamente al alternar el tema. 
+Recientemente se añadieron roles Fixed (como primaryFixed), 
+que mantienen el mismo tono tanto en modo claro como en modo 
+oscuro, ideales para contenedores que no deben cambiar 
+drásticamente al alternar el tema. 
  
 
 
- Para separar visualmente la zona del TextField (base) de la zona del Keyboard, Material Design 3 recomienda jugar con los diferentes tonos de Surface Container para crear una jerarquía clara por capas. 
-Material Design
-Material Design
- +1
+ Para separar visualmente la zona del TextField (base) de la 
+ zona del Keyboard, Material Design 3 recomienda jugar con los 
+ diferentes tonos de Surface Container para crear una jerarquía 
+ clara por capas. 
+ 
+
 Aquí tienes la configuración ideal para lograr esa separación:
+
 1. Zona Base (TextField y Botones principales)
-Esta zona suele ser la "capa superior" en términos de interacción inmediata.
+Esta zona suele ser la "capa superior" en términos de 
+interacción inmediata.
+
 Fondo del área: Usa Surface Container o Surface.
-TextField: El componente ya viene con su propia lógica de color (relleno en Surface Variant o borde en Outline) para destacar sobre la base.
-Botones: Usa Primary para la acción principal (ej. "Enviar") y Secondary Container para acciones de apoyo. 
-Material Design
-Material Design
- +5
+
+TextField: El componente ya viene con su propia lógica de color
+ (relleno en Surface Variant o borde en Outline) para destacar 
+ sobre la base.
+
+Botones: Usa Primary para la acción principal (ej. "Enviar") y 
+Secondary Container para acciones de apoyo. 
+
+
 2. Zona Keyboard (Símbolos, Números y Frases)
-Para que el teclado se sienta como una sección distinta y "anclada" o secundaria a la entrada de texto:
-Fondo del área (Contenedor del teclado): Usa Surface Container Low (para una separación sutil) o Surface Container High (si quieres que el teclado "suba" visualmente sobre la base).
+Para que el teclado se sienta como una sección distinta y "anclada" 
+o secundaria a la entrada de texto:
+
+Fondo del área (Contenedor del teclado): 
+Usa Surface Container Low (para una separación sutil) o 
+Surface Container High (si quieres que el teclado "suba" 
+visualmente sobre la base).
+
 Botones del teclado (Símbolos/Frases):
 Fondo de las teclas: Surface Container Highest o Secondary Container para que contrasten con el fondo del teclado.
 Texto/Iconos en las teclas: On Surface o On Secondary Container respectivamente. 
-Material Design
-Material Design
- +3
+
 Resumen de Tokens Sugeridos
+
 Elemento 	Token MD3 Recomendado	Efecto Visual
+
 Fondo de la App	Surface	Base neutral.
-Contenedor TextField	Surface Container	Eleva ligeramente la zona de escritura.
-Fondo del Teclado	Surface Container Low	Crea un "bloque" distinto al pie de la pantalla.
-Botones del Teclado	Surface Container High	Las teclas destacan claramente sobre el fondo del teclado.
+
+Contenedor TextField	Surface Container
+	Eleva ligeramente la zona de escritura.
+
+Fondo del Teclado	Surface Container Low
+	Crea un "bloque" distinto al pie de la pantalla.
+
+Botones del Teclado	Surface Container High	
+    Las teclas destacan claramente sobre el fondo del teclado.
+
 Consejo de diseño: Si la zona del teclado tiene muchas opciones (frases largas), usa Outline Variant para crear divisores muy finos entre grupos de botones sin saturar la vista con demasiados colores de fondo. 
-Material Design
-Material Design
+
 ¿Prefieres que el teclado se vea más oscuro o más claro que la zona donde escribes el texto?

@@ -6,7 +6,7 @@ import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts
 import 'package:parkingson_key/src/models/keyboard/keyboard_layout.dart';
 import 'package:parkingson_key/src/core/controllers/keyboard_repeat_controller.dart';
 
-class PortraitLayout extends StatelessWidget {
+class PortraitLayout extends ConsumerWidget {
   const PortraitLayout({
     super.key,
     required this.layout,
@@ -21,11 +21,25 @@ class PortraitLayout extends StatelessWidget {
   final KeyboardAccessibilityProfile profile;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
-        _ActionBar(
-          controller: controller,
+        Container(
+          margin: const EdgeInsets.fromLTRB(8, 4, 8, 4),
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surfaceContainer,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: buildActionButtons(
+              context,
+              ref: ref,
+              controller: controller,
+              isPortrait: true,
+            ),
+          ),
         ),
         KeyboardBody(
           rows: layout.portrait,
@@ -36,35 +50,6 @@ class PortraitLayout extends StatelessWidget {
           profile: profile,
         ),
       ],
-    );
-  }
-}
-
-class _ActionBar extends ConsumerWidget {
-  const _ActionBar({
-    required this.controller,
-  });
-
-  final TextEditingController controller;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(8, 4, 8, 4),
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.grey[300],
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: buildActionButtons(
-          context,
-          ref: ref,
-          controller: controller,
-          isPortrait: true,
-        ),
-      ),
     );
   }
 }

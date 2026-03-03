@@ -37,9 +37,10 @@ class LandscapeLayout extends ConsumerWidget {
           profile: profile,
         ),
         Container(
-          margin: const EdgeInsets.fromLTRB(8, 4, 8, 8),
+          margin: const EdgeInsets.fromLTRB(8, 4, 8, 4),
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surfaceContainer,
             borderRadius: BorderRadius.circular(8),
           ),
           child: Column(
@@ -48,7 +49,7 @@ class LandscapeLayout extends ConsumerWidget {
               context,
               ref: ref,
               controller: controller,
-              isPortrait: false,
+              isPortrait: true,
             ),
           ),
         ),
