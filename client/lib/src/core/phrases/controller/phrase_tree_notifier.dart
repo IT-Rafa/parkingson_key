@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parkingson_key/src/core/phrases/phrase_tree/phrase_tree_storage.dart';
+import 'package:parkingson_key/src/core/persistence/phrases/phrase_tree_storage.dart';
 import 'package:parkingson_key/src/models/phrase/phrase_node.dart';
 import 'package:parkingson_key/src/core/phrases/providers/phrase_tree_storage_provider.dart';
 

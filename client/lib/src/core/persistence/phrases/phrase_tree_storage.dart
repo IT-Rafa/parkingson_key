@@ -5,22 +5,35 @@ class PhraseTreeStorage {
   static const _boxName = 'phrase_tree_box';
   static const _key = 'phrases';
 
-  Box<List>? _box;
+  late final Box<List> _box;
+  bool _initialized = false;
 
+  /// Inicializa la caja Hive, solo una vez.
   Future<void> init() async {
-    _box ??= await Hive.openBox<List>(_boxName);
+    if (_initialized) return;
+
+    if (!Hive.isBoxOpen(_boxName)) {
+      _box = await Hive.openBox<List>(_boxName);
+    } else {
+      _box = Hive.box<List>(_boxName);
+    }
+
+    _initialized = true;
   }
 
+  /// Carga el árbol de frases
   List<PhraseNode> load() {
-    final data = _box?.get(_key);
+    final data = _box.get(_key);
     if (data == null) return [];
     return data.cast<PhraseNode>();
   }
 
+  /// Guarda el árbol completo
   Future<void> save(List<PhraseNode> tree) async {
-    await _box?.put(_key, tree);
+    await _box.put(_key, tree);
   }
 
+  /// Agrega una frase dentro de una categoría
   Future<void> addPhrase({
     required String categoryId,
     required PhraseNode phrase,
@@ -40,4 +53,7 @@ class PhraseTreeStorage {
     insert(tree);
     await save(tree);
   }
+
+  /// Comprueba si hay datos
+  bool get isEmpty => _box.isEmpty;
 }

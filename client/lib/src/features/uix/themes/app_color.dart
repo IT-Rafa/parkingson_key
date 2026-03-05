@@ -13,12 +13,12 @@ class AppColors {
     Colors.white,
     Colors.black,
   );
-
+  // on Background App
   static const onSurface = AppColorPair(
     Colors.black,
     Colors.white,
   );
-
+  // Background for containers: textfieldBase, keyboardBase, ActionButtonsBase.
   static const surfaceContainer = AppColorPair(
     Colors.grey,
     Color(0xFF2C2C2C),

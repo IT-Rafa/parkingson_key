@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_layout.dart';
 
@@ -40,16 +39,16 @@ final esConsonantsVowelsKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('z'),
     ],
     [
-      KeyboardItem.char('a', lightColor: Colors.cyan),
-      KeyboardItem.char('e', lightColor: Colors.cyan),
-      KeyboardItem.char('i', lightColor: Colors.cyan),
-      KeyboardItem.char('o', lightColor: Colors.cyan),
-      KeyboardItem.char('u', lightColor: Colors.cyan),
+      KeyboardItem.char('a'),
+      KeyboardItem.char('e'),
+      KeyboardItem.char('i'),
+      KeyboardItem.char('o'),
+      KeyboardItem.char('u'),
     ],
     [
-      KeyboardItem.char('Sí', lightColor: Colors.green),
-      KeyboardItem.char('No', lightColor: Colors.green),
-      KeyboardItem.char('  ', lightColor: Colors.grey.shade400),
+      KeyboardItem.char('Sí'),
+      KeyboardItem.char('No'),
+      KeyboardItem.char('  '),
     ],
     [
       KeyboardItem.dropdown(
@@ -90,7 +89,7 @@ final esConsonantsVowelsKeyboardLayout = KeyboardLayout(
         items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
       ),
             KeyboardItem.dropdown(
-        title: 'KEYBOARD_numbers',
+        title: 'Frases',
         items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
       ),
     ],
@@ -129,14 +128,14 @@ final esConsonantsVowelsKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('z'),
     ],
     [
-      KeyboardItem.char('Sí', lightColor: Colors.green),
-      KeyboardItem.char('No', lightColor: Colors.green),
-      KeyboardItem.char('a', lightColor: Colors.cyan),
-      KeyboardItem.char('e', lightColor: Colors.cyan),
-      KeyboardItem.char('i', lightColor: Colors.cyan),
-      KeyboardItem.char('o', lightColor: Colors.cyan),
-      KeyboardItem.char('u', lightColor: Colors.cyan),
-      KeyboardItem.char('  ', lightColor: Colors.grey.shade400),
+      KeyboardItem.char('Sí'),
+      KeyboardItem.char('No'),
+      KeyboardItem.char('a'),
+      KeyboardItem.char('e'),
+      KeyboardItem.char('i'),
+      KeyboardItem.char('o'),
+      KeyboardItem.char('u'),
+      KeyboardItem.char('  '),
     ],
     [
       KeyboardItem.dropdown(
@@ -177,7 +176,7 @@ final esConsonantsVowelsKeyboardLayout = KeyboardLayout(
         items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
       ),
             KeyboardItem.dropdown(
-        title: 'KEYBOARD_numbers',
+        title: 'Frases',
         items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
       ),
     ],
