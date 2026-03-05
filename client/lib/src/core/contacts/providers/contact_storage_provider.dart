@@ -1,6 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parkingson_key/src/core/persistence/contacts/contact_storage.dart';
-
 import 'package:hive/hive.dart';
 import 'package:parkingson_key/src/models/contacts/contact.dart';
 
@@ -39,4 +36,3 @@ class ContactStorage {
     await _box.put(_key, contacts);
   }
 }
-

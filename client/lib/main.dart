@@ -5,7 +5,6 @@ import 'package:parkingson_key/src/core/persistence/phrases/phrase_tree_storage.
 import 'package:parkingson_key/src/core/providers/app_language_enum.dart';
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/core/providers/shared_prefs_provider.dart';
-import 'package:parkingson_key/src/core/persistence/contacts/contact_storage.dart';
 import 'package:parkingson_key/src/core/persistence/contacts/default_contacts_factory.dart';
 import 'package:parkingson_key/src/core/contacts/providers/contact_storage_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/keyboard_screen.dart';
@@ -30,8 +29,9 @@ Future<void> main() async {
   await phraseStorage.init();
 
   // Inicializa ContactStorage
-  final contactStorage = ContactStorage();
-  await contactStorage.init();
+final contactStorage = ContactStorage();
+await contactStorage.init();
+
   if (contactStorage.isEmpty) {
     await contactStorage.save(DefaultContactsFactory.create());
   }
