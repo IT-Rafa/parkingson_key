@@ -1,13 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/persistence/contacts/contact_storage.dart';
 import 'package:parkingson_key/src/models/contacts/contact.dart';
-import 'contact_storage_provider.dart';
+
+final contactStorageProvider = Provider<ContactStorage>((ref) {
+  throw UnimplementedError();
+});
 
 final contactProvider =
     NotifierProvider<ContactNotifier, List<Contact>>(ContactNotifier.new);
 
 class ContactNotifier extends Notifier<List<Contact>> {
-  late final ContactStorage _storage;
+  late ContactStorage _storage;
 
   @override
   List<Contact> build() {
@@ -15,23 +18,32 @@ class ContactNotifier extends Notifier<List<Contact>> {
     return _storage.load();
   }
 
+  Future<void> reload() async {
+    state = _storage.load();
+  }
+
   Future<void> add(Contact contact) async {
     final updated = [...state, contact];
-    state = updated;
     await _storage.save(updated);
+    state = updated;
   }
 
   Future<void> update(Contact contact) async {
-    final updated = [
-      for (final c in state) if (c.id == contact.id) contact else c
-    ];
-    state = updated;
+    final updated =
+        state.map((c) => c.id == contact.id ? contact : c).toList();
+
     await _storage.save(updated);
+    state = updated;
   }
 
   Future<void> delete(String id) async {
     final updated = state.where((c) => c.id != id).toList();
-    state = updated;
     await _storage.save(updated);
+    state = updated;
+  }
+
+  Future<void> saveAll(List<Contact> contacts) async {
+    await _storage.save(contacts);
+    state = contacts;
   }
 }

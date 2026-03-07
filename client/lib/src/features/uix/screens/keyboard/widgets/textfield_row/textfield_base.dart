@@ -77,6 +77,7 @@ class _TextFieldBaseState extends ConsumerState<TextFieldBase> {
                       contentPadding: const EdgeInsets.symmetric(horizontal: 8),
                     ),
                   ),
+                  
                 ),
 
                 // Botones borrar

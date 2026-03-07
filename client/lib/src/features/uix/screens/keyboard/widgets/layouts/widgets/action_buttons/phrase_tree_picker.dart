@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parkingson_key/src/core/phrase_tree_navigator.dart';
+import 'package:parkingson_key/src/core/providers/phrase_tree_provider.dart';
 import 'package:parkingson_key/src/models/phrase/phrase_node.dart';
-import 'package:parkingson_key/src/core/phrases/providers/phrase_tree_provider.dart';
+import 'package:uuid/uuid.dart';
 
-class PhraseTreePicker extends ConsumerStatefulWidget {
-  final String? phrase; // solo para "Guardar Frase"
-  final ValueChanged<String>? onPhraseSelected; // callback para Frases
+class PhraseTreePicker extends ConsumerWidget {
+  final String? phrase;
+  final ValueChanged<String>? onPhraseSelected;
 
   const PhraseTreePicker({
     super.key,
@@ -14,72 +16,57 @@ class PhraseTreePicker extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<PhraseTreePicker> createState() => _PhraseTreePickerState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final nodes = ref.watch(phraseTreeNavigatorProvider);
+    final navigator = ref.read(phraseTreeNavigatorProvider.notifier);
 
-class _PhraseTreePickerState extends ConsumerState<PhraseTreePicker> {
-  List<PhraseNode> currentLevel = [];
-  final List<PhraseNode> navigationStack = [];
-
-  @override
-  void initState() {
-    super.initState();
-    currentLevel = ref.read(phraseTreeProvider);
-  }
-
-  void enterNode(PhraseNode node) {
-    if (node.children.isEmpty) {
-      // Hoja final
-      if (widget.phrase != null) {
-        // Guardar nueva frase
-        ref.read(phraseTreeProvider.notifier).addPhrase(node.id, widget.phrase!);
-      } else {
-        // Seleccionar frase existente
-        widget.onPhraseSelected?.call(node.title);
-      }
-      Navigator.of(context).pop();
-    } else {
-      // Subtema → navegar
-      setState(() {
-        navigationStack.add(node);
-        currentLevel = node.children;
-      });
-    }
-  }
-
-  void goBack() {
-    setState(() {
-      navigationStack.removeLast();
-      currentLevel = navigationStack.isEmpty
-          ? ref.read(phraseTreeProvider)
-          : navigationStack.last.children;
-    });
-  }
-
-  String get currentPath =>
-      navigationStack.isEmpty ? 'Temas' : navigationStack.map((n) => n.title).join(' > ');
-
-  @override
-  Widget build(BuildContext context) {
     return SafeArea(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
-            leading: navigationStack.isEmpty
+            leading: navigator.currentPath == "Temas"
                 ? null
                 : IconButton(
                     icon: const Icon(Icons.arrow_back),
-                    onPressed: goBack,
+                    onPressed: navigator.goBack,
                   ),
-            title: Text(currentPath, style: const TextStyle(fontWeight: FontWeight.bold)),
+            title: Text(
+              navigator.currentPath,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
           ),
           const Divider(height: 1),
-          ...currentLevel.map(
+          ...nodes.map(
             (node) => ListTile(
               title: Text(node.title),
-              trailing: node.children.isNotEmpty ? const Icon(Icons.chevron_right) : null,
-              onTap: () => enterNode(node),
+              trailing: node.children.isNotEmpty
+                  ? const Icon(Icons.chevron_right)
+                  : null,
+              onTap: () {
+                if (node.children.isNotEmpty) {
+                  navigator.enterNode(node);
+                  return;
+                }
+
+                // nodo hoja
+                if (phrase != null) {
+                  final newNode = PhraseNode(
+                    id: const Uuid().v4(),
+                    title: phrase!,
+                    isCategory: false,
+                    children: [],
+                    ttsEnabled: false,
+                  );
+                  ref
+                      .read(phraseTreeProvider.notifier)
+                      .addPhrase(node.id, newNode);
+                } else {
+                  onPhraseSelected?.call(node.title);
+                }
+
+                Navigator.pop(context);
+              },
             ),
           ),
         ],

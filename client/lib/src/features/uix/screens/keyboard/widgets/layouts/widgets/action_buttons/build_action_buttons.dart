@@ -1,5 +1,3 @@
-
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -47,7 +45,11 @@ List<Widget> buildActionButtons(
 
           showModalBottomSheet(
             context: context,
-            builder: (_) => PhraseTreePicker(phrase: text),
+            builder: (_) => PhraseTreePicker(
+              onPhraseSelected: (phrase) {
+                controller.text += phrase;
+              },
+            ),
           );
         },
       ),
@@ -73,18 +75,12 @@ List<Widget> buildActionButtons(
         title: "KEYBOARD_phrases".tr(),
         onAccepted: () {
           showModalBottomSheet(
-            context: context,
-            builder: (_) => PhraseTreePicker(
-              phrase: null,
-              onPhraseSelected: (selected) {
-                final newText = controller.text + selected;
-                controller.text = newText;
-                controller.selection = TextSelection.collapsed(
-                  offset: newText.length,
-                );
-              },
-            ),
-          );
+              context: context,
+              builder: (_) => PhraseTreePicker(
+                    onPhraseSelected: (phrase) {
+                      controller.text += phrase;
+                    },
+                  ));
         },
       ),
     ),
