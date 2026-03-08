@@ -1,7 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-enum KeyboardItemType { char, dropdown }
+enum KeyboardItemType {
+  char,
+  dropdown,
+  action,
+}
 
 class KeyboardItem {
   final KeyboardItemType type;
@@ -10,8 +14,7 @@ class KeyboardItem {
   final List<String>? items;
   final String? initialValue;
   final ValueChanged<String?>? onChanged;
-  final Color? lightColor;
-  final Color? darkColor;
+  final VoidCallback? onTap;
 
   const KeyboardItem._({
     required this.type,
@@ -20,8 +23,7 @@ class KeyboardItem {
     this.items,
     this.initialValue,
     this.onChanged,
-    this.lightColor,
-    this.darkColor,
+    this.onTap,
   });
 
   factory KeyboardItem.char(String label,
@@ -29,18 +31,26 @@ class KeyboardItem {
     return KeyboardItem._(
       type: KeyboardItemType.char,
       label: label,
-      lightColor: lightColor,
-      darkColor: darkColor,
     );
   }
-
+  factory KeyboardItem.action({
+    required String title,
+    VoidCallback? onTap,
+    Color? lightColor,
+    Color? darkColor,
+  }) {
+    return KeyboardItem._(
+      type: KeyboardItemType.action,
+      label: "",
+      title: title,
+      onChanged: null,
+    );
+  }
   factory KeyboardItem.dropdown({
     required String title,
     required List<String> items,
     String? initialValue,
     ValueChanged<String?>? onChanged,
-    Color? lightColor,
-    Color? darkColor,
   }) =>
       KeyboardItem._(
         type: KeyboardItemType.dropdown,
@@ -49,8 +59,6 @@ class KeyboardItem {
         items: items,
         initialValue: initialValue,
         onChanged: onChanged,
-        lightColor: lightColor,
-        darkColor: darkColor,
       );
 
   /// 🔑 Texto a mostrar en la UI, traducible
@@ -58,7 +66,11 @@ class KeyboardItem {
     switch (type) {
       case KeyboardItemType.char:
         return label;
+
       case KeyboardItemType.dropdown:
+        return title?.tr() ?? "";
+
+      case KeyboardItemType.action:
         return title?.tr() ?? "";
     }
   }

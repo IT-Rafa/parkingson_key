@@ -1,0 +1,76 @@
+
+Cotidiano
+    Comer
+        Es la hora de la comida
+        Ya me dieron la comida
+
+    Medicinas
+        Ya me dieron las medicinas
+        Me faltan las medicinas
+
+    Distracción
+        Cambia el canal de la tv
+        Ponme el libro
+        Ajusta el libro
+        El libro se acabo
+
+Estado
+    Postura
+        Quiero cambiar de postura
+        Ajusta mi silla
+        Ajusta la almohada
+        El colchon antiescaras está mal hinchado
+
+    Dolor
+        Me duele 
+
+    Estado
+        Tengo frío
+        Tengo calor
+
+- Horarío
+    Tenemos que prepararnos para la cita
+    Tengo cita con médico
+    Tengo cita con amigas
+
+- Palabras
+    - Cuerpo
+        Cabeza
+        Oreja
+        Espalda
+        Brazo
+        Pierna
+        Culo
+    
+    - Medicinas
+        ----
+
+    - Muebles
+        - Armario grande
+            Armario, lado derecho, arriba de todo
+            Armario, lado derecho, perchas
+            Armario, lado derecho, cajon
+            Armario, lado izquierdo, arriba de todo
+            Armario, lado izquierdo, perchas
+            Armario, lado izquierdo, cajon
+
+        - Mueble cajones
+            mueble pequeño al lado izquierdo
+            mueble pequeño al lado izquierdo
+
+        - Habitaciones
+            Mi habitación
+            Mi baño
+            Habitación de Rafa
+            Habitación de Berto
+            Habitación de niños
+            Pasillo
+            Baño
+            Salón
+            Cocina
+
+    Dirección
+        A la izquierda
+        A la derecha
+        Arriba
+        Abajo

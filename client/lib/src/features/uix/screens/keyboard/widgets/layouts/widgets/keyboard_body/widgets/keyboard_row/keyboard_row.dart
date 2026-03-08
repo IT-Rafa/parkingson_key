@@ -44,14 +44,21 @@ class KeyboardRow extends StatelessWidget {
   }
 
   double _effectiveWeight(KeyboardItem item, BuildContext context) {
-    switch (item.type) {
-      case KeyboardItemType.char:
-          return isPortrait ? 1.25 : 1.6;
-        
-      case KeyboardItemType.dropdown:
-        return isPortrait ? 1.35 : 1.8;
+switch(item.type) {
+
+  case KeyboardItemType.char:
+    return isPortrait ? 1.25 : 1.6;
+
+  case KeyboardItemType.dropdown:
+     return isPortrait ? 1.35 : 1.8;
+
+  case KeyboardItemType.action:
+    if (item.title == 'KEYBOARD_phrases') {
+      openPhrasePicker();
     }
-  }
+    break;
+}
+
 
   Widget _buildItem(KeyboardItem item) {
     switch (item.type) {
@@ -80,5 +87,18 @@ class KeyboardRow extends StatelessWidget {
           },
         );
     }
+  }
+}
+
+Future<void> openPhrasePicker() async {
+
+  final phrase = await showModalBottomSheet<String>(
+    context: context,
+    isScrollControlled: true,
+    builder: (_) => const PhraseGridPicker(),
+  );
+
+  if (phrase != null) {
+    controller.text += phrase;
   }
 }

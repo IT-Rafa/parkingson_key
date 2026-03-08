@@ -7,16 +7,21 @@ final phraseTreeStorageProvider = Provider<PhraseTreeStorage>((ref) {
 });
 
 final phraseTreeProvider =
-    NotifierProvider<PhraseTreeNotifier, List<PhraseNode>>(PhraseTreeNotifier.new);
+    NotifierProvider<PhraseTreeNotifier, List<PhraseNode>>(
+        PhraseTreeNotifier.new);
 
 class PhraseTreeNotifier extends Notifier<List<PhraseNode>> {
-
   late PhraseTreeStorage _storage;
 
   @override
   List<PhraseNode> build() {
-    _storage = ref.read(phraseTreeStorageProvider);
-    return _storage.load();
+    final storage = ref.read(phraseTreeStorageProvider);
+
+    try {
+      return storage.load();
+    } catch (_) {
+      return [];
+    }
   }
 
   Future<void> reload() async {
