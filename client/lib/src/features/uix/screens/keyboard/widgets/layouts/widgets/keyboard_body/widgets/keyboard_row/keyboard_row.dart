@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parkingson_key/src/core/phrase_tree_navigator.dart';
 import 'package:parkingson_key/src/core/services/haptic_feedback_service.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/utils/insert_from_keyboard_char.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/utils/insert_from_keyboard_dropdown.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/keyboard_button_key.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/phrase_grid_picker.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/keyboard_dropdown_key.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
@@ -28,49 +31,53 @@ class KeyboardRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final weights =
-            items.map((item) => _effectiveWeight(item, context)).toList();
+        final weights = items.map((item) => _effectiveWeight(item)).toList();
         final totalWeight = weights.fold<double>(0, (sum, w) => sum + w);
 
         return Row(
           children: List.generate(items.length, (index) {
             final item = items[index];
             final width = constraints.maxWidth * (weights[index] / totalWeight);
-            return SizedBox(width: width, child: _buildItem(item));
+
+            return SizedBox(
+              width: width,
+              child: _buildItem(context, item),
+            );
           }),
         );
       },
     );
   }
 
-  double _effectiveWeight(KeyboardItem item, BuildContext context) {
-switch(item.type) {
+  double _effectiveWeight(KeyboardItem item) {
+    switch (item.type) {
+      case KeyboardItemType.char:
+        return isPortrait ? 1.25 : 1.6;
 
-  case KeyboardItemType.char:
-    return isPortrait ? 1.25 : 1.6;
+      case KeyboardItemType.dropdown:
+        return isPortrait ? 1.35 : 1.8;
 
-  case KeyboardItemType.dropdown:
-     return isPortrait ? 1.35 : 1.8;
-
-  case KeyboardItemType.action:
-    if (item.title == 'KEYBOARD_phrases') {
-      openPhrasePicker();
+      case KeyboardItemType.action:
+        return isPortrait ? 1.35 : 1.8;
     }
-    break;
-}
+  }
 
-
-  Widget _buildItem(KeyboardItem item) {
+  Widget _buildItem(BuildContext context, KeyboardItem item) {
     switch (item.type) {
       case KeyboardItemType.char:
         return KeyboardButtonKey(
           keyData: item,
           onAccepted: () {
-            if (!repeatController.canAccept(item, profile.repeatBlockDuration)) {
+            if (!repeatController.canAccept(
+                item, profile.repeatBlockDuration)) {
               return;
             }
+
             insertFromKeyboardChar(controller, item.label);
-            if (profile.hapticEnabled) HapticFeedbackService.tap(profile);
+
+            if (profile.hapticEnabled) {
+              HapticFeedbackService.tap(profile);
+            }
           },
         );
 
@@ -79,18 +86,50 @@ switch(item.type) {
           keyData: item,
           onSelected: (value) {
             if (value == null) return;
-            if (!repeatController.canAccept(item, profile.repeatBlockDuration)) {
+
+            if (!repeatController.canAccept(
+                item, profile.repeatBlockDuration)) {
               return;
             }
+
             insertFromKeyboardDropdown(controller, value);
-            if (profile.hapticEnabled) HapticFeedbackService.tap(profile);
+
+            if (profile.hapticEnabled) {
+              HapticFeedbackService.tap(profile);
+            }
+          },
+        );
+
+      case KeyboardItemType.action:
+        return KeyboardButtonKey(
+          keyData: item,
+          onAccepted: () async {
+            if (!repeatController.canAccept(
+                item, profile.repeatBlockDuration)) {
+              return;
+            }
+
+            if (item.title == "KEYBOARD_phrases") {
+              await openPhrasePicker(context, controller);
+            } else {
+              item.onTap?.call();
+            }
+
+            if (profile.hapticEnabled) {
+              HapticFeedbackService.tap(profile);
+            }
           },
         );
     }
   }
 }
 
-Future<void> openPhrasePicker() async {
+Future<void> openPhrasePicker(
+  BuildContext context,
+  TextEditingController controller,
+) async {
+  final container = ProviderScope.containerOf(context);
+  container.read(phraseTreeNavigatorProvider.notifier).reset();
 
   final phrase = await showModalBottomSheet<String>(
     context: context,
@@ -99,6 +138,6 @@ Future<void> openPhrasePicker() async {
   );
 
   if (phrase != null) {
-    controller.text += phrase;
+    controller.text += " $phrase";
   }
 }

@@ -9,9 +9,11 @@ import 'package:parkingson_key/src/core/providers/shared_prefs_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/keyboard_screen.dart';
 import 'package:parkingson_key/src/features/uix/themes/my_themes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parkingson_key/src/models/phrase/init_default_phrases.dart';
 
 Future<void> main() async {
   final bootstrap = await AppBootstrap.init();
+
   runApp(
     ProviderScope(
       overrides: [
@@ -42,11 +44,27 @@ Future<void> main() async {
   );
 }
 
-class MainApp extends ConsumerWidget {
+class MainApp extends ConsumerStatefulWidget {
   const MainApp({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<MainApp> createState() => _MainAppState();
+}
+
+class _MainAppState extends ConsumerState<MainApp> {
+  bool _initialized = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_initialized) {
+      _initialized = true;
+      initDefaultPhrases(ref); // ref es WidgetRef de ConsumerState
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Parkingson Key',

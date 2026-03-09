@@ -14,7 +14,13 @@ class PhraseTreeNavigator extends Notifier<List<PhraseNode>> {
     if (node.children.isEmpty) return;
 
     _stack.add(node);
+
     state = node.children;
+  }
+
+  void reset() {
+    _stack.clear();
+    state = ref.read(phraseTreeProvider);
   }
 
   void goBack() {
@@ -28,11 +34,11 @@ class PhraseTreeNavigator extends Notifier<List<PhraseNode>> {
 
   String get currentPath {
     if (_stack.isEmpty) return "Temas";
+
     return _stack.map((n) => n.title).join(" > ");
   }
 }
 
 final phraseTreeNavigatorProvider =
     NotifierProvider<PhraseTreeNavigator, List<PhraseNode>>(
-  PhraseTreeNavigator.new,
-);
+        PhraseTreeNavigator.new);

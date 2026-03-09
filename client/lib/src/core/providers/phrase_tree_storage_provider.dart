@@ -3,7 +3,7 @@ import 'package:parkingson_key/src/core/persistence/phrases/phrase_tree_storage.
 import 'package:parkingson_key/src/models/phrase/phrase_node.dart';
 
 final phraseTreeStorageProvider = Provider<PhraseTreeStorage>((ref) {
-  throw UnimplementedError();
+  return PhraseTreeStorage();
 });
 
 class PhraseTreeNotifier extends Notifier<List<PhraseNode>> {

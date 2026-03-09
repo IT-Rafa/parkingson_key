@@ -62,7 +62,7 @@ class _KeyboardDropdownKeyState extends ConsumerState<KeyboardDropdownKey> {
   @override
   Widget build(BuildContext context) {
     final profile = ref.watch(keyboardProfileProvider);
-    final baseColor = widget.keyData.lightColor ?? Colors.amber;
+    final baseColor = Colors.amber;
 
     final pressedColor = Color.alphaBlend(
       Colors.black.withValues(alpha: 0.25),

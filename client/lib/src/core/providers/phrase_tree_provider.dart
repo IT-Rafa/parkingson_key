@@ -1,24 +1,22 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/persistence/phrases/phrase_tree_storage.dart';
+import 'package:parkingson_key/src/core/providers/phrase_tree_storage_provider.dart';
 import 'package:parkingson_key/src/models/phrase/phrase_node.dart';
-
-final phraseTreeStorageProvider = Provider<PhraseTreeStorage>((ref) {
-  return PhraseTreeStorage();
-});
 
 final phraseTreeProvider =
     NotifierProvider<PhraseTreeNotifier, List<PhraseNode>>(
         PhraseTreeNotifier.new);
 
 class PhraseTreeNotifier extends Notifier<List<PhraseNode>> {
+
   late PhraseTreeStorage _storage;
 
   @override
   List<PhraseNode> build() {
-    final storage = ref.read(phraseTreeStorageProvider);
+    _storage = ref.read(phraseTreeStorageProvider);
 
     try {
-      return storage.load();
+      return _storage.load();
     } catch (_) {
       return [];
     }
@@ -28,27 +26,84 @@ class PhraseTreeNotifier extends Notifier<List<PhraseNode>> {
     state = _storage.load();
   }
 
-  Future<void> save(List<PhraseNode> tree) async {
+  Future<void> saveTree(List<PhraseNode> tree) async {
     await _storage.save(tree);
     state = tree;
   }
 
-  Future<void> addPhrase(String categoryId, PhraseNode phrase) async {
-    final tree = [...state];
+  Future<void> addPhrase(
+    String categoryId,
+    PhraseNode newPhrase,
+  ) async {
 
-    void insert(List<PhraseNode> nodes) {
-      for (final n in nodes) {
-        if (n.id == categoryId && n.isCategory) {
-          n.children.add(phrase);
-          return;
+    final tree = _copyTree(state);
+
+    final inserted = _insertIntoCategory(
+      tree,
+      categoryId,
+      newPhrase,
+    );
+
+    if (inserted) {
+      await _storage.save(tree);
+      state = tree;
+    }
+  }
+
+  bool _insertIntoCategory(
+    List<PhraseNode> nodes,
+    String categoryId,
+    PhraseNode newPhrase,
+  ) {
+
+    for (int i = 0; i < nodes.length; i++) {
+
+      final node = nodes[i];
+
+      if (node.id == categoryId && node.isCategory) {
+
+        final updatedChildren = [
+          ...node.children,
+          newPhrase
+        ];
+
+        nodes[i] = node.copyWith(
+          children: updatedChildren,
+        );
+
+        return true;
+      }
+
+      if (node.children.isNotEmpty) {
+
+        final inserted = _insertIntoCategory(
+          node.children,
+          categoryId,
+          newPhrase,
+        );
+
+        if (inserted) {
+
+          nodes[i] = node.copyWith(
+            children: node.children,
+          );
+
+          return true;
         }
-        insert(n.children);
       }
     }
 
-    insert(tree);
+    return false;
+  }
 
-    await _storage.save(tree);
-    state = tree;
+  List<PhraseNode> _copyTree(List<PhraseNode> nodes) {
+
+    return nodes
+        .map(
+          (n) => n.copyWith(
+            children: _copyTree(n.children),
+          ),
+        )
+        .toList();
   }
 }

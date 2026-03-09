@@ -36,14 +36,13 @@ class KeyboardItem {
   factory KeyboardItem.action({
     required String title,
     VoidCallback? onTap,
-    Color? lightColor,
-    Color? darkColor,
+
   }) {
     return KeyboardItem._(
       type: KeyboardItemType.action,
       label: "",
       title: title,
-      onChanged: null,
+      onTap: onTap,
     );
   }
   factory KeyboardItem.dropdown({
