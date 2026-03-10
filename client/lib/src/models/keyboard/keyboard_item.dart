@@ -26,8 +26,7 @@ class KeyboardItem {
     this.onTap,
   });
 
-  factory KeyboardItem.char(String label,
-      {Color? lightColor, Color? darkColor}) {
+  factory KeyboardItem.char(String label) {
     return KeyboardItem._(
       type: KeyboardItemType.char,
       label: label,

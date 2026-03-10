@@ -7,6 +7,7 @@ import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/core/providers/phrase_tree_storage_provider.dart';
 import 'package:parkingson_key/src/core/providers/shared_prefs_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/keyboard_screen.dart';
+import 'package:parkingson_key/src/features/uix/screens/settings/settings_screen.dart';
 import 'package:parkingson_key/src/features/uix/themes/my_themes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/models/phrase/init_default_phrases.dart';
@@ -75,6 +76,9 @@ class _MainAppState extends ConsumerState<MainApp> {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       home: const KeyboardScreen(),
+      routes: {
+        '/settings': (context) => const SettingsScreen(),
+      },
     );
   }
 }

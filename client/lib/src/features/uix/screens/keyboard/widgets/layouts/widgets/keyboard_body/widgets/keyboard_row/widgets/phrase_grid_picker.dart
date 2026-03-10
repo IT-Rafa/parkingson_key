@@ -11,37 +11,39 @@ class PhraseGridPicker extends ConsumerWidget {
     final nodes = ref.watch(phraseTreeNavigatorProvider);
     final navigator = ref.read(phraseTreeNavigatorProvider.notifier);
 
-    return SafeArea(
-      child: Column(
-        children: [
-          _Header(navigator: navigator),
-          Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.all(12),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 12,
-                crossAxisSpacing: 12,
-                childAspectRatio: 2.2,
+    return Material(
+      color: Theme.of(context).colorScheme.surface,
+      child: SafeArea(
+        child: Column(
+          children: [
+            _Header(navigator: navigator),
+            Expanded(
+              child: GridView.builder(
+                padding: const EdgeInsets.all(12),
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  mainAxisSpacing: 12,
+                  crossAxisSpacing: 12,
+                  childAspectRatio: 0.9, // más alto para frases largas
+                ),
+                itemCount: nodes.length,
+                itemBuilder: (context, index) {
+                  final node = nodes[index];
+                  return _PhraseButton(
+                    node: node,
+                    onTap: () {
+                      if (node.isCategory) {
+                        navigator.enterNode(node);
+                      } else {
+                        Navigator.pop(context, node.title);
+                      }
+                    },
+                  );
+                },
               ),
-              itemCount: nodes.length,
-              itemBuilder: (context, index) {
-                final node = nodes[index];
-
-                return _PhraseButton(
-                  node: node,
-                  onTap: () {
-                    if (node.isCategory) {
-                      navigator.enterNode(node);
-                    } else {
-                      Navigator.pop(context, node.title);
-                    }
-                  },
-                );
-              },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -54,17 +56,29 @@ class _Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      elevation: 2,
-      child: ListTile(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: navigator.goBack,
-        ),
-        title: Text(
-          navigator.currentPath,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+    // Mejor: añadimos un getter público en PhraseTreeNavigator
+    final isRoot = navigator.isAtRoot;
+
+    return SafeArea(
+      bottom: false,
+      child: Material(
+        elevation: 2,
+        child: ListTile(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              if (isRoot) {
+                Navigator.pop(context); // cierra el picker
+              } else {
+                navigator.goBack();
+              }
+            },
+          ),
+          title: Text(
+            navigator.currentPath,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       ),
     );
@@ -82,26 +96,30 @@ class _PhraseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isCategory = node.isCategory;
-
     return ElevatedButton(
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
         padding: const EdgeInsets.all(12),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            isCategory ? Icons.folder : Icons.chat,
-            size: 28,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            node.title,
-            textAlign: TextAlign.center,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+          if (node.isCategory) ...[
+            const Icon(Icons.folder, size: 28),
+            const SizedBox(height: 6),
+          ],
+          Flexible(
+            child: Text(
+              node.title,
+              textAlign: TextAlign.center,
+              softWrap: true, // permite varias líneas
+              style: const TextStyle(fontSize: 14),
+            ),
           ),
         ],
       ),

@@ -23,6 +23,7 @@ class PhraseTreeNavigator extends Notifier<List<PhraseNode>> {
     state = ref.read(phraseTreeProvider);
   }
 
+  bool get isAtRoot => _stack.isEmpty;
   void goBack() {
     if (_stack.isEmpty) return;
 
