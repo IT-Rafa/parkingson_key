@@ -89,7 +89,6 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
 
             return Column(
               children: [
-                // TextFieldBase
                 TextFieldBase(
                   controller: _textFieldController,
                   focusNode: _focusNode,

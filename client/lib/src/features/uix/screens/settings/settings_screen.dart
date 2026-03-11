@@ -17,7 +17,6 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final String theme = ref.watch(themeProvider);
     final profile = ref.watch(keyboardProfileProvider);
     final preset = ref.watch(keyboardPresetProvider);
 
@@ -68,24 +67,26 @@ class SettingsScreen extends ConsumerWidget {
                   children: [
                     const Text("SETTINGS_theme").tr(),
                     const SizedBox(width: 20),
-                    DropdownButton<String>(
-                      value: theme,
-                      items: [
+                    DropdownButton<ThemeMode>(
+                      value: ref.watch(themeProvider),
+                      items:  [
                         DropdownMenuItem(
-                          value: "light",
+                          value: ThemeMode.light,
                           child: Text("SETTINGS_light_mode").tr(),
                         ),
                         DropdownMenuItem(
-                          value: "dark",
+                          value: ThemeMode.dark,
                           child: Text("SETTINGS_dark_mode").tr(),
                         ),
                         DropdownMenuItem(
-                          value: "system",
+                          value: ThemeMode.system,
                           child: Text("SETTINGS_system_mode").tr(),
                         ),
                       ],
-                      onChanged: (value) {
-                        ref.read(themeProvider.notifier).setTheme(value!);
+                      onChanged: (mode) {
+                        if (mode != null) {
+                          ref.read(themeProvider.notifier).setTheme(mode);
+                        }
                       },
                     ),
                   ],
