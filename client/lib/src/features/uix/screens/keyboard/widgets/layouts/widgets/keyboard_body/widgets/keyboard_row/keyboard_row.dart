@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parkingson_key/src/core/phrase_tree_navigator.dart';
 import 'package:parkingson_key/src/core/services/haptic_feedback_service.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/utils/insert_from_keyboard_char.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/utils/insert_from_keyboard_dropdown.dart';
@@ -128,16 +126,14 @@ Future<void> openPhrasePicker(
   BuildContext context,
   TextEditingController controller,
 ) async {
-  final container = ProviderScope.containerOf(context);
-  container.read(phraseTreeNavigatorProvider.notifier).reset();
-
-  final phrase = await showModalBottomSheet<String>(
-    context: context,
-    isScrollControlled: true,
-    builder: (_) => const PhraseGridPicker(),
+  final phrase = await Navigator.push<String>(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const PhraseGridPicker(),
+    ),
   );
 
   if (phrase != null) {
-    controller.text += " $phrase";
+    controller.text += phrase;
   }
 }
