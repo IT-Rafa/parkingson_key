@@ -6,12 +6,12 @@ import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/keyboard_key_container.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
 
-class KeyboardButtonKey extends ConsumerStatefulWidget {
+class KeyboardActionKey extends ConsumerStatefulWidget {
   final KeyboardItem keyData;
   final VoidCallback onAccepted;
   final double fontSize;
 
-  const KeyboardButtonKey({
+  const KeyboardActionKey({
     super.key,
     required this.keyData,
     required this.onAccepted,
@@ -19,17 +19,24 @@ class KeyboardButtonKey extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<KeyboardButtonKey> createState() => _KeyboardButtonKeyState();
+  ConsumerState<KeyboardActionKey> createState() => _KeyboardActionKeyState();
 }
 
-class _KeyboardButtonKeyState extends ConsumerState<KeyboardButtonKey> {
+class _KeyboardActionKeyState extends ConsumerState<KeyboardActionKey> {
   final accept = AcceptOnHold();
   bool _pressed = false;
+
+  @override
+  void dispose() {
+    accept.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final profile = ref.watch(keyboardProfileProvider);
     final baseColor = Colors.amber;
+
     final pressedColor = Color.alphaBlend(
       Colors.black.withValues(alpha: 0.25),
       baseColor,
@@ -39,6 +46,7 @@ class _KeyboardButtonKeyState extends ConsumerState<KeyboardButtonKey> {
       behavior: HitTestBehavior.opaque,
       onTapDown: (_) {
         setState(() => _pressed = true);
+
         accept.start(
           onAccept: () {
             widget.onAccepted();
@@ -50,28 +58,37 @@ class _KeyboardButtonKeyState extends ConsumerState<KeyboardButtonKey> {
           duration: profile.acceptHoldDuration,
         );
       },
-      onTapUp: (_) { setState(() => _pressed = false); accept.cancel(); },
-      onTapCancel: () { setState(() => _pressed = false); accept.cancel(); },
+      onTapUp: (_) {
+        setState(() => _pressed = false);
+        accept.cancel();
+      },
+      onTapCancel: () {
+        setState(() => _pressed = false);
+        accept.cancel();
+      },
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxHeight: 90),
           child: KeyboardKeyContainer(
             color: _pressed ? pressedColor : baseColor,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 6),
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Text(
-                  widget.keyData.displayText.toUpperCase(),
-                  style: TextStyle(
-                    fontFamily: 'RobotoMono',
-                    fontSize: widget.fontSize,
-                    fontWeight: FontWeight.bold,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      "${widget.keyData.displayText.toUpperCase()} ▾",
+                      style: TextStyle(
+                        fontFamily: 'RobotoMono',
+                        fontSize: widget.fontSize,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                  maxLines: 1,
-                  textAlign: TextAlign.center,
-                ),
-              ),
+                );
+              },
             ),
           ),
         ),

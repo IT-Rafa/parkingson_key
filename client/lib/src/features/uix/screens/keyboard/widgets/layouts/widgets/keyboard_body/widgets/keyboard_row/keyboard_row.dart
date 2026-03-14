@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:parkingson_key/src/core/services/haptic_feedback_service.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/utils/insert_from_keyboard_char.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/utils/insert_from_keyboard_dropdown.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/keyboard_action_key.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/keyboard_button_key.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/phrase_grid_picker.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
@@ -32,6 +33,9 @@ class KeyboardRow extends StatelessWidget {
         final weights = items.map((item) => _effectiveWeight(item)).toList();
         final totalWeight = weights.fold<double>(0, (sum, w) => sum + w);
 
+        // Calculamos un fontSize base para toda la fila
+        final baseFontSize = (constraints.maxHeight * 0.45).clamp(14.0, 24.0);
+
         return Row(
           children: List.generate(items.length, (index) {
             final item = items[index];
@@ -39,12 +43,51 @@ class KeyboardRow extends StatelessWidget {
 
             return SizedBox(
               width: width,
-              child: _buildItem(context, item),
+              child: _buildItem(context, item, baseFontSize),
             );
           }),
         );
       },
     );
+  }
+
+  Widget _buildItem(BuildContext context, KeyboardItem item, double fontSize) {
+    switch (item.type) {
+      case KeyboardItemType.char:
+        return KeyboardButtonKey(
+          keyData: item,
+          fontSize: fontSize,
+          onAccepted: () {
+            insertFromKeyboardChar(controller, item.label);
+            if (profile.hapticEnabled) HapticFeedbackService.tap(profile);
+          },
+        );
+
+      case KeyboardItemType.dropdown:
+        return KeyboardDropdownKey(
+          keyData: item,
+          fontSize: fontSize,
+          onSelected: (value) {
+            if (value == null) return;
+            insertFromKeyboardDropdown(controller, value);
+            if (profile.hapticEnabled) HapticFeedbackService.tap(profile);
+          },
+        );
+
+      case KeyboardItemType.action:
+        return KeyboardActionKey(
+          keyData: item,
+          fontSize: fontSize,
+          onAccepted: () async {
+            if (item.title == "KEYBOARD_phrases") {
+              await openPhrasePicker(context, controller);
+            } else {
+              item.onTap?.call();
+            }
+            if (profile.hapticEnabled) HapticFeedbackService.tap(profile);
+          },
+        );
+    }
   }
 
   double _effectiveWeight(KeyboardItem item) {
@@ -57,67 +100,6 @@ class KeyboardRow extends StatelessWidget {
 
       case KeyboardItemType.action:
         return isPortrait ? 1.35 : 1.8;
-    }
-  }
-
-  Widget _buildItem(BuildContext context, KeyboardItem item) {
-    switch (item.type) {
-      case KeyboardItemType.char:
-        return KeyboardButtonKey(
-          keyData: item,
-          onAccepted: () {
-            if (!repeatController.canAccept(
-                item, profile.repeatBlockDuration)) {
-              return;
-            }
-
-            insertFromKeyboardChar(controller, item.label);
-
-            if (profile.hapticEnabled) {
-              HapticFeedbackService.tap(profile);
-            }
-          },
-        );
-
-      case KeyboardItemType.dropdown:
-        return KeyboardDropdownKey(
-          keyData: item,
-          onSelected: (value) {
-            if (value == null) return;
-
-            if (!repeatController.canAccept(
-                item, profile.repeatBlockDuration)) {
-              return;
-            }
-
-            insertFromKeyboardDropdown(controller, value);
-
-            if (profile.hapticEnabled) {
-              HapticFeedbackService.tap(profile);
-            }
-          },
-        );
-
-      case KeyboardItemType.action:
-        return KeyboardButtonKey(
-          keyData: item,
-          onAccepted: () async {
-            if (!repeatController.canAccept(
-                item, profile.repeatBlockDuration)) {
-              return;
-            }
-
-            if (item.title == "KEYBOARD_phrases") {
-              await openPhrasePicker(context, controller);
-            } else {
-              item.onTap?.call();
-            }
-
-            if (profile.hapticEnabled) {
-              HapticFeedbackService.tap(profile);
-            }
-          },
-        );
     }
   }
 }

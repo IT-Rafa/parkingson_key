@@ -10,11 +10,12 @@ import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
 class KeyboardDropdownKey extends ConsumerStatefulWidget {
   final KeyboardItem keyData;
   final ValueChanged<String?>? onSelected;
-
+final double fontSize;
   const KeyboardDropdownKey({
     super.key,
     required this.keyData,
     required this.onSelected,
+    required this.fontSize,
   });
 
   @override
@@ -97,16 +98,18 @@ class _KeyboardDropdownKeyState extends ConsumerState<KeyboardDropdownKey> {
             color: _pressed ? pressedColor : baseColor,
             child: LayoutBuilder(
               builder: (context, constraints) {
-                final fontSize =
-                    (constraints.maxHeight * 0.45).clamp(14.0, 24.0);
-
-                return Text(
-                  widget.keyData.displayText,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: fontSize,
-                  ),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 6),
+                  child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        "${widget.keyData.displayText.toUpperCase()} ▾",
+                        style: TextStyle(
+                          fontFamily: 'RobotoMono',
+                          fontSize: widget.fontSize,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),),
                 );
               },
             ),
