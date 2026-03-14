@@ -69,20 +69,5 @@ List<Widget> buildActionButtons(
         },
       ),
     ),
-    keyBox(
-      isPortrait: isPortrait,
-      child: ActionButton(
-        title: "KEYBOARD_phrases".tr(),
-        onAccepted: () {
-          showModalBottomSheet(
-              context: context,
-              builder: (_) => PhraseTreePicker(
-                    onPhraseSelected: (phrase) {
-                      controller.text += phrase;
-                    },
-                  ));
-        },
-      ),
-    ),
   ];
 }

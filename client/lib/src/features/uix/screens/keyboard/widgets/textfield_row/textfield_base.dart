@@ -32,7 +32,7 @@ class _TextFieldBaseState extends ConsumerState<TextFieldBase> {
 
     return Container(
       margin: const EdgeInsets.fromLTRB(8, 8, 8, 4),
-      padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+      padding: const EdgeInsets.fromLTRB(8, 4, 0, 4),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainer,
         borderRadius: BorderRadius.circular(8),
@@ -67,18 +67,41 @@ class _TextFieldBaseState extends ConsumerState<TextFieldBase> {
               ),
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: 5),
           PopupMenuButton<String>(
             tooltip: "KEYBOARD_delete".tr(),
-            icon: const Icon(Icons.delete),
+            icon: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+              height: 35,
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.errorContainer,
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.delete,
+                    color: Theme.of(context).colorScheme.onError,
+                  ),
+                  Icon(
+                    Icons.arrow_drop_down,
+                    size: 18,
+                    color: Theme.of(context).colorScheme.onError,
+                  ),
+                ],
+              ),
+            ),
             onSelected: (value) {
               switch (value) {
                 case 'delete_char':
                   deleteChar(widget.controller);
                   break;
+
                 case 'delete_word':
                   deleteWord(widget.controller);
                   break;
+
                 case 'delete_all':
                   deleteAll(widget.controller);
                   break;
@@ -103,7 +126,7 @@ class _TextFieldBaseState extends ConsumerState<TextFieldBase> {
                 child: Text("KEYBOARD_delete_all").tr(),
               ),
             ],
-          ),
+          )
         ],
       ),
     );
