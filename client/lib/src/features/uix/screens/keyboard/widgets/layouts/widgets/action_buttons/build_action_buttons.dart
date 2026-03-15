@@ -2,9 +2,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/appbar_visibility_notifier.dart';
+import 'package:parkingson_key/src/core/providers/phrase_tree_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/contact_picker.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/phrase_tree_picker.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/phrase_category_picker.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/action_button.dart';
+import 'package:parkingson_key/src/models/phrase/phrase_node.dart';
 
 List<Widget> buildActionButtons(
   BuildContext context, {
@@ -38,19 +40,29 @@ List<Widget> buildActionButtons(
       isPortrait: isPortrait,
       child: ActionButton(
         title: "KEYBOARD_savePhrase".tr(),
-        onAccepted: () {
-          final text = controller.text;
-
+        onAccepted: () async {
+          final text = controller.text.trim();
           if (text.isEmpty) return;
 
-          showModalBottomSheet(
+          final selectedCategoryId = await showModalBottomSheet<String>(
             context: context,
-            builder: (_) => PhraseTreePicker(
-              onPhraseSelected: (phrase) {
-                controller.text += phrase;
-              },
-            ),
+            isScrollControlled: true,
+            builder: (_) => const PhraseCategoryPicker(),
           );
+
+          if (selectedCategoryId == null) return;
+
+          final newPhrase = PhraseNode(
+            id: DateTime.now().millisecondsSinceEpoch.toString(),
+            title: text,
+            isCategory: false,
+            children: const [],
+          );
+
+          await ref.read(phraseTreeProvider.notifier).addPhrase(
+                selectedCategoryId,
+                newPhrase,
+              );
         },
       ),
     ),

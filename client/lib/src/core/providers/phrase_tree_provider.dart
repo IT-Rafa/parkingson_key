@@ -8,7 +8,6 @@ final phraseTreeProvider =
         PhraseTreeNotifier.new);
 
 class PhraseTreeNotifier extends Notifier<List<PhraseNode>> {
-
   late PhraseTreeStorage _storage;
 
   @override
@@ -35,7 +34,6 @@ class PhraseTreeNotifier extends Notifier<List<PhraseNode>> {
     String categoryId,
     PhraseNode newPhrase,
   ) async {
-
     final tree = _copyTree(state);
 
     final inserted = _insertIntoCategory(
@@ -55,17 +53,11 @@ class PhraseTreeNotifier extends Notifier<List<PhraseNode>> {
     String categoryId,
     PhraseNode newPhrase,
   ) {
-
     for (int i = 0; i < nodes.length; i++) {
-
       final node = nodes[i];
 
       if (node.id == categoryId && node.isCategory) {
-
-        final updatedChildren = [
-          ...node.children,
-          newPhrase
-        ];
+        final updatedChildren = [...node.children, newPhrase];
 
         nodes[i] = node.copyWith(
           children: updatedChildren,
@@ -75,7 +67,6 @@ class PhraseTreeNotifier extends Notifier<List<PhraseNode>> {
       }
 
       if (node.children.isNotEmpty) {
-
         final inserted = _insertIntoCategory(
           node.children,
           categoryId,
@@ -83,7 +74,6 @@ class PhraseTreeNotifier extends Notifier<List<PhraseNode>> {
         );
 
         if (inserted) {
-
           nodes[i] = node.copyWith(
             children: node.children,
           );
@@ -97,7 +87,6 @@ class PhraseTreeNotifier extends Notifier<List<PhraseNode>> {
   }
 
   List<PhraseNode> _copyTree(List<PhraseNode> nodes) {
-
     return nodes
         .map(
           (n) => n.copyWith(

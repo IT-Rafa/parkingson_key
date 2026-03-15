@@ -150,10 +150,19 @@ Future<void> initDefaultPhrases(WidgetRef ref) async {
           isCategory: true,
           children: [
             PhraseNode(id: 'cabeza', title: trText('Cabeza'), children: []),
-            PhraseNode(id: 'oreja', title: trText('Oreja'), children: []),
+            PhraseNode(
+                id: 'oreja1', title: trText('Oreja izquierda'), children: []),
+            PhraseNode(
+                id: 'oreja2', title: trText('Oreja derecha'), children: []),
             PhraseNode(id: 'espalda', title: trText('Espalda'), children: []),
-            PhraseNode(id: 'brazo', title: trText('Brazo'), children: []),
-            PhraseNode(id: 'pierna', title: trText('Pierna'), children: []),
+            PhraseNode(
+                id: 'brazo1', title: trText('Brazo izquierdo'), children: []),
+            PhraseNode(
+                id: 'brazo2', title: trText('Brazo derecho'), children: []),
+            PhraseNode(
+                id: 'pierna1', title: trText('Pierna izquierda'), children: []),
+            PhraseNode(
+                id: 'pierna2', title: trText('Pierna derecha'), children: []),
             PhraseNode(id: 'culo', title: trText('Culo'), children: []),
           ],
         ),

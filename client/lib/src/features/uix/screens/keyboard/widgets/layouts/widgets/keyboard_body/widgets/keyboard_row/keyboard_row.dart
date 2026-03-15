@@ -34,7 +34,9 @@ class KeyboardRow extends StatelessWidget {
         final totalWeight = weights.fold<double>(0, (sum, w) => sum + w);
 
         // Calculamos un fontSize base para toda la fila
-        final baseFontSize = (constraints.maxHeight * 0.45).clamp(14.0, 24.0);
+        final charFontSize = (constraints.maxHeight * 0.8).clamp(18.0, 42.0);
+        final controlFontSize =
+            (constraints.maxHeight * 0.45).clamp(14.0, 24.0);
 
         return Row(
           children: List.generate(items.length, (index) {
@@ -43,7 +45,7 @@ class KeyboardRow extends StatelessWidget {
 
             return SizedBox(
               width: width,
-              child: _buildItem(context, item, baseFontSize),
+              child: _buildItem(context, item, charFontSize, controlFontSize),
             );
           }),
         );
@@ -51,12 +53,17 @@ class KeyboardRow extends StatelessWidget {
     );
   }
 
-  Widget _buildItem(BuildContext context, KeyboardItem item, double fontSize) {
+  Widget _buildItem(
+    BuildContext context,
+    KeyboardItem item,
+    double charFontSize,
+    double controlFontSize,
+  ) {
     switch (item.type) {
       case KeyboardItemType.char:
         return KeyboardButtonKey(
           keyData: item,
-          fontSize: fontSize,
+          fontSize: charFontSize,
           onAccepted: () {
             insertFromKeyboardChar(controller, item.label);
             if (profile.hapticEnabled) HapticFeedbackService.tap(profile);
@@ -66,7 +73,7 @@ class KeyboardRow extends StatelessWidget {
       case KeyboardItemType.dropdown:
         return KeyboardDropdownKey(
           keyData: item,
-          fontSize: fontSize,
+          fontSize: controlFontSize,
           onSelected: (value) {
             if (value == null) return;
             insertFromKeyboardDropdown(controller, value);
@@ -77,7 +84,7 @@ class KeyboardRow extends StatelessWidget {
       case KeyboardItemType.action:
         return KeyboardActionKey(
           keyData: item,
-          fontSize: fontSize,
+          fontSize: controlFontSize,
           onAccepted: () async {
             if (item.title == "KEYBOARD_phrases") {
               await openPhrasePicker(context, controller);

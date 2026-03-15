@@ -11,43 +11,45 @@ class PhraseGridPicker extends ConsumerWidget {
     final nodes = ref.watch(phraseTreeNavigatorProvider);
     final navigator = ref.read(phraseTreeNavigatorProvider.notifier);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(navigator.currentPath),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            if (navigator.isAtRoot) {
-              Navigator.pop(context);
-            } else {
-              navigator.goBack();
-            }
-          },
-        ),
-      ),
-      body: GridView.builder(
-        padding: const EdgeInsets.all(12),
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200,
-          mainAxisSpacing: 12,
-          crossAxisSpacing: 12,
-          childAspectRatio: 0.9,
-        ),
-        itemCount: nodes.length,
-        itemBuilder: (context, index) {
-          final node = nodes[index];
-
-          return _PhraseButton(
-            node: node,
-            onTap: () {
-              if (node.isCategory) {
-                navigator.enterNode(node);
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(navigator.currentPath),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              if (navigator.isAtRoot) {
+                Navigator.pop(context);
               } else {
-                Navigator.pop(context, node.title);
+                navigator.goBack();
               }
             },
-          );
-        },
+          ),
+        ),
+        body: GridView.builder(
+          padding: const EdgeInsets.all(12),
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 200,
+            mainAxisSpacing: 12,
+            crossAxisSpacing: 12,
+            childAspectRatio: 0.9,
+          ),
+          itemCount: nodes.length,
+          itemBuilder: (context, index) {
+            final node = nodes[index];
+      
+            return _PhraseButton(
+              node: node,
+              onTap: () {
+                if (node.isCategory) {
+                  navigator.enterNode(node);
+                } else {
+                  Navigator.pop(context, node.title);
+                }
+              },
+            );
+          },
+        ),
       ),
     );
   }
