@@ -26,7 +26,7 @@ class AppBootstrap {
     WidgetsFlutterBinding.ensureInitialized();
     await EasyLocalization.ensureInitialized();
 
-    await Hive.initFlutter();
+    await Hive.initFlutter('.parkingson_key');
 
     Hive.registerAdapter(ContactAdapter());
     Hive.registerAdapter(PhraseNodeAdapter());
@@ -56,9 +56,8 @@ class AppBootstrap {
       ],
       path: 'assets/langs',
       fallbackLocale: const Locale('en'),
-      startLocale: savedLang == AppLanguage.es
-          ? const Locale('es')
-          : const Locale('en'),
+      startLocale:
+          savedLang == AppLanguage.es ? const Locale('es') : const Locale('en'),
       useOnlyLangCode: true,
       child: child,
     );
