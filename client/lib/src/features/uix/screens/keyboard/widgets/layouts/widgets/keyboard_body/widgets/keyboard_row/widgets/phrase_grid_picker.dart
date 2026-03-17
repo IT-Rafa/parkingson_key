@@ -14,7 +14,7 @@ class PhraseGridPicker extends ConsumerWidget {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(navigator.currentPath),
+          title: Text(navigator.currentPath) ,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {

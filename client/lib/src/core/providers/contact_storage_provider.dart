@@ -18,6 +18,25 @@ class ContactNotifier extends Notifier<List<Contact>> {
     return _storage.load();
   }
 
+  Future<void> add(Contact contact) async {
+    final updated = [...state, contact];
+    await _storage.save(updated);
+    state = updated;
+  }
+
+  Future<void> update(Contact contact) async {
+    final updated =
+        state.map((c) => c.id == contact.id ? contact : c).toList();
+    await _storage.save(updated);
+    state = updated;
+  }
+
+  Future<void> delete(String id) async {
+    final updated = state.where((c) => c.id != id).toList();
+    await _storage.save(updated);
+    state = updated;
+  }
+
   Future<void> save(List<Contact> contacts) async {
     await _storage.save(contacts);
     state = contacts;

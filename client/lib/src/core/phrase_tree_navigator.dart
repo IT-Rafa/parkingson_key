@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/phrase_tree_provider.dart';
 import 'package:parkingson_key/src/models/phrase/phrase_node.dart';
@@ -34,7 +35,7 @@ class PhraseTreeNavigator extends Notifier<List<PhraseNode>> {
   }
 
   String get currentPath {
-    if (_stack.isEmpty) return "Temas";
+    if (_stack.isEmpty) return 'KEYBOARD_topics'.tr();
 
     return _stack.map((n) => n.title).join(" > ");
   }

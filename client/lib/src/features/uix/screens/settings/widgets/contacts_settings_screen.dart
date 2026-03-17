@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parkingson_key/src/core/providers/contact_provider.dart';
+import 'package:parkingson_key/src/core/providers/contact_storage_provider.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart';
 import 'package:parkingson_key/src/core/services/feedback_service.dart';
 import 'package:parkingson_key/src/features/uix/screens/settings/widgets/contact_form_dialog.dart';

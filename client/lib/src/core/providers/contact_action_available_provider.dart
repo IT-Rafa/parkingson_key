@@ -30,11 +30,9 @@ final contactActionAvailableProvider =
         uri = Uri.parse('https://wa.me/${params.contact.phone}');
         break;
       case ContactAction.email:
-        if (params.contact.email!.isEmpty) return false;
-        uri = Uri(
-            scheme: 'mailto',
-            path: params.contact.email,
-            queryParameters: {'subject': 'Example'});
+        final email = params.contact.email;
+        if (email == null || email.trim().isEmpty) return false;
+        uri = Uri(scheme: 'mailto', path: email);
         break;
     }
 

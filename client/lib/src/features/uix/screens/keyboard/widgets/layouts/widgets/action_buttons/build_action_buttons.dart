@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/appbar_visibility_notifier.dart';
+import 'package:parkingson_key/src/core/providers/contact_storage_provider.dart';
 import 'package:parkingson_key/src/core/providers/phrase_tree_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/contact_picker.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/phrase_category_picker.dart';
@@ -42,7 +43,14 @@ List<Widget> buildActionButtons(
         title: "KEYBOARD_savePhrase".tr(),
         onAccepted: () async {
           final text = controller.text.trim();
-          if (text.isEmpty) return;
+          if (text.isEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text("KEYBOARD_empty_phrase".tr()),
+              ),
+            );
+            return;
+          }
 
           final selectedCategoryId = await showModalBottomSheet<String>(
             context: context,
@@ -72,6 +80,13 @@ List<Widget> buildActionButtons(
         title: "KEYBOARD_contacts".tr(),
         onAccepted: () {
           final text = controller.text.trim();
+          final contacts = ref.read(contactProvider);
+          if (contacts.isEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('KEYBOARD_no_contacts'.tr())),
+            );
+            return;
+          }
 
           showModalBottomSheet(
             context: context,

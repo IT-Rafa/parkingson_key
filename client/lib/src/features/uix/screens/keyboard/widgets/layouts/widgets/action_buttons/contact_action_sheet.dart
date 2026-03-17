@@ -9,10 +9,11 @@ class ContactActionSheet extends ConsumerWidget {
   const ContactActionSheet({
     super.key,
     required this.contact,
-    required String message,
+    required this.message,
   });
 
   final Contact contact;
+  final String message;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -54,10 +55,19 @@ class ContactActionSheet extends ConsumerWidget {
             titleKey: 'KEYBOARD_email',
             action: ContactAction.email,
             contact: contact,
-            onLaunch: (normalized) => launchUrl(Uri(
-                scheme: 'mailto',
-                path: contact.email,
-                queryParameters: {'subject': 'Example'})),
+            onLaunch: (normalized) {
+              final subject = 'KEYBOARD_email_subject'.tr();
+              final encodedSubject = Uri.encodeComponent(subject);
+              final encodedBody = Uri.encodeComponent(message);
+
+              return launchUrl(
+                Uri(
+                  scheme: 'mailto',
+                  path: contact.email,
+                  query: 'subject=$encodedSubject&body=$encodedBody',
+                ),
+              );
+            },
           ),
         ],
       ),

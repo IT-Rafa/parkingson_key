@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/phrase_tree_navigator.dart';
@@ -25,7 +26,7 @@ class PhraseTreePicker extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
-            leading: navigator.currentPath == "Temas"
+            leading: navigator.currentPath == "KEYBOARD_topics".tr()
                 ? null
                 : IconButton(
                     icon: const Icon(Icons.arrow_back),
