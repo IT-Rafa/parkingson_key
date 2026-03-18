@@ -43,6 +43,7 @@ class _TextFieldBaseState extends ConsumerState<TextFieldBase> {
             child: SizedBox(
               height: 40,
               child: TextField(
+                
                 controller: widget.controller,
                 readOnly: true,
                 showCursor: true,
@@ -70,24 +71,26 @@ class _TextFieldBaseState extends ConsumerState<TextFieldBase> {
           const SizedBox(width: 5),
           PopupMenuButton<String>(
             tooltip: "KEYBOARD_delete".tr(),
+
             icon: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
-              height: 35,
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+              height: 37,
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.errorContainer,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(6),
+                border: BoxBorder.all(color: Colors.black87, width: 1.5),
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Icon(
                     Icons.delete,
-                    color: Theme.of(context).colorScheme.onError,
+                    color: Theme.of(context).colorScheme.error,
                   ),
                   Icon(
                     Icons.arrow_drop_down,
-                    size: 18,
-                    color: Theme.of(context).colorScheme.onError,
+                    size: 20,
+                    color: Theme.of(context).colorScheme.error,
                   ),
                 ],
               ),
@@ -112,6 +115,7 @@ class _TextFieldBaseState extends ConsumerState<TextFieldBase> {
                 profile: profile,
               );
             },
+
             itemBuilder: (context) => [
               PopupMenuItem(
                 value: 'delete_char',
