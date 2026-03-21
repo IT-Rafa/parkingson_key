@@ -11,8 +11,8 @@ import 'package:parkingson_key/src/core/controllers/keyboard_repeat_controller.d
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/landscape_layout.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/portrait_layout.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/app_bar/settings_icon_button.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/utils/keyboard_layout_registry.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/textfield_row/textfield_base.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_layout_resolver.dart';
 
 // Widget keyboard_screen
 class KeyboardScreen extends ConsumerStatefulWidget {
@@ -58,7 +58,8 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
     final profile = ref.watch(keyboardProfileProvider);
 
     final keyboardType = ref.watch(keyboardTypeProvider);
-    final keyboardLayout = keyboardLayoutByType[keyboardType]!;
+    final appLanguage = ref.watch(languageProvider);
+    final keyboardLayout = keyboardLayoutResolve(keyboardType, appLanguage);
 
     // Update TTS locale
     ref.listen<AppLanguage>(languageProvider, (prev, next) {

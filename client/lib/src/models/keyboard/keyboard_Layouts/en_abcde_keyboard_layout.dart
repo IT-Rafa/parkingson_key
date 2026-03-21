@@ -1,9 +1,8 @@
 import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_layout.dart';
 
-final esAbcdeKeyboardLayout = KeyboardLayout(
-  id: 'es_abcde',
-  // ───────────────── PORTRAIT ─────────────────
+final enAbcdeKeyboardLayout = KeyboardLayout(
+  id: 'en_abcde',
   portrait: [
     [
       KeyboardItem.char('a'),
@@ -22,33 +21,29 @@ final esAbcdeKeyboardLayout = KeyboardLayout(
     [
       KeyboardItem.char('k'),
       KeyboardItem.char('l'),
-      KeyboardItem.char('ll'),
       KeyboardItem.char('m'),
       KeyboardItem.char('n'),
     ],
     [
-      KeyboardItem.char('ñ'),
       KeyboardItem.char('o'),
       KeyboardItem.char('p'),
       KeyboardItem.char('q'),
-      KeyboardItem.char('qu'),
+      KeyboardItem.char('r'),
+      KeyboardItem.char('s'),
     ],
     [
-      KeyboardItem.char('r'),
-      KeyboardItem.char('rr'),
-      KeyboardItem.char('s'),
       KeyboardItem.char('t'),
       KeyboardItem.char('u'),
-    ],
-    [
       KeyboardItem.char('v'),
       KeyboardItem.char('w'),
       KeyboardItem.char('x'),
+    ],
+    [
       KeyboardItem.char('y'),
       KeyboardItem.char('z'),
     ],
     [
-      KeyboardItem.char('Sí'),
+      KeyboardItem.char('Yes'),
       KeyboardItem.char('No'),
       KeyboardItem.char('  '),
     ],
@@ -61,12 +56,8 @@ final esAbcdeKeyboardLayout = KeyboardLayout(
         title: 'KEYBOARD_numbers',
         items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
       ),
-      KeyboardItem.action(
-        title: 'KEYBOARD_phrases',
-      ),
     ],
   ],
-  // ───────────────── LANDSCAPE ─────────────────
   landscape: [
     [
       KeyboardItem.char('a'),
@@ -83,31 +74,27 @@ final esAbcdeKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('j'),
       KeyboardItem.char('k'),
       KeyboardItem.char('l'),
-      KeyboardItem.char('ll'),
       KeyboardItem.char('m'),
       KeyboardItem.char('n'),
-    ],
-    [
-      KeyboardItem.char('ñ'),
       KeyboardItem.char('o'),
       KeyboardItem.char('p'),
-      KeyboardItem.char('q'),
-      KeyboardItem.char('qu'),
-      KeyboardItem.char('r'),
-      KeyboardItem.char('rr'),
     ],
     [
+      KeyboardItem.char('q'),
+      KeyboardItem.char('r'),
       KeyboardItem.char('s'),
       KeyboardItem.char('t'),
       KeyboardItem.char('u'),
       KeyboardItem.char('v'),
+    ],
+    [
       KeyboardItem.char('w'),
       KeyboardItem.char('x'),
       KeyboardItem.char('y'),
       KeyboardItem.char('z'),
     ],
     [
-      KeyboardItem.char('Sí'),
+      KeyboardItem.char('Yes'),
       KeyboardItem.char('No'),
       KeyboardItem.char('  '),
     ],
@@ -119,9 +106,6 @@ final esAbcdeKeyboardLayout = KeyboardLayout(
       KeyboardItem.dropdown(
         title: 'KEYBOARD_numbers',
         items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-      ),
-      KeyboardItem.action(
-        title: 'KEYBOARD_phrases',
       ),
     ],
   ],

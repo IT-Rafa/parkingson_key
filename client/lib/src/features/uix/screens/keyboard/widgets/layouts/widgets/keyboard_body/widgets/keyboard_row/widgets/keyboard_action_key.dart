@@ -5,6 +5,9 @@ import 'package:parkingson_key/src/core/services/feedback_service.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/utils/accept_on_hold.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/keyboard_key_container.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_key_contrast.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_key_palette.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_key_visual_category.dart';
 
 class KeyboardActionKey extends ConsumerStatefulWidget {
   final KeyboardItem keyData;
@@ -35,11 +38,11 @@ class _KeyboardActionKeyState extends ConsumerState<KeyboardActionKey> {
   @override
   Widget build(BuildContext context) {
     final profile = ref.watch(keyboardProfileProvider);
-    final baseColor = Colors.amber;
-
-    final pressedColor = Color.alphaBlend(
-      Colors.black.withValues(alpha: 0.25),
-      baseColor,
+    final category = keyboardKeyVisualCategoryFor(widget.keyData);
+    final keyColors = KeyboardKeyPalette.colors(context, category);
+    final pressedColor = KeyboardKeyContrast.pressedBackgroundAa(
+      baseBackground: keyColors.background,
+      foreground: keyColors.foreground,
     );
 
     return GestureDetector(
@@ -70,7 +73,7 @@ class _KeyboardActionKeyState extends ConsumerState<KeyboardActionKey> {
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxHeight: 90),
           child: KeyboardKeyContainer(
-            color: _pressed ? pressedColor : baseColor,
+            color: _pressed ? pressedColor : keyColors.background,
             child: LayoutBuilder(
               builder: (context, constraints) {
 
@@ -84,6 +87,7 @@ class _KeyboardActionKeyState extends ConsumerState<KeyboardActionKey> {
                         fontFamily: 'RobotoMono',
                         fontSize: widget.fontSize,
                         fontWeight: FontWeight.bold,
+                        color: keyColors.foreground,
                       ),
                     ),
                   ),
