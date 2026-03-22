@@ -61,37 +61,23 @@ class KeyboardKeyPalette {
     switch (category) {
       case KeyboardKeyVisualCategory.consonant:
         // Tono coral suave (contenedor primario)
-        return _c(isDark, AppColors.primaryContainer);
+        return _c(isDark, AppColors.secondaryContainer);
       case KeyboardKeyVisualCategory.vowel:
         // Tono violeta suave (contenedor secundario)
-        return _c(isDark, AppColors.secondaryContainer);
+        return Color.lerp(
+            _c(isDark, AppColors.secondaryContainer), Colors.black, 0.15)!;
       case KeyboardKeyVisualCategory.word:
         // Acento violeta para Sí / No / Yes
         return _c(isDark, AppColors.secondary);
       case KeyboardKeyVisualCategory.space:
-        return _c(isDark, AppColors.surfaceContainer);
-      case KeyboardKeyVisualCategory.dropdownSymbols:
+        return Color.lerp(
+            _c(isDark, AppColors.surfaceContainer), Colors.black, 0.25)!;
+      case KeyboardKeyVisualCategory.dropdown:
         // Coral más marcado (símbolos)
         return _lerpPair(
           AppColors.primaryContainer,
           AppColors.primary,
-          0.55,
-          isDark,
-        );
-      case KeyboardKeyVisualCategory.dropdownNumbers:
-        // Violeta intermedio (números)
-        return _lerpPair(
-          AppColors.secondaryContainer,
-          AppColors.secondary,
-          0.55,
-          isDark,
-        );
-      case KeyboardKeyVisualCategory.dropdownPhrases:
-        // Mezcla marca coral + violeta (frases / acción frases)
-        return _lerpPair(
-          AppColors.primary,
-          AppColors.secondary,
-          0.28,
+          1.0,
           isDark,
         );
     }
