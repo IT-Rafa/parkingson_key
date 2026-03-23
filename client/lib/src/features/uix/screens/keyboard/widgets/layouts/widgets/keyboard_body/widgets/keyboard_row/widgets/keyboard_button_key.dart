@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart';
 import 'package:parkingson_key/src/core/services/feedback_service.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/utils/accept_on_hold.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/keyboard_key_container.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
@@ -28,6 +29,18 @@ class KeyboardButtonKey extends ConsumerStatefulWidget {
 class _KeyboardButtonKeyState extends ConsumerState<KeyboardButtonKey> {
   final accept = AcceptOnHold();
   bool _pressed = false;
+  bool _accepted = false;
+
+  void _handleAccept(
+      BuildContext context, KeyboardAccessibilityProfile profile) {
+    if (_accepted) return;
+    _accepted = true;
+    widget.onAccepted();
+    FeedbackService.accept(
+      messenger: ScaffoldMessenger.of(context),
+      profile: profile,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,20 +55,28 @@ class _KeyboardButtonKeyState extends ConsumerState<KeyboardButtonKey> {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTapDown: (_) {
-        setState(() => _pressed = true);
+        setState(() {
+          _pressed = true;
+          _accepted = false;
+        });
         accept.start(
           onAccept: () {
-            widget.onAccepted();
-            FeedbackService.accept(
-              messenger: ScaffoldMessenger.of(context),
-              profile: profile,
-            );
+            _handleAccept(context, profile);
+            if (mounted) setState(() => _pressed = false);
           },
           duration: profile.acceptHoldDuration,
         );
       },
-      onTapUp: (_) { setState(() => _pressed = false); accept.cancel(); },
-      onTapCancel: () { setState(() => _pressed = false); accept.cancel(); },
+      onTapUp: (_) {
+        if (!_accepted) {
+          accept.cancel();
+        }
+        setState(() => _pressed = false);
+      },
+      onTapCancel: () {
+        setState(() => _pressed = false);
+        accept.cancel();
+      },
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxHeight: 90),

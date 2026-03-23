@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart';
 import 'package:parkingson_key/src/core/services/feedback_service.dart';
+import 'package:parkingson_key/src/core/services/haptic_feedback_service.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/utils/accept_on_hold.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/keyboard_key_container.dart';
 
@@ -45,13 +46,17 @@ class _ActionButtonState extends ConsumerState<ActionButton> {
       behavior: HitTestBehavior.opaque,
       onTapDown: (_) {
         setState(() => _pressed = true);
+        if (profile.hapticEnabled) HapticFeedbackService.tap(profile);
+        final messenger = ScaffoldMessenger.of(context);
 
         accept.start(
-          onAccept: () {
+          onAccept: () async {
             widget.onAccepted();
+            await Future.delayed(Duration.zero);
+            if (mounted) setState(() => _pressed = false);
 
             FeedbackService.accept(
-              messenger: ScaffoldMessenger.of(context),
+              messenger: messenger,
               profile: profile,
             );
           },

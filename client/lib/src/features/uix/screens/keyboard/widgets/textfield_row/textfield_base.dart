@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,6 +27,10 @@ class TextFieldBase extends ConsumerStatefulWidget {
 class _TextFieldBaseState extends ConsumerState<TextFieldBase> {
   KeyboardAccessibilityProfile get profile => ref.read(keyboardProfileProvider);
 
+  final GlobalKey _deleteKey = GlobalKey();
+  bool _deletePressed = false;
+  Timer? _acceptTimer;
+
   @override
   Widget build(BuildContext context) {
     final ttsService = ref.read(ttsServiceProvider);
@@ -43,7 +48,6 @@ class _TextFieldBaseState extends ConsumerState<TextFieldBase> {
             child: SizedBox(
               height: 40,
               child: TextField(
-                
                 controller: widget.controller,
                 readOnly: true,
                 showCursor: true,
@@ -69,14 +73,80 @@ class _TextFieldBaseState extends ConsumerState<TextFieldBase> {
             ),
           ),
           const SizedBox(width: 5),
-          PopupMenuButton<String>(
-            tooltip: "KEYBOARD_delete".tr(),
-
-            icon: Container(
+          GestureDetector(
+            key: _deleteKey,
+            onTapDown: (_) {
+              setState(() => _deletePressed = true);
+              _acceptTimer = Timer(profile.acceptHoldDuration, () async {
+                setState(() => _deletePressed = false);
+                final currentContext = context;
+                final messenger = ScaffoldMessenger.of(currentContext);
+                if (mounted) {
+                  FeedbackService.accept(
+                    messenger: messenger,
+                    profile: profile,
+                  );
+                }
+                final box =
+                    _deleteKey.currentContext!.findRenderObject() as RenderBox;
+                final offset = box.localToGlobal(Offset.zero);
+                final size = box.size;
+                final selected = await showMenu<String>(
+                  context: currentContext,
+                  position: RelativeRect.fromLTRB(
+                    offset.dx,
+                    offset.dy + size.height,
+                    offset.dx + size.width,
+                    offset.dy,
+                  ),
+                  items: [
+                    PopupMenuItem(
+                      value: 'delete_char',
+                      child: Text("KEYBOARD_delete_char".tr()),
+                    ),
+                    PopupMenuItem(
+                      value: 'delete_word',
+                      child: Text("KEYBOARD_delete_word".tr()),
+                    ),
+                    PopupMenuItem(
+                      value: 'delete_all',
+                      child: Text("KEYBOARD_delete_all".tr()),
+                    ),
+                  ],
+                );
+                if (selected != null && mounted) {
+                  switch (selected) {
+                    case 'delete_char':
+                      deleteChar(widget.controller);
+                      break;
+                    case 'delete_word':
+                      deleteWord(widget.controller);
+                      break;
+                    case 'delete_all':
+                      deleteAll(widget.controller);
+                      break;
+                  }
+                }
+              });
+            },
+            onTapUp: (_) {
+              _acceptTimer?.cancel();
+              setState(() => _deletePressed = false);
+            },
+            onTapCancel: () {
+              _acceptTimer?.cancel();
+              setState(() => _deletePressed = false);
+            },
+            child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
               height: 37,
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
+                color: _deletePressed
+                    ? Theme.of(context)
+                        .colorScheme
+                        .surface
+                        .withValues(alpha: 0.7)
+                    : Theme.of(context).colorScheme.surface,
                 borderRadius: BorderRadius.circular(6),
                 border: BoxBorder.all(color: Colors.black87, width: 1.5),
               ),
@@ -95,41 +165,6 @@ class _TextFieldBaseState extends ConsumerState<TextFieldBase> {
                 ],
               ),
             ),
-            onSelected: (value) {
-              switch (value) {
-                case 'delete_char':
-                  deleteChar(widget.controller);
-                  break;
-
-                case 'delete_word':
-                  deleteWord(widget.controller);
-                  break;
-
-                case 'delete_all':
-                  deleteAll(widget.controller);
-                  break;
-              }
-
-              FeedbackService.accept(
-                messenger: ScaffoldMessenger.of(context),
-                profile: profile,
-              );
-            },
-
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 'delete_char',
-                child: Text("KEYBOARD_delete_char").tr(),
-              ),
-              PopupMenuItem(
-                value: 'delete_word',
-                child: Text("KEYBOARD_delete_word").tr(),
-              ),
-              PopupMenuItem(
-                value: 'delete_all',
-                child: Text("KEYBOARD_delete_all").tr(),
-              ),
-            ],
           )
         ],
       ),

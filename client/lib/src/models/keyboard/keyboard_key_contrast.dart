@@ -46,21 +46,22 @@ abstract final class KeyboardKeyContrast {
     return (background: bg, foreground: fg);
   }
 
-  /// Oscurece el fondo como feedback de pulsación sin bajar de [minRatioAaNormalText]
-  /// respecto a [foreground].
+  /// Ajusta el fondo como feedback de pulsación.
+  /// Para feedback visual temporal, priorizamos visibilidad sobre contraste estricto AA.
   static Color pressedBackgroundAa({
     required Color baseBackground,
     required Color foreground,
     double minRatio = minRatioAaNormalText,
   }) {
-    const alphas = <double>[0.22, 0.18, 0.14, 0.10, 0.06, 0.0];
-    for (final a in alphas) {
-      final pressed = Color.alphaBlend(
-        Colors.black.withValues(alpha: a),
-        baseBackground,
-      );
-      if (ratio(pressed, foreground) >= minRatio) return pressed;
-    }
-    return baseBackground;
+    // Elegir overlay: negro para foreground claro, blanco para oscuro
+    final isForegroundLight =
+        ratio(foreground, _white) >= ratio(foreground, _black);
+    final overlayColor = isForegroundLight ? Colors.black : Colors.white;
+
+    // Aplicar overlay semi-transparente para cambio visible
+    return Color.alphaBlend(
+      overlayColor.withValues(alpha: 0.4),
+      baseBackground,
+    );
   }
 }

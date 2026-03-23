@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parkingson_key/src/core/services/feedback_service.dart';
 import 'package:parkingson_key/src/core/services/haptic_feedback_service.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/keyboard_key_container.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/utils/accept_on_hold.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart';
@@ -13,7 +15,7 @@ import 'package:parkingson_key/src/models/keyboard/keyboard_key_visual_category.
 class KeyboardDropdownKey extends ConsumerStatefulWidget {
   final KeyboardItem keyData;
   final ValueChanged<String?>? onSelected;
-final double fontSize;
+  final double fontSize;
   const KeyboardDropdownKey({
     super.key,
     required this.keyData,
@@ -31,6 +33,7 @@ class _KeyboardDropdownKeyState extends ConsumerState<KeyboardDropdownKey> {
 
   final accept = AcceptOnHold();
   bool _pressed = false;
+  bool _accepted = false;
 
   @override
   void dispose() {
@@ -42,6 +45,7 @@ class _KeyboardDropdownKeyState extends ConsumerState<KeyboardDropdownKey> {
     final box = _key.currentContext!.findRenderObject() as RenderBox;
     final offset = box.localToGlobal(Offset.zero);
     final size = box.size;
+    final profile = ref.read(keyboardProfileProvider);
 
     final selected = await showMenu<String>(
       context: context,
@@ -56,11 +60,23 @@ class _KeyboardDropdownKeyState extends ConsumerState<KeyboardDropdownKey> {
           .toList(),
     );
 
+    if (mounted) setState(() => _pressed = false);
+
     if (selected != null) {
       widget.onSelected?.call(selected);
-      final profile = ref.read(keyboardProfileProvider);
       HapticFeedbackService.tap(profile);
     }
+  }
+
+  void _handleAccept(
+      BuildContext context, KeyboardAccessibilityProfile profile) {
+    if (_accepted) return;
+    _accepted = true;
+    FeedbackService.accept(
+      messenger: ScaffoldMessenger.of(context),
+      profile: profile,
+    );
+    _openMenu();
   }
 
   @override
@@ -77,16 +93,22 @@ class _KeyboardDropdownKeyState extends ConsumerState<KeyboardDropdownKey> {
       key: _key,
       behavior: HitTestBehavior.opaque,
       onTapDown: (_) {
-        setState(() => _pressed = true);
+        setState(() {
+          _pressed = true;
+          _accepted = false;
+        });
+        if (profile.hapticEnabled) HapticFeedbackService.tap(profile);
 
         accept.start(
-          onAccept: _openMenu,
+          onAccept: () => _handleAccept(context, profile),
           duration: profile.acceptHoldDuration,
         );
       },
       onTapUp: (_) {
+        if (!_accepted) {
+          accept.cancel();
+        }
         setState(() => _pressed = false);
-        accept.cancel();
       },
       onTapCancel: () {
         setState(() => _pressed = false);
@@ -104,16 +126,17 @@ class _KeyboardDropdownKeyState extends ConsumerState<KeyboardDropdownKey> {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 6),
                   child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        "${widget.keyData.displayText.toUpperCase()} ▾",
-                        style: TextStyle(
-                          fontFamily: 'RobotoMono',
-                          fontSize: widget.fontSize,
-                          fontWeight: FontWeight.bold,
-                          color: keyColors.foreground,
-                        ),
-                      ),),
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      "${widget.keyData.displayText.toUpperCase()} ▾",
+                      style: TextStyle(
+                        fontFamily: 'RobotoMono',
+                        fontSize: widget.fontSize,
+                        fontWeight: FontWeight.bold,
+                        color: keyColors.foreground,
+                      ),
+                    ),
+                  ),
                 );
               },
             ),
