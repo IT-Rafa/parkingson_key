@@ -6,6 +6,8 @@ final keyboardTypeProvider =
   KeyboardTypeController.new,
 );
 
+final keyboardLastTypeProvider = StateProvider<KeyboardType?>((_) => null);
+
 class KeyboardTypeController extends Notifier<KeyboardType> {
   @override
   KeyboardType build() {

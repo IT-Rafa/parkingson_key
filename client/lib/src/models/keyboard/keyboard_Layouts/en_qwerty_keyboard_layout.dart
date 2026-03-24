@@ -40,9 +40,8 @@ final enQwertyKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('  '),
     ],
     [
-      KeyboardItem.dropdown(
+      KeyboardItem.action(
         title: 'KEYBOARD_symbols',
-        items: ['!', '@', '#', '\$', '%', '^', '&', '*'],
       ),
       KeyboardItem.dropdown(
         title: 'KEYBOARD_numbers',
@@ -87,9 +86,8 @@ final enQwertyKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('  '),
     ],
     [
-      KeyboardItem.dropdown(
+      KeyboardItem.action(
         title: 'KEYBOARD_symbols',
-        items: ['!', '@', '#', '\$', '%', '^', '&', '*'],
       ),
       KeyboardItem.dropdown(
         title: 'KEYBOARD_numbers',

@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:parkingson_key/src/core/providers/keyboard_type_provider.dart';
 import 'package:parkingson_key/src/core/services/haptic_feedback_service.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/utils/insert_from_keyboard_char.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/utils/insert_from_keyboard_dropdown.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/keyboard_action_key.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/keyboard_button_key.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/phrase_grid_picker.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/symbol_group_picker.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_type_enum.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/keyboard_dropdown_key.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
 import 'package:parkingson_key/src/core/controllers/keyboard_repeat_controller.dart';
 
-class KeyboardRow extends StatelessWidget {
+class KeyboardRow extends ConsumerWidget {
   const KeyboardRow({
     super.key,
     required this.items,
@@ -27,7 +31,7 @@ class KeyboardRow extends StatelessWidget {
   final KeyboardAccessibilityProfile profile;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return LayoutBuilder(
       builder: (context, constraints) {
         final weights = items.map((item) => _effectiveWeight(item)).toList();
@@ -45,7 +49,7 @@ class KeyboardRow extends StatelessWidget {
 
             return SizedBox(
               width: width,
-              child: _buildItem(context, item, charFontSize, controlFontSize),
+              child: _buildItem(context, ref, item, charFontSize, controlFontSize),
             );
           }),
         );
@@ -55,6 +59,7 @@ class KeyboardRow extends StatelessWidget {
 
   Widget _buildItem(
     BuildContext context,
+    WidgetRef ref,
     KeyboardItem item,
     double charFontSize,
     double controlFontSize,
@@ -88,6 +93,19 @@ class KeyboardRow extends StatelessWidget {
           onAccepted: () async {
             if (item.title == "KEYBOARD_phrases") {
               await openPhrasePicker(context, controller);
+            } else if (item.title == 'KEYBOARD_symbols') {
+              await openSymbolPicker(context, controller);
+            } else if (item.title == 'KEYBOARD_numbers') {
+              final currentType = ref.read(keyboardTypeProvider);
+              if (currentType != KeyboardType.numbers) {
+                ref.read(keyboardLastTypeProvider.notifier).state = currentType;
+              }
+              ref.read(keyboardTypeProvider.notifier).setType(KeyboardType.numbers);
+            } else if (item.title == 'KEYBOARD_back') {
+              final lastType = ref.read(keyboardLastTypeProvider);
+              final targetType = lastType ?? KeyboardType.consonantsVowels;
+              ref.read(keyboardTypeProvider.notifier).setType(targetType);
+              ref.read(keyboardLastTypeProvider.notifier).state = null;
             } else {
               item.onTap?.call();
             }
@@ -124,5 +142,21 @@ Future<void> openPhrasePicker(
 
   if (phrase != null) {
     controller.text += phrase;
+  }
+}
+
+Future<void> openSymbolPicker(
+  BuildContext context,
+  TextEditingController controller,
+) async {
+  final symbol = await Navigator.push<String>(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const SymbolGroupPicker(),
+    ),
+  );
+
+  if (symbol != null) {
+    controller.text += symbol;
   }
 }

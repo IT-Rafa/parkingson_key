@@ -3,9 +3,11 @@ import 'package:parkingson_key/src/models/keyboard/keyboard_layout.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_Layouts/en_abcde_keyboard_layout.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_Layouts/en_consonants_vowels_keyboard_layout.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_Layouts/en_qwerty_keyboard_layout.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_Layouts/en_numbers_keyboard_layout.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_Layouts/es_qwerty_keyboard_layout.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_Layouts/es_abcde_keyboard_layout.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_Layouts/es_consonants_vowels_keyboard_layout.dart';
-import 'package:parkingson_key/src/models/keyboard/keyboard_Layouts/es_qwerty_keyboard_layout.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_Layouts/es_numbers_keyboard_layout.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_type_enum.dart';
 
 KeyboardLayout keyboardLayoutResolve(KeyboardType type, AppLanguage language) {
@@ -18,5 +20,7 @@ KeyboardLayout keyboardLayoutResolve(KeyboardType type, AppLanguage language) {
     (AppLanguage.en, KeyboardType.abc) => enAbcdeKeyboardLayout,
     (AppLanguage.en, KeyboardType.consonantsVowels) =>
       enConsonantsVowelsKeyboardLayout,
+    (AppLanguage.es, KeyboardType.numbers) => esNumbersKeyboardLayout,
+    (AppLanguage.en, KeyboardType.numbers) => enNumbersKeyboardLayout,
   };
 }

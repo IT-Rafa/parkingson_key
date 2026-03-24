@@ -53,13 +53,11 @@ final esAbcdeKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('  '),
     ],
     [
-      KeyboardItem.dropdown(
+      KeyboardItem.action(
         title: 'KEYBOARD_symbols',
-        items: ['!', '@', '#', '\$', '%', '^', '&', '*'],
       ),
-      KeyboardItem.dropdown(
+      KeyboardItem.action(
         title: 'KEYBOARD_numbers',
-        items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
       ),
       KeyboardItem.action(
         title: 'KEYBOARD_phrases',
@@ -112,13 +110,11 @@ final esAbcdeKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('  '),
     ],
     [
-      KeyboardItem.dropdown(
+      KeyboardItem.action(
         title: 'KEYBOARD_symbols',
-        items: ['!', '@', '#', '\$', '%', '^', '&', '*'],
       ),
-      KeyboardItem.dropdown(
+      KeyboardItem.action(
         title: 'KEYBOARD_numbers',
-        items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
       ),
       KeyboardItem.action(
         title: 'KEYBOARD_phrases',

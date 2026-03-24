@@ -1,1 +1,1 @@
-enum KeyboardType { qwerty, abc, consonantsVowels }
+enum KeyboardType { qwerty, abc, consonantsVowels, numbers }

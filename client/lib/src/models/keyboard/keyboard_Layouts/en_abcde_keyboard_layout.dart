@@ -48,9 +48,8 @@ final enAbcdeKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('  '),
     ],
     [
-      KeyboardItem.dropdown(
+      KeyboardItem.action(
         title: 'KEYBOARD_symbols',
-        items: ['!', '@', '#', '\$', '%', '^', '&', '*'],
       ),
       KeyboardItem.dropdown(
         title: 'KEYBOARD_numbers',
@@ -99,9 +98,8 @@ final enAbcdeKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('  '),
     ],
     [
-      KeyboardItem.dropdown(
+      KeyboardItem.action(
         title: 'KEYBOARD_symbols',
-        items: ['!', '@', '#', '\$', '%', '^', '&', '*'],
       ),
       KeyboardItem.dropdown(
         title: 'KEYBOARD_numbers',

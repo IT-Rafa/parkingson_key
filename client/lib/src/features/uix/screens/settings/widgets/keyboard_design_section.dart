@@ -32,7 +32,9 @@ class KeyboardDesignSection extends ConsumerWidget {
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: KeyboardType.values.map((type) {
+            children: KeyboardType.values
+                .where((type) => type != KeyboardType.numbers)
+                .map((type) {
               final isSelected = type == keyboardType;
               return InkWell(
                 onTap: () =>
@@ -75,6 +77,8 @@ class KeyboardDesignSection extends ConsumerWidget {
         return 'SETTINGS_alpha';
       case KeyboardType.consonantsVowels:
         return 'SETTINGS_alpha_vowels';
+      case KeyboardType.numbers:
+        return 'SETTINGS_numbers';
     }
   }
 }
