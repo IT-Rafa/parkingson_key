@@ -43,15 +43,6 @@ class KeyboardKeyPalette {
   static Color _c(bool isDark, AppColorPair pair) =>
       isDark ? pair.dark : pair.light;
 
-  static Color _lerpPair(
-    AppColorPair a,
-    AppColorPair b,
-    double t,
-    bool isDark,
-  ) {
-    return Color.lerp(_c(isDark, a), _c(isDark, b), t)!;
-  }
-
   static Color _desiredBackground(
     BuildContext context,
     KeyboardKeyVisualCategory category,
@@ -72,14 +63,6 @@ class KeyboardKeyPalette {
       case KeyboardKeyVisualCategory.space:
         return Color.lerp(
             _c(isDark, AppColors.surfaceContainer), Colors.black, 0.25)!;
-      case KeyboardKeyVisualCategory.dropdown:
-        // Coral más marcado (símbolos)
-        return _lerpPair(
-          AppColors.primaryContainer,
-          AppColors.primary,
-          1.0,
-          isDark,
-        );
     }
   }
 }

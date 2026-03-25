@@ -49,9 +49,8 @@ final enConsonantsVowelsKeyboardLayout = KeyboardLayout(
       KeyboardItem.action(
         title: 'KEYBOARD_symbols',
       ),
-      KeyboardItem.dropdown(
+      KeyboardItem.action(
         title: 'KEYBOARD_numbers',
-        items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
       ),
       KeyboardItem.action(
         title: 'KEYBOARD_phrases',
@@ -100,9 +99,8 @@ final enConsonantsVowelsKeyboardLayout = KeyboardLayout(
       KeyboardItem.action(
         title: 'KEYBOARD_symbols',
       ),
-      KeyboardItem.dropdown(
+      KeyboardItem.action(
         title: 'KEYBOARD_numbers',
-        items: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
       ),
       KeyboardItem.action(
         title: 'KEYBOARD_phrases',

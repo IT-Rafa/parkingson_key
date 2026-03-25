@@ -3,14 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_type_provider.dart';
 import 'package:parkingson_key/src/core/services/haptic_feedback_service.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/utils/insert_from_keyboard_char.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/utils/insert_from_keyboard_dropdown.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/keyboard_action_key.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/keyboard_button_key.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/phrase_grid_picker.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/symbol_group_picker.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_type_enum.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/keyboard_dropdown_key.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
 import 'package:parkingson_key/src/core/controllers/keyboard_repeat_controller.dart';
 
@@ -75,16 +73,7 @@ class KeyboardRow extends ConsumerWidget {
           },
         );
 
-      case KeyboardItemType.dropdown:
-        return KeyboardDropdownKey(
-          keyData: item,
-          fontSize: controlFontSize,
-          onSelected: (value) {
-            if (value == null) return;
-            insertFromKeyboardDropdown(controller, value);
-            if (profile.hapticEnabled) HapticFeedbackService.tap(profile);
-          },
-        );
+ 
 
       case KeyboardItemType.action:
         return KeyboardActionKey(
@@ -119,9 +108,6 @@ class KeyboardRow extends ConsumerWidget {
     switch (item.type) {
       case KeyboardItemType.char:
         return isPortrait ? 1.25 : 1.6;
-
-      case KeyboardItemType.dropdown:
-        return isPortrait ? 1.35 : 1.8;
 
       case KeyboardItemType.action:
         return isPortrait ? 1.35 : 1.8;

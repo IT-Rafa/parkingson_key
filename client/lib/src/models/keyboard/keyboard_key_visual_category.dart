@@ -6,25 +6,17 @@ enum KeyboardKeyVisualCategory {
   vowel,
   word,
   space,
-  dropdown,
 }
 
 /// Resuelve la categoría a partir del [KeyboardItem] sin tocar cada layout.
 KeyboardKeyVisualCategory keyboardKeyVisualCategoryFor(KeyboardItem item) {
   switch (item.type) {
-    case KeyboardItemType.dropdown:
-      return KeyboardKeyVisualCategory.dropdown;
     case KeyboardItemType.action:
-      if (item.title == 'KEYBOARD_phrases') {
-        return KeyboardKeyVisualCategory.dropdown;
-      }
       return KeyboardKeyVisualCategory.word;
     case KeyboardItemType.char:
       return _categoryForCharLabel(item.label);
   }
 }
-
-
 
 KeyboardKeyVisualCategory _categoryForCharLabel(String label) {
   final trimmed = label.trim();
