@@ -25,9 +25,9 @@ class KeyboardDesignSection extends ConsumerWidget {
         const SizedBox(height: 10),
         RadioGroup<KeyboardType>(
           groupValue: keyboardType,
-          onChanged: (value) {
+          onChanged: (value) async {
             if (value != null) {
-              ref.read(keyboardTypeProvider.notifier).setType(value);
+              await ref.read(keyboardTypeProvider.notifier).setType(value);
             }
           },
           child: Column(
@@ -37,8 +37,8 @@ class KeyboardDesignSection extends ConsumerWidget {
                 .map((type) {
               final isSelected = type == keyboardType;
               return InkWell(
-                onTap: () =>
-                    ref.read(keyboardTypeProvider.notifier).setType(type),
+                onTap: () async =>
+                    await ref.read(keyboardTypeProvider.notifier).setType(type),
                 borderRadius: BorderRadius.circular(4),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 4),

@@ -100,9 +100,7 @@ class _KeyboardActionKeyState extends ConsumerState<KeyboardActionKey> {
                   child: FittedBox(
                     fit: BoxFit.scaleDown,
                     child: Text(
-                      widget.keyData.title == 'KEYBOARD_back'
-                          ? widget.keyData.displayText.toUpperCase()
-                          : "${widget.keyData.displayText.toUpperCase()} ▾",
+                      widget.keyData.displayText.toUpperCase(),
                       style: TextStyle(
                         fontFamily: 'RobotoMono',
                         fontSize: widget.fontSize,

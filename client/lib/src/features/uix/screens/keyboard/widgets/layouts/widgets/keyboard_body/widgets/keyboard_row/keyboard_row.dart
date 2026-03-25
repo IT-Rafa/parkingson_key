@@ -89,11 +89,11 @@ class KeyboardRow extends ConsumerWidget {
               if (currentType != KeyboardType.numbers) {
                 ref.read(keyboardLastTypeProvider.notifier).state = currentType;
               }
-              ref.read(keyboardTypeProvider.notifier).setType(KeyboardType.numbers);
+              await ref.read(keyboardTypeProvider.notifier).setType(KeyboardType.numbers);
             } else if (item.title == 'KEYBOARD_back') {
               final lastType = ref.read(keyboardLastTypeProvider);
               final targetType = lastType ?? KeyboardType.consonantsVowels;
-              ref.read(keyboardTypeProvider.notifier).setType(targetType);
+              await ref.read(keyboardTypeProvider.notifier).setType(targetType);
               ref.read(keyboardLastTypeProvider.notifier).state = null;
             } else {
               item.onTap?.call();

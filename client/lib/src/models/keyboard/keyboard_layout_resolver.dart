@@ -1,13 +1,13 @@
 import 'package:parkingson_key/src/core/providers/app_language_enum.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_layout.dart';
-import 'package:parkingson_key/src/models/keyboard/keyboard_Layouts/en_abcde_keyboard_layout.dart';
-import 'package:parkingson_key/src/models/keyboard/keyboard_Layouts/en_consonants_vowels_keyboard_layout.dart';
-import 'package:parkingson_key/src/models/keyboard/keyboard_Layouts/en_qwerty_keyboard_layout.dart';
-import 'package:parkingson_key/src/models/keyboard/keyboard_Layouts/en_numbers_keyboard_layout.dart';
-import 'package:parkingson_key/src/models/keyboard/keyboard_Layouts/es_qwerty_keyboard_layout.dart';
-import 'package:parkingson_key/src/models/keyboard/keyboard_Layouts/es_abcde_keyboard_layout.dart';
-import 'package:parkingson_key/src/models/keyboard/keyboard_Layouts/es_consonants_vowels_keyboard_layout.dart';
-import 'package:parkingson_key/src/models/keyboard/keyboard_Layouts/es_numbers_keyboard_layout.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_layouts/en_abcde_keyboard_layout.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_layouts/en_consonants_vowels_keyboard_layout.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_layouts/en_qwerty_keyboard_layout.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_layouts/en_numbers_keyboard_layout.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_layouts/es_qwerty_keyboard_layout.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_layouts/es_abcde_keyboard_layout.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_layouts/es_consonants_vowels_keyboard_layout.dart';
+import 'package:parkingson_key/src/models/keyboard/keyboard_layouts/es_numbers_keyboard_layout.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_type_enum.dart';
 
 KeyboardLayout keyboardLayoutResolve(KeyboardType type, AppLanguage language) {

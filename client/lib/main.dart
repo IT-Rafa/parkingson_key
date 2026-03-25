@@ -5,6 +5,7 @@ import 'package:parkingson_key/src/core/providers/app_language_enum.dart';
 import 'package:parkingson_key/src/core/providers/contact_storage_provider.dart';
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/core/providers/phrase_tree_storage_provider.dart';
+import 'package:parkingson_key/src/core/providers/settings_storage_provider.dart';
 import 'package:parkingson_key/src/core/providers/shared_prefs_provider.dart';
 import 'package:parkingson_key/src/core/providers/theme_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/keyboard_screen.dart';
@@ -24,6 +25,9 @@ Future<void> main() async {
         ),
         phraseTreeStorageProvider.overrideWithValue(
           bootstrap.phraseTreeStorage,
+        ),
+        settingsStorageProvider.overrideWithValue(
+          bootstrap.settingsStorage,
         ),
         sharedPrefsProvider.overrideWithValue(
           bootstrap.prefs,

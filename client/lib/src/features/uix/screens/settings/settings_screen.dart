@@ -102,8 +102,8 @@ class SettingsScreen extends ConsumerWidget {
                   divisions: 14,
                   value: profile.acceptHoldDuration.inMilliseconds.toDouble(),
                   label: "${profile.acceptHoldDuration.inMilliseconds} ms",
-                  onChanged: (v) {
-                    ref
+                  onChanged: (v) async {
+                    await ref
                         .read(keyboardProfileProvider.notifier)
                         .setAcceptHold(Duration(milliseconds: v.round()));
                   },
@@ -117,8 +117,8 @@ class SettingsScreen extends ConsumerWidget {
                     const Text("SETTINGS_haptic").tr(),
                     Switch(
                       value: profile.hapticEnabled,
-                      onChanged: (value) {
-                        ref
+                      onChanged: (value) async {
+                        await ref
                             .read(keyboardProfileProvider.notifier)
                             .setHapticEnabled(value);
                       },
@@ -142,9 +142,9 @@ class SettingsScreen extends ConsumerWidget {
                           child: Text("SETTINGS_strong").tr(),
                         ),
                       ],
-                      onChanged: (value) {
+                      onChanged: (value) async {
                         if (value != null) {
-                          ref
+                          await ref
                               .read(keyboardProfileProvider.notifier)
                               .setHapticLevel(value);
                         }
@@ -174,15 +174,15 @@ class SettingsScreen extends ConsumerWidget {
                           child: Text("SETTINGS_strong").tr(),
                         ),
                       ],
-                      onChanged: (value) {
+                      onChanged: (value) async {
                         if (value != null) {
-                          ref
+                          await ref
                               .read(keyboardPresetProvider.notifier)
                               .setPreset(value);
 
                           final profile =
                               KeyboardAccessibilityProfiles.presets[value]!;
-                          ref
+                          await ref
                               .read(keyboardProfileProvider.notifier)
                               .setProfile(profile);
                         }

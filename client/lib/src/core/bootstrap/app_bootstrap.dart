@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:parkingson_key/src/core/persistence/contacts/contact_storage.dart';
 import 'package:parkingson_key/src/core/persistence/phrases/phrase_tree_storage.dart';
+import 'package:parkingson_key/src/core/persistence/settings/settings_storage.dart';
 import 'package:parkingson_key/src/core/providers/app_language_enum.dart';
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/models/contacts/contact.dart';
@@ -12,12 +13,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AppBootstrap {
   final ContactStorage contactStorage;
   final PhraseTreeStorage phraseTreeStorage;
+  final SettingsStorage settingsStorage;
   final SharedPreferences prefs;
   final AppLanguage savedLang;
 
   AppBootstrap({
     required this.contactStorage,
     required this.phraseTreeStorage,
+    required this.settingsStorage,
     required this.prefs,
     required this.savedLang,
   });
@@ -40,9 +43,13 @@ class AppBootstrap {
     final phraseTreeStorage = PhraseTreeStorage();
     await phraseTreeStorage.init();
 
+    final settingsStorage = SettingsStorage();
+    await settingsStorage.init();
+
     return AppBootstrap(
       contactStorage: contactStorage,
       phraseTreeStorage: phraseTreeStorage,
+      settingsStorage: settingsStorage,
       prefs: prefs,
       savedLang: savedLang,
     );

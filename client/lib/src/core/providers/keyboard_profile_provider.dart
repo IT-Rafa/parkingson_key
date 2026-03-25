@@ -1,28 +1,43 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/utils/keyboard_accessibility_profiles.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
+import 'package:parkingson_key/src/core/persistence/settings/settings_storage.dart';
+import 'package:parkingson_key/src/core/providers/settings_storage_provider.dart';
 
 
 class KeyboardProfileNotifier extends Notifier<KeyboardAccessibilityProfile> {
+  late final SettingsStorage _storage = ref.read(settingsStorageProvider);
+
   @override
   KeyboardAccessibilityProfile build() {
-    return KeyboardAccessibilityProfiles.medium;
+    return KeyboardAccessibilityProfile(
+      name: 'Custom', // or load if stored
+      acceptHoldDuration: _storage.getAcceptHoldDuration(),
+      repeatBlockDuration: const Duration(milliseconds: 350), // default from medium
+      hapticEnabled: _storage.getHapticEnabled(),
+      hapticLevel: _storage.getHapticLevel(),
+    );
   }
 
-  void setProfile(KeyboardAccessibilityProfile profile) {
+  Future<void> setProfile(KeyboardAccessibilityProfile profile) async {
     state = profile;
+    await _storage.setAcceptHoldDuration(profile.acceptHoldDuration);
+    await _storage.setHapticEnabled(profile.hapticEnabled);
+    await _storage.setHapticLevel(profile.hapticLevel);
   }
 
-  void setAcceptHold(Duration d) {
+  Future<void> setAcceptHold(Duration d) async {
     state = state.copyWith(acceptHoldDuration: d);
+    await _storage.setAcceptHoldDuration(d);
   }
 
-  void setHapticEnabled(bool v) {
+  Future<void> setHapticEnabled(bool v) async {
     state = state.copyWith(hapticEnabled: v);
+    await _storage.setHapticEnabled(v);
   }
 
-  void setHapticLevel(HapticLevel l) {
+  Future<void> setHapticLevel(HapticLevel l) async {
     state = state.copyWith(hapticLevel: l);
+    await _storage.setHapticLevel(l);
   }
 }
 
