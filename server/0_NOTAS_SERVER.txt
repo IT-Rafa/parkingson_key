@@ -1,2 +1,288 @@
 Shelf
 Web Server 
+
+
+Shelf es un paquete de Dart diseñado para crear servidores web y middleware de manera modular y reutilizable. 
+
+Aunque se asocia frecuentemente con el ecosistema de Flutter, su uso principal es el desarrollo de backend en el lado del servidor, permitiendo manejar solicitudes HTTP mediante funciones simples llamadas handlers. 
+
+
+
+Conceptos Clave de Shelf
+Handler: Una función que recibe una petición (Request) y devuelve una respuesta (Response).
+Middleware: Funciones que envuelven a los handlers para añadir lógica adicional, como registro de logs, autenticación o manejo de errores.
+Pipeline: Una clase que facilita la composición de múltiples capas de middleware alrededor de un handler central.
+Adapter: Código que conecta el servidor con una implementación específica de HTTP, como shelf_io para servidores basados en dart:io. 
+Dart packages
+Dart packages
+ +3
+Paquetes Complementarios Populares
+El ecosistema de Shelf incluye varias extensiones para funcionalidades específicas: 
+shelf_router: Proporciona un sistema de rutas para definir endpoints de forma sencilla (ej. app.get('/hello', ...).
+shelf_static: Permite servir archivos estáticos desde el sistema de archivos.
+shelf_plus: Un "addon" que añade hot-reload, configuración simplificada y mejoras en el manejo de JSON y respuestas.
+shelf_flutter_asset: Un handler especializado para servir archivos directamente desde los assets de una aplicación Flutter. 
+Dart packages
+Dart packages
+ +5
+Ejemplo Básico de Uso
+Para iniciar un servidor simple con rutas, se suele combinar con shelf_router: 
+dart
+import 'package:shelf/shelf.dart';
+import 'package:shelf/shelf_io.dart' as io;
+import 'package:shelf_router/shelf_router.dart';
+
+void main() async {
+  final app = Router();
+
+  app.get('/hola', (Request request) {
+    return Response.ok('¡Hola desde Shelf!');
+  });
+
+  final handler = Pipeline()
+      .addMiddleware(logRequests()) // Middleware de log incluido en shelf
+      .addHandler(app);
+
+  final server = await io.serve(handler, 'localhost', 8080);
+  print('Servidor funcionando en http://${server.address.host}:${server.port}');
+}
+Usa el código con precaución.
+
+¿Estás buscando crear una API REST para una app de Flutter o necesitas configurar un servidor para servir archivos estáticos?
+Las respuestas de la IA pueden contener errores. Más información
+
+
+
+
+
+undefined
+undefined
+undefined
+12 sitios
+shelf | Dart package - Pub.dev
+26 jun 2024 — * pub.dev. Searching for packagesPackage scoring and pub points. * Flutter. Using packagesDeveloping packages and pluginsPublishin...
+
+Dart packages
+shelf_flutter_asset | Flutter package - Pub.dev
+13 mar 2025 — * pub.dev. Searching for packagesPackage scoring and pub points. * Flutter. Using packagesDeveloping packages and pluginsPublishin...
+
+Dart packages
+Dart Shelf server tutorial - Suragch
+5 ene 2024 — Dart Shelf server tutorial. Getting started with your first Shelf… | by Suragch | Medium. ... Dart Shelf server tutorial. ... If t...
+
+Medium
+
+Mostrar todo
+Tengo está parte del código para una aplicación flutter. Solo precisa almacenar los datos de configuración y un árbol de frases.
+
+El cliente no está listo para enviar o recibir los datos. Solo almacena localmente esos datos. con shared_preferences y hive_flutter 
+
+Este es el código del servidor:
+
+import 'dart:convert';
+import 'dart:io';
+import 'package:server/storage/config_store.dart';
+import 'package:server/storage/database_helper.dart';
+import 'package:server/storage/phrase_store.dart';
+import 'package:shared/models/user_config.dart';
+import 'package:shared/models/phrase_tree.dart';
+import 'package:shelf/shelf.dart';
+import 'package:shelf/shelf_io.dart';
+import 'package:shelf_router/shelf_router.dart';
+import 'package:shelf_cors_headers/shelf_cors_headers.dart';
+
+
+void main() async {
+  final db = DatabaseHelper();
+  await db.init();
+
+  final configStore = ConfigStore();
+  await configStore.init(db);
+
+  final phraseStore = PhraseStore();
+  await phraseStore.init(db);
+  final router = Router();
+
+  // Health check
+  router.get('/ping', (Request request) {
+    return Response.ok('pong');
+  });
+
+  // Obtener configuración
+  router.get('/config/<userId>', (Request request, String userId) {
+    final config = configStore.get(userId);
+
+    if (config == null) {
+      return Response.notFound('Not found');
+    }
+
+    return Response.ok(
+      config.toJson().toString(),
+      headers: {'Content-Type': 'application/json'},
+    );
+  });
+
+  // Guardar configuración
+  router.post('/config/<userId>', (Request request, String userId) async {
+    final body = await request.readAsString();
+    final incoming = UserConfig.fromJson(jsonDecode(body));
+
+    final saved = configStore.save(incoming);
+
+    return Response.ok(
+      saved.toJson().toString(),
+      headers: {'Content-Type': 'application/json'},
+    );
+  });
+
+  // Obtener frases
+  router.get('/phrases/<userId>', (Request request, String userId) {
+    final phrases = phraseStore.get(userId);
+
+    if (phrases == null) {
+      return Response.notFound('Not found');
+    }
+
+    return Response.ok(
+      phrases.toJson().toString(),
+      headers: {'Content-Type': 'application/json'},
+    );
+  });
+
+  // Guardar frases
+  router.post('/phrases/<userId>', (Request request, String userId) async {
+    final body = await request.readAsString();
+    final incoming = PhraseTree.fromJson(jsonDecode(body));
+
+    final saved = phraseStore.save(incoming);
+
+    return Response.ok(
+      saved.toJson().toString(),
+      headers: {'Content-Type': 'application/json'},
+    );
+  });
+
+  final handler = Pipeline()
+      .addMiddleware(logRequests())
+      .addMiddleware(corsHeaders())
+      .addHandler(router.call);
+
+  final server = await serve(
+    handler,
+    InternetAddress.anyIPv4,
+    8081,
+  );
+
+  print('Server running on http://${server.address.host}:${server.port}');
+}
+Tu código base de Shelf está bien estructurado para una API REST básica. Sin embargo, para que funcione correctamente con los modelos de Flutter y sea consumible por el cliente, hay un par de detalles críticos en la serialización y el manejo de datos que debes ajustar.
+Aquí tienes las correcciones y sugerencias clave:
+1. Corregir la serialización JSON
+En tus respuestas Response.ok, estás usando .toString(). Esto no genera un JSON válido, sino la representación de cadena de Dart (que usa llaves pero no comillas dobles estandarizadas).
+Cambia esto:
+dart
+// Incorrecto
+return Response.ok(config.toJson().toString(), ...);
+
+// Correcto
+return Response.ok(jsonEncode(config.toJson()), ...);
+Usa el código con precaución.
+
+2. Manejo de Errores en el POST
+Es vital envolver la decodificación en un try-catch para evitar que el servidor se caiga si el cliente envía un JSON mal formado.
+dart
+router.post('/config/<userId>', (Request request, String userId) async {
+  try {
+    final body = await request.readAsString();
+    final payload = jsonDecode(body);
+    final incoming = UserConfig.fromJson(payload);
+
+    final saved = configStore.save(incoming);
+
+    return Response.ok(
+      jsonEncode(saved.toJson()),
+      headers: {'Content-Type': 'application/json'},
+    );
+  } catch (e) {
+    return Response.badRequest(body: 'Formato JSON inválido: $e');
+  }
+});
+Usa el código con precaución.
+
+3. Sincronización con Hive/SharedPrefs
+Como mencionas que el cliente usa Hive y Shared_Preferences, ten en cuenta:
+Hive: Ideal para el PhraseTree (árbol de frases) porque maneja estructuras anidadas y grandes volúmenes de datos de forma eficiente.
+Shared_Preferences: Solo para la configuración básica (UserConfig) si es pequeña. Si la configuración crece, muévela también a Hive.
+4. Recomendación de Middleware
+Dado que vas a trabajar con JSON en todos los endpoints, te recomiendo usar el paquete shelf_body_parser o simplemente definir un encabezado global de tipo de contenido en un middleware personalizado para no repetirlo en cada Response.ok.
+5. El "Mock" para el cliente
+Si el cliente "no está listo", puedes añadir un retraso artificial en el servidor para simular latencia de red real y probar cómo reacciona la UI de Flutter (shimmers, loaders):
+dart
+final handler = Pipeline()
+    .addMiddleware(logRequests())
+    .addMiddleware(corsHeaders())
+    .addMiddleware((innerHandler) {
+      return (request) async {
+        await Future.delayed(Duration(milliseconds: 500)); // Simula latencia
+        return innerHandler(request);
+      };
+    })
+    .addHandler(router.call);
+Usa el código con precaución.
+
+¿Necesitas ayuda para implementar la lógica de persistencia dentro de ConfigStore o PhraseStore usando una base de datos local en el servidor (como sqlite3 o hive para servidor)?
+Las respuestas de la IA pueden contener errores. Más información
+
+
+
+
+Tengo otra carpeta shared para archivos compartidos entre servidor y cliente.
+sqlite3 está instalado en linux. aunque también lo instalaré para Windows.
+
+El cliente debe saber la ip local del servidor ?
+Como funciona en general este sistema?
+Para que tu arquitectura funcione (Server Dart + Cliente Flutter + SQLite), aquí tienes los conceptos clave sobre cómo se conectan:
+1. ¿El cliente debe saber la IP local del servidor?
+Sí. Para que la app Flutter se comunique con el servidor Shelf en una red local, necesitas la dirección IP privada del equipo que corre el servidor (ej. 192.168.1.15).
+En desarrollo (Emulador): Si usas el emulador de Android, localhost apunta al teléfono. Para llegar a tu PC, debes usar 10.0.2.2.
+En dispositivos reales: Ambos deben estar en la misma red Wi-Fi. Debes configurar el cliente con la IP fija del servidor.
+Truco de conveniencia: Puedes usar paquetes como multicast_dns o nsd para que el cliente "descubra" automáticamente al servidor en la red sin escribir la IP a mano.
+2. ¿Cómo funciona el sistema en general?
+El flujo de datos sigue este patrón:
+Shared (Modelos): Es el corazón. Contiene las clases UserConfig y PhraseTree con sus métodos fromJson y toJson. Esto garantiza que el Servidor y el Cliente hablen exactamente el mismo "idioma".
+El Servidor (Shelf + SQLite):
+Recibe peticiones HTTP.
+Usa el paquete sqlite3 de Dart para persistir los datos en un archivo .db.
+Transforma las filas de la base de datos en objetos del paquete shared y los envía como JSON.
+El Cliente (Flutter + Hive/SharedPrefs):
+Caché Local: Usa Hive o SharedPreferences para que la app funcione instantáneamente sin internet.
+Sincronización: Cuando hay red, hace un GET al servidor Shelf, recibe el JSON, lo convierte a objeto usando el paquete shared y actualiza su base de datos local (Hive).
+3. Implementación de SQLite en el Servidor
+Como ya tienes sqlite3 en Linux/Windows, tu DatabaseHelper debería verse algo así para manejar la persistencia real:
+dart
+import 'package:sqlite3/sqlite3.dart';
+
+class DatabaseHelper {
+  late Database db;
+
+  Future<void> init() async {
+    db = sqlite3.open('data_server.db');
+    db.execute('''
+      CREATE TABLE IF NOT EXISTS configs (
+        userId TEXT PRIMARY KEY,
+        data TEXT
+      )
+    ''');
+    // ... misma lógica para frases
+  }
+}
+Usa el código con precaución.
+
+4. Flujo de Configuración (Ejemplo)
+Flutter pide: GET http://192.168.1.15
+Shelf busca en el archivo data_server.db de tu PC.
+Shelf responde con el JSON.
+Flutter guarda ese JSON en su Hive local para uso offline.
+Recomendación Crítica
+Para Linux/Windows, asegúrate de que el Firewall permita tráfico en el puerto 8081. Si no lo abres, el cliente Flutter recibirá un error de "Connection Refused" aunque la IP sea correcta.
+¿Quieres que te ayude a escribir el DatabaseHelper para que guarde los JSONs del paquete shared directamente en las tablas de SQLite?
