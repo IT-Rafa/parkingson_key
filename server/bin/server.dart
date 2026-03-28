@@ -36,7 +36,7 @@ void main() async {
     }
 
     return Response.ok(
-      config.toJson().toString(),
+      jsonEncode(config.toJson()),
       headers: {'Content-Type': 'application/json'},
     );
   });
@@ -49,7 +49,7 @@ void main() async {
     final saved = configStore.save(incoming);
 
     return Response.ok(
-      saved.toJson().toString(),
+      jsonEncode(saved.toJson()),
       headers: {'Content-Type': 'application/json'},
     );
   });
@@ -63,7 +63,7 @@ void main() async {
     }
 
     return Response.ok(
-      phrases.toJson().toString(),
+      jsonEncode(phrases.toJson()),
       headers: {'Content-Type': 'application/json'},
     );
   });
@@ -76,7 +76,7 @@ void main() async {
     final saved = phraseStore.save(incoming);
 
     return Response.ok(
-      saved.toJson().toString(),
+      jsonEncode(saved.toJson()),
       headers: {'Content-Type': 'application/json'},
     );
   });

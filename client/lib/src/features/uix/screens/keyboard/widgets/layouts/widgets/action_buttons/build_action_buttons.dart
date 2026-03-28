@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -77,6 +79,26 @@ List<Widget> buildActionButtons(
     keyBox(
       isPortrait: isPortrait,
       child: ActionButton(
+        title: "KEYBOARD_syncServer".tr(),
+        onAccepted: () async {
+          final messenger = ScaffoldMessenger.of(context);
+          final notifier = ref.read(phraseTreeProvider.notifier);
+          try {
+            await notifier.syncToServer();
+            messenger.showSnackBar(
+              SnackBar(content: Text('KEYBOARD_sync_success'.tr())),
+            );
+          } catch (error) {
+            messenger.showSnackBar(
+              SnackBar(content: Text(_syncErrorMessage(error))),
+            );
+          }
+        },
+      ),
+    ),
+    keyBox(
+      isPortrait: isPortrait,
+      child: ActionButton(
         title: "KEYBOARD_contacts".tr(),
         onAccepted: () {
           final text = controller.text.trim();
@@ -97,4 +119,23 @@ List<Widget> buildActionButtons(
       ),
     ),
   ];
+}
+
+String _syncErrorMessage(Object error) {
+  if (error is SocketException) {
+    return 'KEYBOARD_sync_failed_network'.tr();
+  }
+
+  if (error is HttpException) {
+    final message = error.message.isNotEmpty
+        ? error.message
+        : 'KEYBOARD_sync_failed'.tr();
+    return '${'KEYBOARD_sync_failed'.tr()}: $message';
+  }
+
+  if (error is FormatException) {
+    return '${'KEYBOARD_sync_failed'.tr()}: ${error.message}';
+  }
+
+  return '${'KEYBOARD_sync_failed'.tr()}: ${error.toString()}';
 }

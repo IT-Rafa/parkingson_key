@@ -9,22 +9,33 @@ Aunque se asocia frecuentemente con el ecosistema de Flutter, su uso principal e
 
 
 Conceptos Clave de Shelf
-Handler: Una función que recibe una petición (Request) y devuelve una respuesta (Response).
-Middleware: Funciones que envuelven a los handlers para añadir lógica adicional, como registro de logs, autenticación o manejo de errores.
-Pipeline: Una clase que facilita la composición de múltiples capas de middleware alrededor de un handler central.
+Handler: 
+Una función que recibe una petición (Request) y devuelve una respuesta (Response).
+
+Middleware: 
+Funciones que envuelven a los handlers para añadir lógica adicional, como registro de logs, autenticación o manejo de errores.
+
+Pipeline: 
+Una clase que facilita la composición de múltiples capas de middleware alrededor de un handler central.
+
 Adapter: Código que conecta el servidor con una implementación específica de HTTP, como shelf_io para servidores basados en dart:io. 
-Dart packages
-Dart packages
- +3
+
+
+
 Paquetes Complementarios Populares
 El ecosistema de Shelf incluye varias extensiones para funcionalidades específicas: 
-shelf_router: Proporciona un sistema de rutas para definir endpoints de forma sencilla (ej. app.get('/hello', ...).
-shelf_static: Permite servir archivos estáticos desde el sistema de archivos.
-shelf_plus: Un "addon" que añade hot-reload, configuración simplificada y mejoras en el manejo de JSON y respuestas.
-shelf_flutter_asset: Un handler especializado para servir archivos directamente desde los assets de una aplicación Flutter. 
-Dart packages
-Dart packages
- +5
+shelf_router:
+Proporciona un sistema de rutas para definir endpoints de forma sencilla (ej. app.get('/hello', ...).
+
+shelf_static:
+Permite servir archivos estáticos desde el sistema de archivos.
+
+shelf_plus:
+Un "addon" que añade hot-reload, configuración simplificada y mejoras en el manejo de JSON y respuestas.
+
+shelf_flutter_asset: 
+Un handler especializado para servir archivos directamente desde los assets de una aplicación Flutter. 
+
 Ejemplo Básico de Uso
 Para iniciar un servidor simple con rutas, se suele combinar con shelf_router: 
 dart
@@ -175,8 +186,14 @@ void main() async {
 
   print('Server running on http://${server.address.host}:${server.port}');
 }
-Tu código base de Shelf está bien estructurado para una API REST básica. Sin embargo, para que funcione correctamente con los modelos de Flutter y sea consumible por el cliente, hay un par de detalles críticos en la serialización y el manejo de datos que debes ajustar.
+
+
+Tu código base de Shelf está bien estructurado para una API REST básica.
+
+Sin embargo, para que funcione correctamente con los modelos de Flutter y sea consumible por el cliente, hay un par de detalles críticos en la serialización y el manejo de datos que debes ajustar.
+
 Aquí tienes las correcciones y sugerencias clave:
+
 1. Corregir la serialización JSON
 En tus respuestas Response.ok, estás usando .toString(). Esto no genera un JSON válido, sino la representación de cadena de Dart (que usa llaves pero no comillas dobles estandarizadas).
 Cambia esto:

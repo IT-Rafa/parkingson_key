@@ -11,6 +11,8 @@ class SettingsStorage {
   static const String _hapticEnabledKey = 'hapticEnabled';
   static const String _hapticLevelKey = 'hapticLevel';
   static const String _acceptHoldDurationKey = 'acceptHoldDuration';
+  static const String _userIdKey = 'userId';
+  static const String _serverHostKey = 'serverHost';
 
   late Box<String> _box;
 
@@ -74,10 +76,32 @@ class SettingsStorage {
     if (value == null) return const Duration(milliseconds: 500); // default
 
     final ms = int.tryParse(value);
-    return ms != null ? Duration(milliseconds: ms) : const Duration(milliseconds: 500);
+    return ms != null
+        ? Duration(milliseconds: ms)
+        : const Duration(milliseconds: 500);
   }
 
   Future<void> setAcceptHoldDuration(Duration duration) async {
     await _box.put(_acceptHoldDurationKey, duration.inMilliseconds.toString());
+  }
+
+  String getUserId() {
+    final value = _box.get(_userIdKey);
+    return value == null || value.isEmpty ? 'default_user' : value;
+  }
+
+  Future<void> setUserId(String userId) async {
+    await _box.put(_userIdKey, userId);
+  }
+
+  String getServerHost() {
+    final value = _box.get(_serverHostKey);
+    return value == null || value.isEmpty
+        ? 'http://localhost:8081'
+        : value;
+  }
+
+  Future<void> setServerHost(String serverHost) async {
+    await _box.put(_serverHostKey, serverHost);
   }
 }

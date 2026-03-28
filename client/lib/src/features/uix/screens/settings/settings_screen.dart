@@ -6,6 +6,8 @@ import 'package:parkingson_key/src/core/providers/keyboard_preset_provider.dart'
 import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart';
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/core/providers/theme_provider.dart';
+import 'package:parkingson_key/src/core/providers/server_host_provider.dart';
+import 'package:parkingson_key/src/core/providers/user_id_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/utils/keyboard_accessibility_profiles.dart';
 import 'package:parkingson_key/src/features/uix/screens/settings/widgets/contacts_settings_screen.dart';
 import 'package:parkingson_key/src/features/uix/screens/settings/widgets/keyboard_design_section.dart';
@@ -69,7 +71,7 @@ class SettingsScreen extends ConsumerWidget {
                     const SizedBox(width: 20),
                     DropdownButton<ThemeMode>(
                       value: ref.watch(themeProvider),
-                      items:  [
+                      items: [
                         DropdownMenuItem(
                           value: ThemeMode.light,
                           child: Text("SETTINGS_light_mode").tr(),
@@ -91,6 +93,14 @@ class SettingsScreen extends ConsumerWidget {
                     ),
                   ],
                 ),
+
+                const SizedBox(height: 20),
+
+                const UserIdSettingsSection(),
+
+                const SizedBox(height: 20),
+
+                const ServerHostSettingsSection(),
 
                 const SizedBox(height: 20),
 
@@ -220,6 +230,139 @@ class SettingsScreen extends ConsumerWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ServerHostSettingsSection extends ConsumerStatefulWidget {
+  const ServerHostSettingsSection({super.key});
+
+  @override
+  ConsumerState<ServerHostSettingsSection> createState() =>
+      _ServerHostSettingsSectionState();
+}
+
+class _ServerHostSettingsSectionState
+    extends ConsumerState<ServerHostSettingsSection> {
+  late final TextEditingController _controller;
+  String _lastSavedHost = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final serverHost = ref.watch(serverHostProvider);
+    if (_lastSavedHost != serverHost) {
+      _lastSavedHost = serverHost;
+      _controller.text = serverHost;
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text("SETTINGS_server_host").tr(),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _controller,
+          decoration: InputDecoration(
+            hintText: "SETTINGS_server_host_hint".tr(),
+            border: const OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 10),
+        Align(
+          alignment: Alignment.centerRight,
+          child: ElevatedButton(
+            onPressed: () async {
+              final value = _controller.text.trim();
+              if (value.isEmpty) return;
+
+              final messenger = ScaffoldMessenger.of(context);
+              await ref.read(serverHostProvider.notifier).setServerHost(value);
+              messenger.showSnackBar(
+                SnackBar(content: Text('SETTINGS_server_host_saved'.tr())),
+              );
+            },
+            child: const Text("SETTINGS_save").tr(),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class UserIdSettingsSection extends ConsumerStatefulWidget {
+  const UserIdSettingsSection({super.key});
+
+  @override
+  ConsumerState<UserIdSettingsSection> createState() =>
+      _UserIdSettingsSectionState();
+}
+
+class _UserIdSettingsSectionState extends ConsumerState<UserIdSettingsSection> {
+  late final TextEditingController _controller;
+  String _lastSavedUserId = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final userId = ref.watch(userIdProvider);
+    if (_lastSavedUserId != userId) {
+      _lastSavedUserId = userId;
+      _controller.text = userId;
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text("SETTINGS_user_id").tr(),
+        const SizedBox(height: 8),
+        TextField(
+          controller: _controller,
+          decoration: InputDecoration(
+            hintText: "SETTINGS_user_id_hint".tr(),
+            border: const OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 10),
+        Align(
+          alignment: Alignment.centerRight,
+          child: ElevatedButton(
+            onPressed: () async {
+              final value = _controller.text.trim();
+              if (value.isEmpty) return;
+
+              final messenger = ScaffoldMessenger.of(context);
+              await ref.read(userIdProvider.notifier).setUserId(value);
+              messenger.showSnackBar(
+                SnackBar(content: Text('SETTINGS_user_id_saved'.tr())),
+              );
+            },
+            child: const Text("SETTINGS_save").tr(),
+          ),
+        ),
+      ],
     );
   }
 }
