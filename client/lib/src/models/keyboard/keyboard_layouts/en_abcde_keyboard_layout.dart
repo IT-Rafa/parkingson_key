@@ -54,6 +54,9 @@ final enAbcdeKeyboardLayout = KeyboardLayout(
       KeyboardItem.action(
         title: 'KEYBOARD_numbers',
       ),
+      KeyboardItem.action(
+        title: 'KEYBOARD_phrases',
+      ),
     ],
   ],
   landscape: [
@@ -102,6 +105,9 @@ final enAbcdeKeyboardLayout = KeyboardLayout(
       ),
       KeyboardItem.action(
         title: 'KEYBOARD_numbers',
+      ),
+      KeyboardItem.action(
+        title: 'KEYBOARD_phrases',
       ),
     ],
   ],

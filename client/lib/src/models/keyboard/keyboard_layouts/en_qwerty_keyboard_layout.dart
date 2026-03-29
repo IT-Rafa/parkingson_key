@@ -35,6 +35,8 @@ final enQwertyKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('b'),
       KeyboardItem.char('n'),
       KeyboardItem.char('m'),
+    ],
+    [
       KeyboardItem.char('Yes'),
       KeyboardItem.char('No'),
       KeyboardItem.char('  '),
@@ -45,6 +47,9 @@ final enQwertyKeyboardLayout = KeyboardLayout(
       ),
       KeyboardItem.action(
         title: 'KEYBOARD_numbers',
+      ),
+      KeyboardItem.action(
+        title: 'KEYBOARD_phrases',
       ),
     ],
   ],
@@ -80,6 +85,8 @@ final enQwertyKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('b'),
       KeyboardItem.char('n'),
       KeyboardItem.char('m'),
+    ],
+    [
       KeyboardItem.char('Yes'),
       KeyboardItem.char('No'),
       KeyboardItem.char('  '),
@@ -90,6 +97,9 @@ final enQwertyKeyboardLayout = KeyboardLayout(
       ),
       KeyboardItem.action(
         title: 'KEYBOARD_numbers',
+      ),
+      KeyboardItem.action(
+        title: 'KEYBOARD_phrases',
       ),
     ],
   ],
