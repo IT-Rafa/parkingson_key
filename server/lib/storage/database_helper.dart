@@ -5,9 +5,11 @@ import 'package:sqlite3/sqlite3.dart';
 import 'package:shared/models/user_config.dart';
 import 'package:shared/models/phrase_tree.dart';
 
+/// Wraps the SQLite database and exposes persistence operations.
 class DatabaseHelper {
   late final Database _db;
 
+  /// Opens or creates the local SQLite database and initializes tables.
   Future<void> init() async {
     final dbPath = p.join(Directory.current.path, 'server.db');
     _db = sqlite3.open(dbPath);
@@ -15,6 +17,7 @@ class DatabaseHelper {
     _createTables();
   }
 
+  /// Creates the database tables that store user configs and phrase trees.
   void _createTables() {
     // User configs table
     _db.execute('''
@@ -42,6 +45,7 @@ class DatabaseHelper {
   }
 
   // UserConfig operations
+  /// Retrieves the latest saved UserConfig for the given userId.
   UserConfig? getUserConfig(String userId) {
     final result = _db.select(
       'SELECT * FROM user_configs WHERE user_id = ? ORDER BY version DESC LIMIT 1',
@@ -60,6 +64,7 @@ class DatabaseHelper {
     });
   }
 
+  /// Persists or updates a UserConfig record in the database.
   void saveUserConfig(UserConfig config) {
     _db.execute(
       'INSERT OR REPLACE INTO user_configs (id, user_id, data, version, updated_at, updated_by_device_id) VALUES (?, ?, ?, ?, ?, ?)',
@@ -75,6 +80,7 @@ class DatabaseHelper {
   }
 
   // Phrases operations
+  /// Retrieves the latest saved PhraseTree for the given userId.
   PhraseTree? getPhraseTree(String userId) {
     final result = _db.select(
       'SELECT * FROM phrases WHERE user_id = ? ORDER BY version DESC LIMIT 1',
@@ -93,6 +99,7 @@ class DatabaseHelper {
     });
   }
 
+  /// Persists or updates a PhraseTree record in the database.
   void savePhraseTree(PhraseTree tree) {
     _db.execute(
       'INSERT OR REPLACE INTO phrases (id, user_id, tree_data, version, updated_at, updated_by_device_id) VALUES (?, ?, ?, ?, ?, ?)',
@@ -107,6 +114,7 @@ class DatabaseHelper {
     );
   }
 
+  /// Closes the database connection and releases resources.
   void close() {
     _db.dispose();
   }

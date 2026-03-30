@@ -10,7 +10,8 @@ import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
 import 'package:shelf_cors_headers/shelf_cors_headers.dart';
 
-
+/// Entry point for the server application.
+/// Initializes the database, stores, HTTP routes, and starts listening on port 8081.
 void main() async {
   final db = DatabaseHelper();
   await db.init();
@@ -22,12 +23,13 @@ void main() async {
   await phraseStore.init(db);
   final router = Router();
 
-  // Health check
+  // Health check route returns a simple pong response for diagnostics.
   router.get('/ping', (Request request) {
     return Response.ok('pong');
   });
 
   // Obtener configuración
+  // Returns the latest saved user configuration for the given userId.
   router.get('/config/<userId>', (Request request, String userId) {
     final config = configStore.get(userId);
 
@@ -42,6 +44,7 @@ void main() async {
   });
 
   // Guardar configuración
+  // Saves or updates the user configuration provided in the request body.
   router.post('/config/<userId>', (Request request, String userId) async {
     final body = await request.readAsString();
     final incoming = UserConfig.fromJson(jsonDecode(body));
@@ -55,6 +58,7 @@ void main() async {
   });
 
   // Obtener frases
+  // Returns the saved phrase tree for the requested userId.
   router.get('/phrases/<userId>', (Request request, String userId) {
     final phrases = phraseStore.get(userId);
 
@@ -69,6 +73,7 @@ void main() async {
   });
 
   // Guardar frases
+  // Saves or updates the phrase tree sent in the request body.
   router.post('/phrases/<userId>', (Request request, String userId) async {
     final body = await request.readAsString();
     final incoming = PhraseTree.fromJson(jsonDecode(body));

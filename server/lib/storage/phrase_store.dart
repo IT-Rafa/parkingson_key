@@ -1,17 +1,21 @@
 import 'package:shared/models/phrase_tree.dart';
 import 'database_helper.dart';
 
+/// Provides a higher-level API for phrase tree persistence.
 class PhraseStore {
   late final DatabaseHelper _db;
 
+  /// Sets the database helper instance used by this store.
   Future<void> init(DatabaseHelper db) async {
     _db = db;
   }
 
+  /// Returns the latest phrase tree for the requested userId.
   PhraseTree? get(String userId) {
     return _db.getPhraseTree(userId);
   }
 
+  /// Saves a new phrase tree or resolves conflicts by keeping the newest version.
   PhraseTree save(PhraseTree incoming) {
     final existing = _db.getPhraseTree(incoming.id.split('_')[0]);
 

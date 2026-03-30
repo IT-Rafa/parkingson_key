@@ -14,6 +14,7 @@ import 'package:parkingson_key/src/features/uix/themes/my_themes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/models/phrase/init_default_phrases.dart';
 
+/// Entry point for the client application.
 Future<void> main() async {
   final bootstrap = await AppBootstrap.init();
 
@@ -65,7 +66,7 @@ class _MainAppState extends ConsumerState<MainApp> {
     super.didChangeDependencies();
     if (!_initialized) {
       _initialized = true;
-      initDefaultPhrases(ref); // ref es WidgetRef de ConsumerState
+      initDefaultPhrases(ref);
     }
   }
 
