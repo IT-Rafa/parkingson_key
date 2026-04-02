@@ -7,6 +7,7 @@ import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart
 import 'package:parkingson_key/src/core/providers/keyboard_type_provider.dart';
 import 'package:parkingson_key/src/core/providers/language_provider.dart';
 import 'package:parkingson_key/src/core/providers/tts_service_provider.dart';
+import 'package:parkingson_key/src/core/providers/phrase_tree_provider.dart';
 import 'package:parkingson_key/src/core/controllers/keyboard_repeat_controller.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/landscape_layout.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/portrait_layout.dart';
@@ -32,6 +33,8 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
 
   late final KeyboardRepeatController _repeatController;
 
+  bool _initialSyncDone = false;
+
   @override
   void initState() {
     super.initState();
@@ -40,6 +43,12 @@ class _KeyboardScreenState extends ConsumerState<KeyboardScreen> {
     _repeatController = KeyboardRepeatController();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted && !_initialSyncDone) {
+        _initialSyncDone = true;
+        ref.read(phraseTreeProvider.notifier).syncFromServer().catchError((_) {
+          // Silently ignore errors on initial sync
+        });
+      }
       if (mounted) _focusNode.requestFocus();
     });
   }

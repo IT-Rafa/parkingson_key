@@ -16,8 +16,21 @@ class ServerHostNotifier extends Notifier<String> {
     return _storage.getServerHost();
   }
 
+  String _normalizeServerHost(String serverHost) {
+    final value = serverHost.trim();
+    if (value.isEmpty) return _defaultServerHost;
+
+    final uri = Uri.tryParse(value);
+    if (uri == null || uri.scheme.isEmpty) {
+      return 'http://$value';
+    }
+
+    return value;
+  }
+
   Future<void> setServerHost(String serverHost) async {
-    state = serverHost.isEmpty ? _defaultServerHost : serverHost;
-    await _storage.setServerHost(state);
+    final normalized = _normalizeServerHost(serverHost);
+    state = normalized;
+    await _storage.setServerHost(normalized);
   }
 }

@@ -1,11 +1,15 @@
 import 'dart:io';
 
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 import 'package:parkingson_key/src/core/providers/appbar_visibility_notifier.dart';
 import 'package:parkingson_key/src/core/providers/contact_storage_provider.dart';
 import 'package:parkingson_key/src/core/providers/phrase_tree_provider.dart';
+import 'package:parkingson_key/src/core/providers/server_host_provider.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/contact_picker.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/phrase_category_picker.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/action_button.dart';
@@ -83,14 +87,24 @@ List<Widget> buildActionButtons(
         onAccepted: () async {
           final messenger = ScaffoldMessenger.of(context);
           final notifier = ref.read(phraseTreeProvider.notifier);
+          final serverHost = ref.read(serverHostProvider);
+          messenger.removeCurrentSnackBar();
+          messenger.showSnackBar(
+            SnackBar(
+              content: Text('KEYBOARD_sync_in_progress'.tr()),
+              duration: const Duration(seconds: 15),
+            ),
+          );
           try {
             await notifier.syncToServer();
+            messenger.removeCurrentSnackBar();
             messenger.showSnackBar(
               SnackBar(content: Text('KEYBOARD_sync_success'.tr())),
             );
           } catch (error) {
+            messenger.removeCurrentSnackBar();
             messenger.showSnackBar(
-              SnackBar(content: Text(_syncErrorMessage(error))),
+              SnackBar(content: Text(_syncErrorMessage(error, serverHost))),
             );
           }
         },
@@ -121,9 +135,9 @@ List<Widget> buildActionButtons(
   ];
 }
 
-String _syncErrorMessage(Object error) {
-  if (error is SocketException) {
-    return 'KEYBOARD_sync_failed_network'.tr();
+String _syncErrorMessage(Object error, String serverHost) {
+  if (error is TimeoutException || error is SocketException || error is http.ClientException) {
+    return '${'KEYBOARD_sync_server_not_found'.tr()} ($serverHost)';
   }
 
   if (error is HttpException) {

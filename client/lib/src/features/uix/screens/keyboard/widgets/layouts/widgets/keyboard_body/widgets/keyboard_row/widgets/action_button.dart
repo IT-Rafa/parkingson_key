@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart';
@@ -8,7 +10,7 @@ import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts
 
 class ActionButton extends ConsumerStatefulWidget {
   final String title;
-  final VoidCallback onAccepted;
+  final FutureOr<void> Function() onAccepted;
   final Color? color;
 
   const ActionButton({
@@ -51,7 +53,7 @@ class _ActionButtonState extends ConsumerState<ActionButton> {
 
         accept.start(
           onAccept: () async {
-            widget.onAccepted();
+            await widget.onAccepted();
             await Future.delayed(Duration.zero);
             if (mounted) setState(() => _pressed = false);
 

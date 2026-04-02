@@ -24,6 +24,8 @@ class SymbolTreeNavigator extends Notifier<List<PhraseNode>> {
 
   bool get isAtRoot => _stack.isEmpty;
 
+  List<PhraseNode> get currentPathNodes => List.unmodifiable(_stack);
+
   void goBack() {
     if (_stack.isEmpty) return;
 

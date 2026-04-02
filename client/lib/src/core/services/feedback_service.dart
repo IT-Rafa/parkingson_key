@@ -49,17 +49,7 @@ class FeedbackService {
         volume: 0.4,
       );
     } catch (_) {
-      messenger.removeCurrentSnackBar();
-      messenger.showSnackBar(
-        const SnackBar(
-          content: Text(
-            'El sonido del teclado no está disponible.\n'
-            'En Linux instala GStreamer 1.0 para habilitarlo.\n'
-            'En Windows/macOS puede haber un fallo de audio.',
-          ),
-          duration: Duration(seconds: 4),
-        ),
-      );
+      // Keep current snack bar messages intact when audio is unavailable.
     }
   }
 }

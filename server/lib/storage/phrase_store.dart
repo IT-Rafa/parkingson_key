@@ -15,7 +15,10 @@ class PhraseStore {
     return _db.getPhraseTree(userId);
   }
 
-  /// Saves a new phrase tree or resolves conflicts by keeping the newest version.
+  /// Saves a new phrase tree using last-writer-wins semantics.
+  ///
+  /// Si llegan varios árboles para el mismo userId, el que tenga updatedAt
+  /// más reciente reemplaza completamente al anterior.
   PhraseTree save(PhraseTree incoming) {
     final existing = _db.getPhraseTree(incoming.id.split('_')[0]);
 
@@ -24,8 +27,6 @@ class PhraseStore {
       return incoming;
     }
 
-    // Resolución de conflicto simple:
-    // gana el más reciente
     if (incoming.updatedAt.isAfter(existing.updatedAt)) {
       final updated = PhraseTree(
         id: incoming.id,
@@ -34,11 +35,53 @@ class PhraseStore {
         updatedByDeviceId: incoming.updatedByDeviceId,
         nodes: incoming.nodes,
       );
-
       _db.savePhraseTree(updated);
       return updated;
     }
 
     return existing;
+  }
+
+  List<PhraseNode> _mergeNodeLists(
+    List<PhraseNode> existing,
+    List<PhraseNode> incoming,
+  ) {
+    final Map<String, PhraseNode> existingById = {
+      for (final node in existing) node.id: node,
+    };
+
+    final Map<String, PhraseNode> incomingById = {
+      for (final node in incoming) node.id: node,
+    };
+
+    final List<PhraseNode> merged = [];
+
+    for (final node in existing) {
+      if (incomingById.containsKey(node.id)) {
+        merged.add(_mergeNode(node, incomingById[node.id]!));
+      } else {
+        merged.add(node);
+      }
+    }
+
+    for (final node in incoming) {
+      if (!existingById.containsKey(node.id)) {
+        merged.add(node);
+      }
+    }
+
+    return merged;
+  }
+
+  PhraseNode _mergeNode(PhraseNode existing, PhraseNode incoming) {
+    final children = _mergeNodeLists(existing.children, incoming.children);
+
+    return PhraseNode(
+      id: existing.id,
+      title: incoming.title.isNotEmpty ? incoming.title : existing.title,
+      isCategory: existing.isCategory || incoming.isCategory,
+      children: children,
+      ttsEnabled: incoming.ttsEnabled,
+    );
   }
 }

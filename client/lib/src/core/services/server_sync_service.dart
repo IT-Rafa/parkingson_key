@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -16,26 +17,35 @@ class ServerSyncService {
   final http.Client _client;
   final _uuid = const Uuid();
 
-  static String get _defaultBaseUrl {
-    if (Platform.isAndroid) {
-      return 'http://10.0.2.2:8081';
-    }
+  static const String _defaultBaseUrl = 'http://localhost:8081';
 
-    return 'http://localhost:8081';
+  static const Duration _requestTimeout = Duration(seconds: 8);
+
+  Uri _buildUri(String path) {
+    var host = _baseUrl.trim();
+    if (!host.startsWith('http://') && !host.startsWith('https://')) {
+      host = 'http://$host';
+    }
+    if (host.endsWith('/') && path.startsWith('/')) {
+      host = host.substring(0, host.length - 1);
+    }
+    return Uri.parse('$host$path');
   }
 
-  Uri _buildUri(String path) => Uri.parse('$_baseUrl$path');
-
   Future<bool> ping() async {
-    final response = await _client.get(_buildUri('/ping'));
+    final response = await _client
+        .get(_buildUri('/ping'))
+        .timeout(_requestTimeout);
     return response.statusCode == 200 && response.body.trim() == 'pong';
   }
 
   Future<shared.PhraseTree?> loadPhraseTree(String userId) async {
-    final response = await _client.get(
-      _buildUri('/phrases/$userId'),
-      headers: {'Accept': 'application/json'},
-    );
+    final response = await _client
+        .get(
+          _buildUri('/phrases/$userId'),
+          headers: {'Accept': 'application/json'},
+        )
+        .timeout(_requestTimeout);
 
     if (response.statusCode == 200) {
       final body = response.body;
@@ -52,14 +62,16 @@ class ServerSyncService {
     String deviceId,
   ) async {
     final tree = _buildPhraseTree(userId, nodes, deviceId);
-    final response = await _client.post(
-      _buildUri('/phrases/$userId'),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(tree.toJson()),
-    );
+    final response = await _client
+        .post(
+          _buildUri('/phrases/$userId'),
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: jsonEncode(tree.toJson()),
+        )
+        .timeout(_requestTimeout);
 
     if (response.statusCode != 200) {
       throw HttpException(
@@ -77,10 +89,12 @@ class ServerSyncService {
   }
 
   Future<shared_config.UserConfig?> loadUserConfig(String userId) async {
-    final response = await _client.get(
-      _buildUri('/config/$userId'),
-      headers: {'Accept': 'application/json'},
-    );
+    final response = await _client
+        .get(
+          _buildUri('/config/$userId'),
+          headers: {'Accept': 'application/json'},
+        )
+        .timeout(_requestTimeout);
 
     if (response.statusCode == 200) {
       final body = response.body;
@@ -104,14 +118,16 @@ class ServerSyncService {
       data: data,
     );
 
-    final response = await _client.post(
-      _buildUri('/config/$userId'),
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(config.toJson()),
-    );
+    final response = await _client
+        .post(
+          _buildUri('/config/$userId'),
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: jsonEncode(config.toJson()),
+        )
+        .timeout(_requestTimeout);
 
     if (response.statusCode != 200) {
       throw HttpException(

@@ -5,6 +5,7 @@ import 'package:parkingson_key/src/core/providers/server_sync_provider.dart';
 import 'package:parkingson_key/src/core/providers/settings_storage_provider.dart';
 import 'package:parkingson_key/src/core/persistence/settings/settings_storage.dart';
 import 'package:parkingson_key/src/core/providers/user_id_provider.dart';
+import 'package:parkingson_key/src/core/phrase_tree_navigator.dart';
 import 'package:parkingson_key/src/models/phrase/phrase_node.dart';
 import 'package:shared/models/phrase_tree.dart' as shared;
 
@@ -44,6 +45,7 @@ class PhraseTreeNotifier extends Notifier<List<PhraseNode>> {
     final String id = userId ?? ref.read(userIdProvider);
     await _syncConfigToServer(id);
     await _syncTreeToServer(userId: id);
+    await syncFromServer(userId: id);
   }
 
   Future<void> syncFromServer({String? userId}) async {
@@ -55,6 +57,7 @@ class PhraseTreeNotifier extends Notifier<List<PhraseNode>> {
     final localTree = _convertSharedToLocal(remoteTree.nodes);
     await _storage.save(localTree);
     state = localTree;
+    ref.read(phraseTreeNavigatorProvider.notifier).reset();
   }
 
   Future<void> addPhrase(

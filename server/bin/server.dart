@@ -28,7 +28,6 @@ void main() async {
     return Response.ok('pong');
   });
 
-  // Obtener configuración
   // Returns the latest saved user configuration for the given userId.
   router.get('/config/<userId>', (Request request, String userId) {
     final config = configStore.get(userId);
@@ -43,7 +42,6 @@ void main() async {
     );
   });
 
-  // Guardar configuración
   // Saves or updates the user configuration provided in the request body.
   router.post('/config/<userId>', (Request request, String userId) async {
     final body = await request.readAsString();
@@ -57,7 +55,6 @@ void main() async {
     );
   });
 
-  // Obtener frases
   // Returns the saved phrase tree for the requested userId.
   router.get('/phrases/<userId>', (Request request, String userId) {
     final phrases = phraseStore.get(userId);
@@ -72,7 +69,6 @@ void main() async {
     );
   });
 
-  // Guardar frases
   // Saves or updates the phrase tree sent in the request body.
   router.post('/phrases/<userId>', (Request request, String userId) async {
     final body = await request.readAsString();
