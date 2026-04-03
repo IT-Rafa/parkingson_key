@@ -1,8 +1,9 @@
-import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/keyboard_item.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_layout.dart';
 
-final enAbcdeKeyboardLayout = KeyboardLayout(
-  id: 'en_abcde',
+final esAbcdeKeyboardLayout = KeyboardLayout(
+  id: 'es_abcde',
+  // ───────────────── PORTRAIT ─────────────────
   portrait: [
     [
       KeyboardItem.char('a'),
@@ -21,29 +22,33 @@ final enAbcdeKeyboardLayout = KeyboardLayout(
     [
       KeyboardItem.char('k'),
       KeyboardItem.char('l'),
+      KeyboardItem.char('ll'),
       KeyboardItem.char('m'),
       KeyboardItem.char('n'),
     ],
     [
+      KeyboardItem.char('ñ'),
       KeyboardItem.char('o'),
       KeyboardItem.char('p'),
       KeyboardItem.char('q'),
-      KeyboardItem.char('r'),
-      KeyboardItem.char('s'),
+      KeyboardItem.char('qu'),
     ],
     [
+      KeyboardItem.char('r'),
+      KeyboardItem.char('rr'),
+      KeyboardItem.char('s'),
       KeyboardItem.char('t'),
       KeyboardItem.char('u'),
+    ],
+    [
       KeyboardItem.char('v'),
       KeyboardItem.char('w'),
       KeyboardItem.char('x'),
-    ],
-    [
       KeyboardItem.char('y'),
       KeyboardItem.char('z'),
     ],
     [
-      KeyboardItem.char('Yes'),
+      KeyboardItem.char('Sí'),
       KeyboardItem.char('No'),
       KeyboardItem.char('  '),
     ],
@@ -59,6 +64,7 @@ final enAbcdeKeyboardLayout = KeyboardLayout(
       ),
     ],
   ],
+  // ───────────────── LANDSCAPE ─────────────────
   landscape: [
     [
       KeyboardItem.char('a'),
@@ -75,27 +81,31 @@ final enAbcdeKeyboardLayout = KeyboardLayout(
       KeyboardItem.char('j'),
       KeyboardItem.char('k'),
       KeyboardItem.char('l'),
+      KeyboardItem.char('ll'),
       KeyboardItem.char('m'),
       KeyboardItem.char('n'),
-      KeyboardItem.char('o'),
-      KeyboardItem.char('p'),
     ],
     [
+      KeyboardItem.char('ñ'),
+      KeyboardItem.char('o'),
+      KeyboardItem.char('p'),
       KeyboardItem.char('q'),
+      KeyboardItem.char('qu'),
       KeyboardItem.char('r'),
+      KeyboardItem.char('rr'),
+    ],
+    [
       KeyboardItem.char('s'),
       KeyboardItem.char('t'),
       KeyboardItem.char('u'),
       KeyboardItem.char('v'),
-    ],
-    [
       KeyboardItem.char('w'),
       KeyboardItem.char('x'),
       KeyboardItem.char('y'),
       KeyboardItem.char('z'),
     ],
     [
-      KeyboardItem.char('Yes'),
+      KeyboardItem.char('Sí'),
       KeyboardItem.char('No'),
       KeyboardItem.char('  '),
     ],

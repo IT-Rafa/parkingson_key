@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parkingson_key/src/features/uix/themes/app_color.dart';
-import 'package:parkingson_key/src/models/keyboard/keyboard_key_contrast.dart';
-import 'package:parkingson_key/src/models/keyboard/keyboard_key_visual_category.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/widgets/widgets/keyboard_key_contrast.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/widgets/widgets/keyboard_key_visual_category.dart';
 
 /// Par fondo / primer plano con contraste **WCAG AA** (texto normal ≥ 4.5:1).
 class KeyboardKeyColors {

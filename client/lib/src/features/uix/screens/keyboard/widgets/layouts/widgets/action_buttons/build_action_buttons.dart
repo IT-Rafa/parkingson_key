@@ -10,9 +10,9 @@ import 'package:parkingson_key/src/core/providers/appbar_visibility_notifier.dar
 import 'package:parkingson_key/src/core/providers/contact_storage_provider.dart';
 import 'package:parkingson_key/src/core/providers/phrase_tree_provider.dart';
 import 'package:parkingson_key/src/core/providers/server_host_provider.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/contact_picker.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/phrase_category_picker.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/action_button.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/widgets/contact/contact_picker.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/widgets/phrase/phrase_category_picker.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/action_buttons/action_button.dart';
 import 'package:parkingson_key/src/models/phrase/phrase_node.dart';
 
 List<Widget> buildActionButtons(

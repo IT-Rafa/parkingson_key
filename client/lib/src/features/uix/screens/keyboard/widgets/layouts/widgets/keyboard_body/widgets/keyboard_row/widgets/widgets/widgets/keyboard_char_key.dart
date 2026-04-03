@@ -4,18 +4,18 @@ import 'package:parkingson_key/src/core/providers/keyboard_profile_provider.dart
 import 'package:parkingson_key/src/core/services/feedback_service.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/utils/accept_on_hold.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/keyboard_key_container.dart';
-import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
-import 'package:parkingson_key/src/models/keyboard/keyboard_key_contrast.dart';
-import 'package:parkingson_key/src/models/keyboard/keyboard_key_palette.dart';
-import 'package:parkingson_key/src/models/keyboard/keyboard_key_visual_category.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_key_container.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/keyboard_item.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/widgets/widgets/keyboard_key_contrast.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/widgets/widgets/keyboard_key_palette.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/widgets/widgets/keyboard_key_visual_category.dart';
 
-class KeyboardButtonKey extends ConsumerStatefulWidget {
+class KeyboardCharKey extends ConsumerStatefulWidget {
   final KeyboardItem keyData;
   final VoidCallback onAccepted;
   final double fontSize;
 
-  const KeyboardButtonKey({
+  const KeyboardCharKey({
     super.key,
     required this.keyData,
     required this.onAccepted,
@@ -23,10 +23,10 @@ class KeyboardButtonKey extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<KeyboardButtonKey> createState() => _KeyboardButtonKeyState();
+  ConsumerState<KeyboardCharKey> createState() => _KeyboardCharKeyState();
 }
 
-class _KeyboardButtonKeyState extends ConsumerState<KeyboardButtonKey> {
+class _KeyboardCharKeyState extends ConsumerState<KeyboardCharKey> {
   final accept = AcceptOnHold();
   bool _pressed = false;
   bool _accepted = false;

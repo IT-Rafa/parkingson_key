@@ -3,13 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:parkingson_key/src/core/providers/keyboard_type_provider.dart';
 import 'package:parkingson_key/src/core/services/haptic_feedback_service.dart';
 import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/utils/insert_from_keyboard_char.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/keyboard_action_key.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/keyboard_button_key.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/phrase_grid_picker.dart';
-import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/symbol_group_picker.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/widgets/keyboard_action_key.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/widgets/keyboard_char_key.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/widgets/widgets/widgets/phrase_grid_picker.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/widgets/widgets/widgets/symbol_group_picker.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_accessibility_profile.dart';
 import 'package:parkingson_key/src/models/keyboard/keyboard_type_enum.dart';
-import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/keyboard_item.dart';
 import 'package:parkingson_key/src/core/controllers/keyboard_repeat_controller.dart';
 
 class KeyboardRow extends ConsumerWidget {
@@ -47,7 +47,8 @@ class KeyboardRow extends ConsumerWidget {
 
             return SizedBox(
               width: width,
-              child: _buildItem(context, ref, item, charFontSize, controlFontSize),
+              child:
+                  _buildItem(context, ref, item, charFontSize, controlFontSize),
             );
           }),
         );
@@ -64,7 +65,7 @@ class KeyboardRow extends ConsumerWidget {
   ) {
     switch (item.type) {
       case KeyboardItemType.char:
-        return KeyboardButtonKey(
+        return KeyboardCharKey(
           keyData: item,
           fontSize: charFontSize,
           onAccepted: () {
@@ -72,8 +73,6 @@ class KeyboardRow extends ConsumerWidget {
             if (profile.hapticEnabled) HapticFeedbackService.tap(profile);
           },
         );
-
- 
 
       case KeyboardItemType.action:
         return KeyboardActionKey(
@@ -89,7 +88,9 @@ class KeyboardRow extends ConsumerWidget {
               if (currentType != KeyboardType.numbers) {
                 ref.read(keyboardLastTypeProvider.notifier).state = currentType;
               }
-              await ref.read(keyboardTypeProvider.notifier).setType(KeyboardType.numbers);
+              await ref
+                  .read(keyboardTypeProvider.notifier)
+                  .setType(KeyboardType.numbers);
             } else if (item.title == 'KEYBOARD_back') {
               final lastType = ref.read(keyboardLastTypeProvider);
               final targetType = lastType ?? KeyboardType.consonantsVowels;

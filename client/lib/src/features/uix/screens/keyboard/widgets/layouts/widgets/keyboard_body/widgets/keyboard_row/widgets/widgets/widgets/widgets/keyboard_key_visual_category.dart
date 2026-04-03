@@ -1,4 +1,4 @@
-import 'package:parkingson_key/src/models/keyboard/keyboard_item.dart';
+import 'package:parkingson_key/src/features/uix/screens/keyboard/widgets/layouts/widgets/keyboard_body/widgets/keyboard_row/widgets/widgets/keyboard_item.dart';
 
 /// Categoría visual para colorear teclas (consonante, vocal, palabras, etc.).
 enum KeyboardKeyVisualCategory {
